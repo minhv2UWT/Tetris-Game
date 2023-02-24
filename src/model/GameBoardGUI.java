@@ -1,29 +1,41 @@
-
 package model;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.GridLayout;
-import java.io.File;
-import java.io.IOException;
+import java.io.Serial;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class BorderLayoutPractice extends JFrame {
+public class GameBoardGUI extends JFrame {
 
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 54048875904583676L;
 
-    JFrame frame;
+    /**
+     * This constant is the most used dimension value for panels.
+     */
+    private static final int DIMENSION_100 = 100;
 
-    public BorderLayoutPractice() {
+    /**
+     * This constant is a defining dimension value.
+     */
+    private static final int DIMENSION_175 = 175;
 
+    /**
+     * This constant is another defining dimension value.
+     */
+    private static final int DIMENSION_20 = 20;
+
+    /**
+     * This is a constructor that calls the createLayout() method.
+     */
+    public GameBoardGUI() {
     }
 
 //    public static void main(final String[] theArgs) {
@@ -36,29 +48,10 @@ public class BorderLayoutPractice extends JFrame {
 //        layout.setVisible(true);
 //    }
 
+    /**
+     * This method creates the JPanel game board GUI.
+     */
     public void createLayout() {
-//
-//        // importing the tetris game font
-//        Font font = null;
-//        try {
-//            font = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/emulogic.ttf"));
-//        }
-//        catch (final IOException | FontFormatException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // creating a large font and a small font
-//        final Font headerFont;
-//        final Font smallFont;
-//        if (font != null) {
-//            headerFont = font.deriveFont(Font.BOLD).deriveFont(60f);
-//            smallFont = font.deriveFont(Font.BOLD).deriveFont(10f);
-//        }
-//        else {
-//            headerFont = null;
-//            smallFont = null;
-//        }
-
         // creating the panels
         final JPanel panel1 = new JPanel();
         final JPanel panel2 = new JPanel();
@@ -68,19 +61,14 @@ public class BorderLayoutPractice extends JFrame {
         final JPanel panel6 = new JPanel();
 // labeling each panel to know which panel is meant for what
         final JLabel tetrisLabel = new JLabel("TETRIS");
-//        tetrisLabel.setFont(headerFont);
         panel2.add(tetrisLabel);
         final JLabel footerLabel = new JLabel("Footer");
-//        footerLabel.setFont(smallFont);
         panel3.add(footerLabel);
         final JLabel gamePanelLabel = new JLabel("Game Panel");
-//        gamePanelLabel.setFont(smallFont);
         panel4.add(gamePanelLabel);
         final JLabel nextPieceLabel = new JLabel("Next Piece Panel");
-//        nextPieceLabel.setFont(smallFont);
         panel5.add(nextPieceLabel);
         final JLabel gameInfoLabel = new JLabel("Game Controls");
-//        gameInfoLabel.setFont(smallFont);
         panel6.add(gameInfoLabel);
 
         // changing the color of each panel as per assignment specification
@@ -92,14 +80,14 @@ public class BorderLayoutPractice extends JFrame {
         panel6.setBackground(Color.green);
 
         // setting panel sizes
-        panel1.setPreferredSize(new Dimension(175, 100));
-        panel2.setPreferredSize(new Dimension(100, 100));
-        panel3.setPreferredSize(new Dimension(150, 20));
-        panel4.setPreferredSize(new Dimension(100, 25));
-        panel5.setPreferredSize(new Dimension(100, 175));
-        panel6.setPreferredSize(new Dimension(100, 175));
+        panel1.setPreferredSize(new Dimension(DIMENSION_175, DIMENSION_100));
+        panel2.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+        panel3.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_20));
+        panel4.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+        panel5.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+        panel6.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
 
-        // adding panels to the Jframe
+        // adding panels to the JFrame
         this.add(panel1, BorderLayout.EAST);
         this.add(panel2, BorderLayout.NORTH);
         this.add(panel3, BorderLayout.SOUTH);
