@@ -4,10 +4,10 @@
 
 ### Group Members
 
- Simran Narwal
- Koji Yoshiyama
- Minh Vu
- Jack Chen
+ Simran Narwal,
+ Koji Yoshiyama,
+ Minh Vu,
+ Jack Chen,
 
 ### Sprint 1 Contribution 
 
