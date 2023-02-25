@@ -20,6 +20,6 @@
 #### Minh Vu
 
 #### Jack Chen
-
+ - Create GUI window for Tetris display
 ### Sprint 1 Comments 
 
