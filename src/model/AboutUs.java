@@ -9,11 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-/**
- * This class is creating the content
- * within the AboutUs tab
- * located in the MenuGUI.
- *
+ /**
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
@@ -21,6 +17,8 @@ import javax.swing.JLabel;
  * @version Winter 2023
  */
 
+/**This class is creating the content within the AboutUs
+ tab located in the MenuGUI.*/
 public class AboutUs extends JFrame {
     /**
      * Still unsure if this is required, but added just in case.
@@ -42,6 +40,7 @@ public class AboutUs extends JFrame {
      * This method is a constructor that calls the createAboutUs() method.
      */
     public AboutUs() {
+        super();
         createAboutUs();
     }
 
@@ -51,11 +50,11 @@ public class AboutUs extends JFrame {
      */
     private void createAboutUs() {
         final ImageIcon image = new ImageIcon("Tetris.PNG");
-        final String br = "<br><br>";
+        final String breaking = "<br><br>";
         final JLabel label = new JLabel("<html>" + "Developers:"
-                + br + "1. Minh"
-                + br + "2. Simran" + br + "3. Koji"
-                + br + "4. Jack");
+                + breaking + "1. Minh"
+                + breaking + "2. Simran" + breaking + "3. Koji"
+                + breaking + "4. Jack");
         label.setIcon(image);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setHorizontalTextPosition(JLabel.CENTER);

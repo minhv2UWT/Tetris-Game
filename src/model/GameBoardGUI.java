@@ -14,9 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * This class creates the main display that includes the
- * game board, next piece region and the scoreboard.
- *
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
@@ -24,6 +21,8 @@ import javax.swing.JPanel;
  * @version Winter 2023
  */
 
+/** This class creates the main display that includes the
+ * game board, next piece region and the scoreboard.*/
 public class GameBoardGUI extends JFrame {
 
     /**
@@ -51,6 +50,7 @@ public class GameBoardGUI extends JFrame {
      * This is a constructor that calls the createLayout() method.
      */
     public GameBoardGUI() {
+        super();
     }
 
 //    public static void main(final String[] theArgs) {

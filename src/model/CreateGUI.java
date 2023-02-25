@@ -9,7 +9,6 @@ import java.io.Serial;
 
 /**
  * This class only houses a main method that starts the program.
- *
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
