@@ -7,34 +7,59 @@ package model;
 import static java.lang.System.out;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.Serial;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 /**
+ * This class creates the MenuGUI, and combines it with
+ * a GameBoardGUI object.
+ */
+
+/*
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
  * @author Minh Vu
  * @version Winter 2023
  */
-
-/**This class creates the MenuGUI, and combines it with
- * a GameBoardGUI object.*/
-
 public class MenuGUI extends JFrame implements ActionListener {
+    /**
+     * This constant is made to avoid magic numbers.
+     */
+    private static final int BOUNDS_SIZE = 600;
 
+    /**
+     * This constant is made to avoid magic numbers.
+     */
+    private static final int SIZE_WIDTH = 500;
+
+    /**
+     * This constant is made to avoid magic numbers.
+     */
+    private static final int SIZE_HEIGHT = 450;
+    /**
+     * This constant is the dimension for the window.
+     */
+    private static final int DIMENSION_510 = 510;
     /**
      * This constant sets the size of the gameBoardGUI.
      */
     private static final int DIMENSION_500 = 500;
+    /**
+     * This constant was made to avoid magic numbers.
+     */
+    private static final int MAGIC_NUMBER = 450;
 
     /**
      * This constant helps set the gameBoardGUI layout.
@@ -58,9 +83,13 @@ public class MenuGUI extends JFrame implements ActionListener {
     private static final String EXIT = "Exit";
 
     /**
-     * Creating string holding "<br><br>".
+     * Creating string holding breaklines commands.
      */
     private static final String BR_BR = "<br><br>";
+    /**
+     * Creating string holding breaklines commands.
+     */
+    private static final String HTML = "<html>";
 
     /**
      * Creates a menu option that displays, "About Tetris".
@@ -163,8 +192,8 @@ public class MenuGUI extends JFrame implements ActionListener {
         myDeleteItem.setMnemonic(KeyEvent.VK_D);
 
         // Creating performance for these layouts
-        myLayout1.addActionListener(this);
-        myLayout2.addActionListener(this);
+        myLayout1.addActionListener(e -> out.println("layout 1 generated"));
+        myLayout2.addActionListener(e -> out.println("layout 2 generated"));
 
         // Adding Items to Help Menu
         helpMenu.add(myHowToPlayItem);
@@ -191,11 +220,21 @@ public class MenuGUI extends JFrame implements ActionListener {
         aboutMenu.add(myAboutItem);
 
         // Creating Performance for about Items
-        myAboutUsItem.addActionListener(this);
-        myAboutItem.addActionListener(this);
-        myHowToPlayItem.addActionListener(this);
-        myFAQItem.addActionListener(this);
-        myExitItem.addActionListener(this);
+        myAboutUsItem.addActionListener(e -> createAboutUs());
+        myAboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null,
+                HTML
+                        + "Tetris is a classic puzzle video game where "
+                        + "players manipulate different shaped blocks"
+                        + BR_BR
+                        + " to create complete horizontal lines The "
+                        + "game was created in 1984 and has since become"
+                        + BR_BR
+                        + " a popular and iconic game enjoyed by "
+                        + "millions of players worldwide.",
+                ABOUT_US, JOptionPane.INFORMATION_MESSAGE));
+        myHowToPlayItem.addActionListener(e -> createHowToPlay());
+        myFAQItem.addActionListener(e -> createFrequentlyAskedQuestions());
+        myExitItem.addActionListener(e -> createExitOption());
 
         // Adding options to menu bar
         menuBar.add(fileMenu);
@@ -235,6 +274,29 @@ public class MenuGUI extends JFrame implements ActionListener {
     }
 
     /**
+     * This method creates the image window that displays when
+     * "About Tetris" is clicked in the menu.
+     */
+    private void createAboutUs() {
+        final ImageIcon image = new ImageIcon("Tetris.PNG");
+        final JLabel label = new JLabel(HTML + "Developers:"
+                + BR_BR + "1. Minh"
+                + BR_BR + "2. Simran" + BR_BR + "3. Koji"
+                + BR_BR + "4. Jack");
+        label.setIcon(image);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalAlignment(JLabel.TOP);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        this.setSize(DIMENSION_510, DIMENSION_500);
+        this.setVisible(true);
+        this.add(label);
+        this.setIconImage(image.getImage());
+        this.setTitle(ABOUT_US);
+
+    }
+
+    /**
      * This method pulls up the image in the class AboutUs when
      * the "About Tetris" button is clicked.
      *
@@ -242,43 +304,125 @@ public class MenuGUI extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
-        actionPerformedHelper(theEvent);
+//        actionPerformedHelper(theEvent);
 
-        if (theEvent.getSource().equals(myAboutUsItem)) {
-            new AboutUs();
-        }
-        if (theEvent.getSource().equals(myLayout1)) {
-            myFrame.createLayout();
-        }
-        if (theEvent.getSource().equals(myHowToPlayItem)) {
-            new HowToPlay();
-        }
-        if (theEvent.getSource().equals(myFAQItem)) {
-            new FrequentlyAsked();
-        }
-        if (theEvent.getSource().equals(myExitItem)) {
-            new ExitOption();
-        }
+//        if (theEvent.getSource().equals(myAboutUsItem)) {
+//            new AboutUs();
+//        }
+//        if (theEvent.getSource().equals(myLayout1)) {
+//            myFrame.createLayout();
+//        }
+//        if (theEvent.getSource().equals(myHowToPlayItem)) {
+//            new HowToPlay();
+//        }
+//        if (theEvent.getSource().equals(myFAQItem)) {
+//            new FrequentlyAsked();
+//        }
+//        if (theEvent.getSource().equals(myExitItem)) {
+//            new ExitOption();
+//        }
     }
 
     /**
-     * This is a helper method for actionPerformed() to reduce complexity.
-     *
-     * @param theEvent the event to be processed
+     * This method creates a window of text, displaying the instructions on
+     * how to play Tetris.
      */
-    private void actionPerformedHelper(final ActionEvent theEvent) {
-        if (theEvent.getSource().equals(myAboutItem)) {
-            JOptionPane.showMessageDialog(null,
-                    "<html>"
-                            + "Tetris is a classic puzzle video game where "
-                            + "players manipulate different shaped blocks"
-                            + BR_BR
-                            + " to create complete horizontal lines The "
-                            + "game was created in 1984 and has since become"
-                            + BR_BR
-                            + " a popular and iconic game enjoyed by "
-                            + "millions of players worldwide.",
-                    ABOUT_US, JOptionPane.INFORMATION_MESSAGE);
+    private void createHowToPlay() {
+        final JFrame frame = new JFrame();
+
+        final JTextArea text = new JTextArea("Instructions to Play!");
+        text.append(System.lineSeparator());
+        text.append("1.      The pieces will automatically come down");
+        text.append(System.lineSeparator());
+        text.append("2.      To bring piece down faster, click the "
+                + "down key on your keyboard");
+        text.append(System.lineSeparator());
+        text.append("3.      Fit the pieces so they all fill the bottom row");
+        text.append(System.lineSeparator());
+        text.append("4.      Once the bottom row is filled, "
+                + "your score will increase!");
+
+        text.setBounds(0, 0, MAGIC_NUMBER, MAGIC_NUMBER);
+        frame.add(text);
+        frame.setSize(MAGIC_NUMBER, MAGIC_NUMBER);
+        frame.setLayout(null);
+        frame.setVisible(true);
+    }
+
+    /**
+     * This method creates a window to answer a series of FAQs.
+     */
+    private void createFrequentlyAskedQuestions() {
+        final JFrame frame = new JFrame();
+        final JTextArea text = new JTextArea("Frequently Asked Questions");
+        text.append(System.lineSeparator());
+        text.append(System.lineSeparator());
+        text.append("1.");
+        text.append(System.lineSeparator());
+        text.append(" Question: Why play?");
+        text.append(System.lineSeparator());
+        text.append(" Answer: IT'S THE BEST GAME EVER!");
+        text.append(System.lineSeparator());
+        text.append(System.lineSeparator());
+        text.append("2.");
+        text.append(System.lineSeparator());
+        text.append(" Question: When was the first game of Tetris created?");
+        text.append(System.lineSeparator());
+        text.append(" Answer: 1984!");
+        text.append(System.lineSeparator());
+        text.append(System.lineSeparator());
+        text.append("3.");
+        text.append(System.lineSeparator());
+        text.append(" Question: My pieces won't fall?");
+        text.append(System.lineSeparator());
+        text.append(" Answer: There may be a chance there "
+                + "is a lag in the system."
+                + " Try restarting!");
+        text.append(System.lineSeparator());
+        text.append(System.lineSeparator());
+        text.append("4.");
+        text.append(System.lineSeparator());
+        text.append(" Question: Can I change the "
+                + "background color of my screen?");
+        text.append(System.lineSeparator());
+        text.append(" Answer: Unfortunately,we are unable to support that"
+                + " request at this time!");
+        text.append(System.lineSeparator());
+        text.append(System.lineSeparator());
+        text.append("5.");
+        text.append(System.lineSeparator());
+        text.append(" Question: Can I play with other players?");
+        text.append(System.lineSeparator());
+        text.append(" Answer: Unfortunately,this game of Tetris is"
+                + " to be played individually!");
+        text.append(System.lineSeparator());
+        text.append(System.lineSeparator());
+        text.append("Is your question not here?");
+        text.append(System.lineSeparator());
+        text.append("Try searching the web. Good Luck :)");
+
+        text.setBounds(0, 0, BOUNDS_SIZE, BOUNDS_SIZE);
+        frame.add(text);
+
+        frame.setSize(SIZE_WIDTH, SIZE_HEIGHT);
+        frame.setLayout(null);
+        frame.setVisible(true);
+    }
+
+    private void createExitOption() {
+        final JFrame frame = new JFrame();
+        frame.setVisible(true);
+
+        final int selection = JOptionPane.showConfirmDialog(frame,
+                "Are you sure you want to "
+                        + "exit?", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (selection == JOptionPane.YES_OPTION) {
+            final Window[] windows = Window.getWindows();
+            for (final Window window : windows) {
+                window.dispose(); // close all windows
+            }
         }
     }
 }
