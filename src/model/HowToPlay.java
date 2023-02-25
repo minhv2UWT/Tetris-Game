@@ -10,7 +10,6 @@ import javax.swing.JTextArea;
 
 /**
  * This class creates the content within the "How to Play" tab in the MenuGUI.
- *
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
@@ -30,7 +29,8 @@ public class HowToPlay extends JFrame {
     /**
      * This method is a constructor that calls the createHowToPlay() method.
      */
-    HowToPlay() {
+    public HowToPlay() {
+        super();
         createHowToPlay();
     }
 
@@ -38,7 +38,7 @@ public class HowToPlay extends JFrame {
      * This method creates a window of text, displaying the instructions on
      * how to play Tetris.
      */
-    public void createHowToPlay() {
+    private void createHowToPlay() {
         final JFrame frame = new JFrame();
 
         final JTextArea text = new JTextArea("Instructions to Play!");

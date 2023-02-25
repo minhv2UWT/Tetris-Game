@@ -237,16 +237,16 @@ public class MenuGUI extends JFrame implements ActionListener {
     public void actionPerformed(final ActionEvent theEvent) {
         actionPerformedHelper(theEvent);
         if (theEvent.getSource() == mySaveItem) {
-            System.out.println("Game Saved");
+            System.out.print("Game Saved");
         }
         if (theEvent.getSource() == myLoadItem) {
-            System.out.println("Game Loaded");
+            System.out.print("Game Loaded");
         }
         if (theEvent.getSource() == myDeleteItem) {
-            System.out.println("Game Deleted");
+            System.out.print("Game Deleted");
         }
         if (theEvent.getSource() == myNewGameItem) {
-            System.out.println("New Game!");
+            System.out.print("New Game!");
         }
         if (theEvent.getSource() == myAboutUsItem) {
             new AboutUs();
@@ -258,7 +258,7 @@ public class MenuGUI extends JFrame implements ActionListener {
             new HowToPlay();
         }
         if (theEvent.getSource() == myFAQItem) {
-            new FAQs();
+            new FrequentlyAsked();
         }
         if (theEvent.getSource() == myExitItem) {
             new ExitOption();

@@ -4,13 +4,13 @@
  */
 package model;
 
+
 import java.io.Serial;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  * This class creates the functionality within the "Exit" tab in the MenuGUI.
- *
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
@@ -25,7 +25,8 @@ public class ExitOption extends JFrame {
     /**
      * This method is a constructor that calls the createExitOption() method.
      */
-    ExitOption() {
+     public ExitOption() {
+        super();
         createExitOption();
     }
 
@@ -33,6 +34,7 @@ public class ExitOption extends JFrame {
      * This method creates a dialog console to confirm if the user wishes to
      * exit the game.
      */
+
     private void createExitOption() {
         final JFrame frame = new JFrame();
         frame.setVisible(true);

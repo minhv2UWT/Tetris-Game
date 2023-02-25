@@ -10,7 +10,6 @@ import javax.swing.JTextArea;
 
 /**
  * This class creates the content within the "FAQ" tab in the MenuGUI.
- *
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
@@ -18,7 +17,7 @@ import javax.swing.JTextArea;
  * @version Winter 2023
  */
 
-public class FAQs extends JFrame {
+public class FrequentlyAsked extends JFrame {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -42,14 +41,15 @@ public class FAQs extends JFrame {
      * This method is a constructor that calls the
      * createFrequentlyAskedQuestions() method.
      */
-    FAQs() {
+    public FrequentlyAsked() {
+        super();
         createFrequentlyAskedQuestions();
     }
 
     /**
      * This method creates a window to answer a series of FAQs.
      */
-    public void createFrequentlyAskedQuestions() {
+    private void createFrequentlyAskedQuestions() {
         final JFrame frame = new JFrame();
         final JTextArea text = new JTextArea("Frequently Asked Questions");
         text.append(System.lineSeparator());

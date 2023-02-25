@@ -10,7 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * This class is creating the content within the AboutUs tab
+ * This class is creating the content
+ * within the AboutUs tab
  * located in the MenuGUI.
  *
  * @author Simran Narwal
@@ -21,7 +22,6 @@ import javax.swing.JLabel;
  */
 
 public class AboutUs extends JFrame {
-
     /**
      * Still unsure if this is required, but added just in case.
      */
@@ -41,7 +41,7 @@ public class AboutUs extends JFrame {
     /**
      * This method is a constructor that calls the createAboutUs() method.
      */
-    AboutUs() {
+    public AboutUs() {
         createAboutUs();
     }
 

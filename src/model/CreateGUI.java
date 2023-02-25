@@ -5,6 +5,7 @@
 package model;
 
 import javax.swing.JFrame;
+import java.io.Serial;
 
 /**
  * This class only houses a main method that starts the program.
@@ -16,7 +17,10 @@ import javax.swing.JFrame;
  * @version Winter 2023
  */
 
+
 public class CreateGUI extends JFrame {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * This main method kick-starts the whole program.
