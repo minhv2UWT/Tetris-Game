@@ -206,9 +206,9 @@ public class MenuGUI extends JFrame implements ActionListener {
                             + " a popular and iconic game enjoyed by millions of players worldwide.",
                     myAboutString, JOptionPane.INFORMATION_MESSAGE);
         }
-//        if (theEvent.getSource() == saveItem) {
-//            System.out.println("Game Saved");
-//        }
+        if (theEvent.getSource() == saveItem) {
+            System.out.println("Game Saved");
+        }
         if (theEvent.getSource() == loadItem) {
             out.println("Game Loaded");
         }
