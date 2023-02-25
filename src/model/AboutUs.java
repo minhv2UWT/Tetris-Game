@@ -34,7 +34,7 @@ public class AboutUs extends JFrame {
         final ImageIcon image = new ImageIcon("Tetris.PNG");
         final String br = "<br><br>";
         final JLabel label = new JLabel("<html>" + br + "About Tetris" + br
-                + "Tetris is really fun I guess hehe :) :):)");
+                + "Tetris is really fun I guess :) :):)");
         label.setIcon(image);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setHorizontalTextPosition(JLabel.CENTER);
