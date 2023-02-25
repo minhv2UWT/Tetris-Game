@@ -30,7 +30,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     private static final long serialVersionUID = -2286457356758598552L;
 
     /**
-     * I made this JMenuItem a field because the variable is used in multiple methods.
+     * JMenuItem is a field because the variable is used in multiple methods.
      */
     private final JMenuItem myAboutItem = new JMenuItem("About Tetris");
 
