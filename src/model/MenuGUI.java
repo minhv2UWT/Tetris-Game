@@ -254,6 +254,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
     /**
      * This is a helper method for actionPerformed() to reduce complexity.
+     *
      * @param theEvent the event to be processed
      */
     private void actionPerformedHelper(final ActionEvent theEvent) {
