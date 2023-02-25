@@ -17,7 +17,12 @@ public class AboutUs extends JFrame {
     /**
      * This constant is the dimension for the window.
      */
-    private static final int DIMENSION_600 = 600;
+    private static final int DIMENSION_510 = 510;
+
+    /**
+     * This constant is the dimension for the window.
+     */
+    private static final int DIMENSION_500 = 500;
 
     /**
      * This method is a constructor that calls the createAboutUs() method.
@@ -33,18 +38,19 @@ public class AboutUs extends JFrame {
     private void createAboutUs() {
         final ImageIcon image = new ImageIcon("Tetris.PNG");
         final String br = "<br><br>";
-        final JLabel label = new JLabel("<html>" + br + "About Tetris" + br
-                + "Tetris is really fun I guess hehe :) :):)");
+        final JLabel label = new JLabel("<html>" + "Developers:" + br + "1. Minh"
+                + br + "2. Simran" + br + "3. Koji"
+                + br + "4. Jack");
         label.setIcon(image);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.TOP);
         label.setHorizontalAlignment(JLabel.CENTER);
-        this.setSize(DIMENSION_600, DIMENSION_600);
+        this.setSize(DIMENSION_510, DIMENSION_500);
         this.setVisible(true);
         this.add(label);
         this.setIconImage(image.getImage());
-        this.setTitle("About");
+        this.setTitle("About Us");
 
     }
 }
