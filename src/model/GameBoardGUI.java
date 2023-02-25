@@ -1,3 +1,7 @@
+/*
+ * TCSS 305 – Winter 2023
+ * Tetris Project – Sprint 1
+ */
 package model;
 
 import java.awt.BorderLayout;
@@ -9,10 +13,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * This class creates the main display that includes the
+ * game board, next piece region and the scoreboard.
+ *
+ * @author Simran Narwal
+ * @author Jack Chen
+ * @author Koji Yoshiyama
+ * @author Minh Vu
+ * @version Winter 2023
+ */
+
 public class GameBoardGUI extends JFrame {
 
     /**
-     *
+     * Still unsure if this is required, but added just in case.
      */
     @Serial
     private static final long serialVersionUID = 54048875904583676L;

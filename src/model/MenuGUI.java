@@ -1,4 +1,7 @@
-
+/*
+ * TCSS 305 – Winter 2023
+ * Tetris Project – Sprint 1
+ */
 package model;
 
 import java.awt.BorderLayout;
@@ -13,6 +16,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+/**
+ * This class creates the MenuGUI, and combines it with
+ * a GameBoardGUI object.
+ *
+ * @author Simran Narwal
+ * @author Jack Chen
+ * @author Koji Yoshiyama
+ * @author Minh Vu
+ * @version Winter 2023
+ */
 
 public class MenuGUI extends JFrame implements ActionListener {
 
@@ -111,7 +124,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     }
 
     /**
-     * This class creates the MenuGUI and inserts it into a GameBoardGUI object.
+     * This method creates the MenuGUI and inserts it into a GameBoardGUI object.
      */
     private void createMenuGUI() {
         gameBoardGUISetUp();

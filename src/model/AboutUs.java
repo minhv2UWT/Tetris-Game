@@ -1,3 +1,7 @@
+/*
+ * TCSS 305 – Winter 2023
+ * Tetris Project – Sprint 1
+ */
 package model;
 
 import java.io.Serial;
@@ -5,11 +9,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+/**
+ * This class is creating the content within the AboutUs tab
+ * located in the MenuGUI.
+ *
+ * @author Simran Narwal
+ * @author Jack Chen
+ * @author Koji Yoshiyama
+ * @author Minh Vu
+ * @version Winter 2023
+ */
 
 public class AboutUs extends JFrame {
 
     /**
-     *
+     * Still unsure if this is required, but added just in case.
      */
     @Serial
     private static final long serialVersionUID = 4235325245485188290L;

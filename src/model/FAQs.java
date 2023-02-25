@@ -1,27 +1,54 @@
+/*
+ * TCSS 305 – Winter 2023
+ * Tetris Project – Sprint 1
+ */
 package model;
 
 import java.io.Serial;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
+/**
+ * This class creates the content within the "FAQ" tab in the MenuGUI.
+ *
+ * @author Simran Narwal
+ * @author Jack Chen
+ * @author Koji Yoshiyama
+ * @author Minh Vu
+ * @version Winter 2023
+ */
 
 public class FAQs extends JFrame {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * This constant is made to avoid magic numbers.
+     */
     private static final int BOUNDS_SIZE = 600;
 
+    /**
+     * This constant is made to avoid magic numbers.
+     */
     private static final int SIZE_WIDTH = 500;
 
+    /**
+     * This constant is made to avoid magic numbers.
+     */
     private static final int SIZE_HEIGHT = 450;
 
-    //This method is a constructor that calls the createFrequentlyAskedQuestions() method
+    /**
+     * This method is a constructor that calls the
+     * createFrequentlyAskedQuestions() method.
+     */
     FAQs() {
         createFrequentlyAskedQuestions();
     }
 
-    //This method creates a window to answer a series of FAQs
+    /**
+     * This method creates a window to answer a series of FAQs.
+     */
     public void createFrequentlyAskedQuestions() {
         final JFrame frame = new JFrame();
         final JTextArea text = new JTextArea("Frequently Asked Questions");
@@ -45,13 +72,15 @@ public class FAQs extends JFrame {
         text.append(System.lineSeparator());
         text.append(" Question: My pieces won't fall?");
         text.append(System.lineSeparator());
-        text.append(" Answer: There may be a chance there is a lag in the system."
+        text.append(" Answer: There may be a chance there "
+                + "is a lag in the system."
                 + " Try restarting!");
         text.append(System.lineSeparator());
         text.append(System.lineSeparator());
         text.append("4.");
         text.append(System.lineSeparator());
-        text.append(" Question: Can I change the background color of my screen?");
+        text.append(" Question: Can I change the "
+                + "background color of my screen?");
         text.append(System.lineSeparator());
         text.append(" Answer: Unfortunately,we are unable to support that"
                 + " request at this time!");
