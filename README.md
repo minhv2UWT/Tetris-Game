@@ -14,8 +14,8 @@
 #### Simran Narwal
 
 #### Koji Yoshiyama
- Created GUI for Tetris Display including the gameboard, next piece region, and a scoreboard region. 
- Also made extensive checkstyle edits across GameBoardGUI MenuGUI CreateGUI and AboutUs Classes.
+ -Created GUI for Tetris Display including the gameboard, next piece region, and a scoreboard region. 
+ -Also made extensive checkstyle edits across GameBoardGUI MenuGUI CreateGUI and AboutUs Classes.
 
 #### Minh Vu
 
