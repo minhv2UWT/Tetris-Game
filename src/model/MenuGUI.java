@@ -4,6 +4,8 @@
  */
 package model;
 
+import static java.lang.System.out;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,15 +19,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 /**
- * This class creates the MenuGUI, and combines it with
- * a GameBoardGUI object.
- *
  * @author Simran Narwal
  * @author Jack Chen
  * @author Koji Yoshiyama
  * @author Minh Vu
  * @version Winter 2023
  */
+
+/**This class creates the MenuGUI, and combines it with
+ * a GameBoardGUI object.*/
 
 public class MenuGUI extends JFrame implements ActionListener {
 
@@ -48,12 +50,17 @@ public class MenuGUI extends JFrame implements ActionListener {
     /**
      * Made into a field as it is sed more than once.
      */
-    private final String myAboutString = "About Us";
+    private static final String ABOUT_US = "About Us";
 
     /**
      * Made into a field as it is sed more than once.
      */
-    private final String myExitString = "Exit";
+    private static final String EXIT = "Exit";
+
+    /**
+     * Creating string holding "<br><br>".
+     */
+    private static final String BR_BR = "<br><br>";
 
     /**
      * Creates a menu option that displays, "About Tetris".
@@ -63,7 +70,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     /**
      * Creates a menu option that displays, "About Us".
      */
-    private final JMenuItem myAboutUsItem = new JMenuItem(myAboutString);
+    private final JMenuItem myAboutUsItem = new JMenuItem(ABOUT_US);
 
     /**
      * Creates a menu option that displays, "How to Play".
@@ -78,7 +85,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     /**
      * Creates a menu option that displays, "Exit".
      */
-    private final JMenuItem myExitItem = new JMenuItem(myExitString);
+    private final JMenuItem myExitItem = new JMenuItem(EXIT);
 
     /**
      * Creates a menu option that displays, "New Game".
@@ -135,7 +142,7 @@ public class MenuGUI extends JFrame implements ActionListener {
         final JMenu fileMenu = new JMenu("File");
         final JMenu aboutMenu = new JMenu("About ");
         final JMenu helpMenu = new JMenu("Help");
-        final JMenu exitMenu = new JMenu(myExitString);
+        final JMenu exitMenu = new JMenu(EXIT);
         final JMenu optionsMenu = new JMenu("Options");
 
         // Set ShortKey to Menu Options
@@ -167,10 +174,10 @@ public class MenuGUI extends JFrame implements ActionListener {
         exitMenu.add(myExitItem);
 
         // Creating performances of file menu items
-        myNewGameItem.addActionListener(this);
-        mySaveItem.addActionListener(this);
-        myLoadItem.addActionListener(this);
-        myDeleteItem.addActionListener(this);
+        myNewGameItem.addActionListener(e -> out.println("New game"));
+        mySaveItem.addActionListener(e -> out.println("Game Saved"));
+        myLoadItem.addActionListener(e -> out.println("Game Loaded"));
+        myDeleteItem.addActionListener(e -> out.println("Game Deleted"));
 
         // Adding Items to file menu
         fileMenu.add(myNewGameItem);
@@ -236,31 +243,20 @@ public class MenuGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
         actionPerformedHelper(theEvent);
-        if (theEvent.getSource() == mySaveItem) {
-            System.out.print("Game Saved");
-        }
-        if (theEvent.getSource() == myLoadItem) {
-            System.out.print("Game Loaded");
-        }
-        if (theEvent.getSource() == myDeleteItem) {
-            System.out.print("Game Deleted");
-        }
-        if (theEvent.getSource() == myNewGameItem) {
-            System.out.print("New Game!");
-        }
-        if (theEvent.getSource() == myAboutUsItem) {
+
+        if (theEvent.getSource().equals(myAboutUsItem)) {
             new AboutUs();
         }
-        if (theEvent.getSource() == myLayout1) {
+        if (theEvent.getSource().equals(myLayout1)) {
             myFrame.createLayout();
         }
-        if (theEvent.getSource() == myHowToPlayItem) {
+        if (theEvent.getSource().equals(myHowToPlayItem)) {
             new HowToPlay();
         }
-        if (theEvent.getSource() == myFAQItem) {
+        if (theEvent.getSource().equals(myFAQItem)) {
             new FrequentlyAsked();
         }
-        if (theEvent.getSource() == myExitItem) {
+        if (theEvent.getSource().equals(myExitItem)) {
             new ExitOption();
         }
     }
@@ -271,19 +267,18 @@ public class MenuGUI extends JFrame implements ActionListener {
      * @param theEvent the event to be processed
      */
     private void actionPerformedHelper(final ActionEvent theEvent) {
-        final String br = "<br><br>";
-        if (theEvent.getSource() == myAboutItem) {
+        if (theEvent.getSource().equals(myAboutItem)) {
             JOptionPane.showMessageDialog(null,
                     "<html>"
                             + "Tetris is a classic puzzle video game where "
                             + "players manipulate different shaped blocks"
-                            + br
+                            + BR_BR
                             + " to create complete horizontal lines The "
                             + "game was created in 1984 and has since become"
-                            + br
+                            + BR_BR
                             + " a popular and iconic game enjoyed by "
                             + "millions of players worldwide.",
-                    myAboutString, JOptionPane.INFORMATION_MESSAGE);
+                    ABOUT_US, JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }
