@@ -1,6 +1,6 @@
 # group3-tetris
 
-## group3-TCSS305B
+## Group 3 - TCSS305 B
 
 ### Group Members
 
@@ -21,4 +21,3 @@
 
 ### Sprint 1 Comments 
 
-###
