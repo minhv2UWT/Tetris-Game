@@ -38,7 +38,8 @@ public class AboutUs extends JFrame {
     private void createAboutUs() {
         final ImageIcon image = new ImageIcon("Tetris.PNG");
         final String br = "<br><br>";
-        final JLabel label = new JLabel("<html>" + "Developers:" + br + "1. Minh"
+        final JLabel label = new JLabel("<html>" + "Developers:"
+                + br + "1. Minh"
                 + br + "2. Simran" + br + "3. Koji"
                 + br + "4. Jack");
         label.setIcon(image);
