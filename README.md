@@ -22,10 +22,12 @@
  - Also made extensive checkstyle edits across GameBoardGUI MenuGUI CreateGUI and AboutUs Classes.
 
 #### Minh Vu
-- Created and implemented the file menu and their menu items for File and About.
-- Merging everyone codes together.
+- Created the file menu and their menu items for File and About( Implemented actionListener using lambda expression for readability purpose).
+- Merging everyone codes together( combining all other classes into one class).
 - Fixing Checkstyles warnings and PMD across every classes.
 - Modifying other codes to work with the existed code.
+- Simplifying complicated methods when merging other classes( rewrite the methods with some helper methods). Making the codes more readable.
+- Debugging the code.
 
 #### Jack Chen
  - Created GUI window for Tetris Display
