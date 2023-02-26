@@ -7,6 +7,9 @@ package model;
 import static java.lang.System.out;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +22,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 /**
@@ -65,6 +69,20 @@ public class MenuGUI extends JFrame implements ActionListener {
      * This constant helps set the gameBoardGUI layout.
      */
     private static final int DIMENSION_10 = 10;
+    /**
+     * This constant is the most used dimension value for panels.
+     */
+    private static final int DIMENSION_100 = 100;
+
+    /**
+     * This constant is a defining dimension value.
+     */
+    private static final int DIMENSION_175 = 175;
+
+    /**
+     * This constant is another defining dimension value.
+     */
+    private static final int DIMENSION_20 = 20;
 
     /**
      * Still unsure if this is required, but added just in case.
@@ -149,13 +167,15 @@ public class MenuGUI extends JFrame implements ActionListener {
     /**
      * This is the game board GUI that will be merged with the menu bar.
      */
-    private GameBoardGUI myFrame;
+    private JFrame myFrame;
 
     /**
      * This method is a constructor that calls the createMenuGUI() method.
      */
     public MenuGUI() {
         super();
+        gameBoardGUISetUp();
+        createLayout();
         createMenuGUI();
     }
 
@@ -163,7 +183,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      * This method creates the MenuGUI and inserts it into a GameBoardGUI object.
      */
     private void createMenuGUI() {
-        gameBoardGUISetUp();
+
         // Creating Menu Bar
         final JMenuBar menuBar = new JMenuBar();
 
@@ -245,7 +265,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
         // -------------------------------------------------------------------
         //creating layouts using createLayout from BorderLayoutPractice class
-        myFrame.createLayout();
+//        myFrame.createLayout();
         // --------------------------------------------------------------------
 
         // Set Frame menu bar
@@ -253,12 +273,59 @@ public class MenuGUI extends JFrame implements ActionListener {
         myFrame.setVisible(true);
     }
 
+    private void createLayout() {
+        // creating the panels
+        final JPanel panel1 = new JPanel();
+        final JPanel panel2 = new JPanel();
+        final JPanel panel3 = new JPanel();
+        final JPanel panel4 = new JPanel();
+        final JPanel panel5 = new JPanel();
+        final JPanel panel6 = new JPanel();
+// labeling each panel to know which panel is meant for what
+        final JLabel tetrisLabel = new JLabel("TETRIS");
+        panel2.add(tetrisLabel);
+        final JLabel footerLabel = new JLabel("Footer");
+        panel3.add(footerLabel);
+        final JLabel gamePanelLabel = new JLabel("Game Panel");
+        panel4.add(gamePanelLabel);
+        final JLabel nextPieceLabel = new JLabel("Next Piece Panel");
+        panel5.add(nextPieceLabel);
+        final JLabel gameInfoLabel = new JLabel("Game Controls");
+        panel6.add(gameInfoLabel);
+
+        // changing the color of each panel as per assignment specification
+        panel1.setBackground(Color.gray);
+        panel2.setBackground(Color.gray);
+        panel3.setBackground(Color.gray);
+        panel4.setBackground(Color.red);
+        panel5.setBackground(Color.blue);
+        panel6.setBackground(Color.green);
+
+        // setting panel sizes
+        panel1.setPreferredSize(new Dimension(DIMENSION_175, DIMENSION_100));
+        panel2.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+        panel3.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_20));
+        panel4.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+        panel5.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+        panel6.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+
+        // adding panels to the JFrame
+        myFrame.add(panel1, BorderLayout.EAST);
+        myFrame.add(panel2, BorderLayout.NORTH);
+        myFrame.add(panel3, BorderLayout.SOUTH);
+        myFrame.add(panel4, BorderLayout.CENTER);
+
+        // creating a nested panel for next piece/controls
+        panel1.setLayout(new GridLayout(2, 1));
+        panel1.add(panel5);
+        panel1.add(panel6);
+    }
     /**
      * This is a helper method for createMenuGUI that sets up te gameBoardGUI.
      */
     private void gameBoardGUISetUp() {
         //GUI window using BorderLayoutPractice
-        myFrame = new GameBoardGUI();
+        myFrame = new JFrame();
 
         // Creating GUI window
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
