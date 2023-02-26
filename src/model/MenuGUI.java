@@ -180,7 +180,8 @@ public class MenuGUI extends JFrame implements ActionListener {
     }
 
     /**
-     * This method creates the MenuGUI and inserts it into a GameBoardGUI object.
+     * This method creates the MenuGUI and inserts
+     * it into a GameBoardGUI object.
      */
     private void createMenuGUI() {
 
