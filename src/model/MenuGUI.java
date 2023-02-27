@@ -173,6 +173,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      */
     private JFrame myFrame;
 
+
     /**
      * This method is a constructor that calls the createMenuGUI() method.
      */
@@ -380,11 +381,13 @@ public class MenuGUI extends JFrame implements ActionListener {
      */
     private void createHowToPlay() {
         final JFrame frame = new JFrame("Instructions to Play!");
-        final JTextArea text = new JTextArea("Instructions to Play!\n"
-                + "1. The pieces will automatically come down\n"
-                + "2. To bring piece down faster, click the down key on your keyboard\n"
-                + "3. Fit the pieces so they all fill the bottom row\n"
-                + "4. Once the bottom row is filled, your score will increase!");
+        final JTextArea text = new JTextArea("""
+                Instructions to Play!
+                1. The pieces will automatically come down
+                2. To bring piece down faster, click the down key on your keyboard
+                3. Fit the pieces so they all fill the bottom row
+                4. Once the bottom row is filled, your score will increase!
+                """);
         text.setBounds(0, 0, MAGIC_NUMBER, MAGIC_NUMBER);
         frame.add(text);
         frame.setSize(MAGIC_NUMBER, DIMENSION_150);
@@ -398,21 +401,22 @@ public class MenuGUI extends JFrame implements ActionListener {
      * This method creates a window to answer a series of FAQs.
      */
     private void createFrequentlyAskedQuestions() {
-        final String faqs = "Frequently Asked Questions\n\n"
-                + "1. Question: Why play?\n"
-                + " Answer: IT'S THE BEST GAME EVER!\n\n"
-                + "2. Question: When was the first game of Tetris created?\n"
-                + " Answer: 1984!\n\n" + "3. Question: My pieces won't fall?\n"
-                + " Answer: There may be a chance there is a lag in the system."
-                + " Try restarting!\n\n"
-                + "4. Question: Can I change the background color of my screen?\n"
-                + " Answer: Unfortunately,"
-                + " we are unable to support that request at this time!\n\n"
-                + "5. Question: Can I play with other players?\n"
-                + " Answer: Unfortunately, "
-                + "this game of Tetris is to be played individually!\n\n"
-                + "Is your question not here?\n" + "Try searching the web. Good Luck :)";
-        final JTextArea text = new JTextArea(faqs);
+        final JTextArea text = new JTextArea("""
+                  Frequently Asked Questions
+                  1. Question: Why play?
+                  Answer: IT'S THE BEST GAME EVER!
+                  2. Question: When was the first game of Tetris created?
+                  Answer: 1984!
+                  3. Question: My pieces won't fall?
+                  Answer: There may be a chance there is a lag in the system
+                  Try restarting!
+                  4. Question: Can I change the background color of my screen?
+                  Answer: Unfortunately, we are unable to support that request at this time!
+                  5. Question: Can I play with other players?
+                  Answer: Unfortunately, this game of Tetris is to be played individually!
+                  Is your question not here?
+                 `Try searching the web. Good Luck :)
+                """);
         text.setBounds(0, 0, BOUNDS_SIZE, BOUNDS_SIZE);
 
         final JFrame frame = new JFrame();
