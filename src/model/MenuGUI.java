@@ -61,9 +61,13 @@ public class MenuGUI extends JFrame implements ActionListener {
      */
     private static final int DIMENSION_500 = 500;
     /**
+     * This constant sets the size of the gameBoardGUI.
+     */
+    private static final int DIMENSION_150 = 150;
+    /**
      * This constant was made to avoid magic numbers.
      */
-    private static final int MAGIC_NUMBER = 450;
+    private static final int MAGIC_NUMBER = 400;
 
     /**
      * This constant helps set the gameBoardGUI layout.
@@ -169,6 +173,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      */
     private JFrame myFrame;
 
+
     /**
      * This method is a constructor that calls the createMenuGUI() method.
      */
@@ -264,63 +269,56 @@ public class MenuGUI extends JFrame implements ActionListener {
         menuBar.add(helpMenu);
         menuBar.add(exitMenu);
 
-        // -------------------------------------------------------------------
-        //creating layouts using createLayout from BorderLayoutPractice class
-//        myFrame.createLayout();
-        // --------------------------------------------------------------------
-
         // Set Frame menu bar
         myFrame.setJMenuBar(menuBar);
         myFrame.setVisible(true);
     }
 
     private void createLayout() {
-        // creating the panels
-        final JPanel panel1 = new JPanel();
-        final JPanel panel2 = new JPanel();
-        final JPanel panel3 = new JPanel();
-        final JPanel panel4 = new JPanel();
-        final JPanel panel5 = new JPanel();
-        final JPanel panel6 = new JPanel();
-// labeling each panel to know which panel is meant for what
-        final JLabel tetrisLabel = new JLabel("TETRIS");
-        panel2.add(tetrisLabel);
-        final JLabel footerLabel = new JLabel("Footer");
-        panel3.add(footerLabel);
-        final JLabel gamePanelLabel = new JLabel("Game Panel");
-        panel4.add(gamePanelLabel);
-        final JLabel nextPieceLabel = new JLabel("Next Piece Panel");
-        panel5.add(nextPieceLabel);
-        final JLabel gameInfoLabel = new JLabel("Game Controls");
-        panel6.add(gameInfoLabel);
+        // create panels
+        final JPanel panel1 = createPanel(Color.gray,
+                new Dimension(DIMENSION_175, DIMENSION_100));
+        final JPanel panel2 = createPanel(Color.gray,
+                new Dimension(DIMENSION_100, DIMENSION_100));
+        final JPanel panel3 = createPanel(Color.gray,
+                new Dimension(DIMENSION_100, DIMENSION_20));
+        final JPanel panel4 = createPanel(Color.red,
+                new Dimension(DIMENSION_100, DIMENSION_100));
+        final JPanel panel5 = createPanel(Color.blue,
+                new Dimension(DIMENSION_100, DIMENSION_100));
+        final JPanel panel6 = createPanel(Color.green,
+                new Dimension(DIMENSION_100, DIMENSION_100));
 
-        // changing the color of each panel as per assignment specification
-        panel1.setBackground(Color.gray);
-        panel2.setBackground(Color.gray);
-        panel3.setBackground(Color.gray);
-        panel4.setBackground(Color.red);
-        panel5.setBackground(Color.blue);
-        panel6.setBackground(Color.green);
+        // add labels to panels
+        panel2.add(createLabel("TETRIS"));
+        panel3.add(createLabel("Footer"));
+        panel4.add(createLabel("Game Panel"));
+        panel5.add(createLabel("Next Piece Panel"));
+        panel6.add(createLabel("Game Controls"));
 
-        // setting panel sizes
-        panel1.setPreferredSize(new Dimension(DIMENSION_175, DIMENSION_100));
-        panel2.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
-        panel3.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_20));
-        panel4.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
-        panel5.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
-        panel6.setPreferredSize(new Dimension(DIMENSION_100, DIMENSION_100));
+        // create nested panel for next piece/controls
+        panel1.setLayout(new GridLayout(2, 1));
+        panel1.add(panel5);
+        panel1.add(panel6);
 
-        // adding panels to the JFrame
+        // add panels to frame
         myFrame.add(panel1, BorderLayout.EAST);
         myFrame.add(panel2, BorderLayout.NORTH);
         myFrame.add(panel3, BorderLayout.SOUTH);
         myFrame.add(panel4, BorderLayout.CENTER);
-
-        // creating a nested panel for next piece/controls
-        panel1.setLayout(new GridLayout(2, 1));
-        panel1.add(panel5);
-        panel1.add(panel6);
     }
+
+    private JPanel createPanel(final Color theColor, final Dimension theSize) {
+        final JPanel panel = new JPanel();
+        panel.setBackground(theColor);
+        panel.setPreferredSize(theSize);
+        return panel;
+    }
+
+    private JLabel createLabel(final String theText) {
+        return new JLabel(theText);
+    }
+
     /**
      * This is a helper method for createMenuGUI that sets up te gameBoardGUI.
      */
@@ -348,9 +346,9 @@ public class MenuGUI extends JFrame implements ActionListener {
     private void createAboutUs() {
         final ImageIcon image = new ImageIcon("Tetris.PNG");
         final JLabel label = new JLabel(HTML + "Developers:"
-                + BR_BR + "1. Minh"
-                + BR_BR + "2. Simran" + BR_BR + "3. Koji"
-                + BR_BR + "4. Jack");
+                + BR_BR + "1. Minh Vu"
+                + BR_BR + "2. Simran Narwal" + BR_BR + "3. Koji Yoshiyama"
+                + BR_BR + "4. Jack Chen");
         label.setIcon(image);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setHorizontalTextPosition(JLabel.CENTER);
@@ -360,6 +358,8 @@ public class MenuGUI extends JFrame implements ActionListener {
         this.setVisible(true);
         this.add(label);
         this.setIconImage(image.getImage());
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
         this.setTitle(ABOUT_US);
 
     }
@@ -372,23 +372,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
-//        actionPerformedHelper(theEvent);
-
-//        if (theEvent.getSource().equals(myAboutUsItem)) {
-//            new AboutUs();
-//        }
-//        if (theEvent.getSource().equals(myLayout1)) {
-//            myFrame.createLayout();
-//        }
-//        if (theEvent.getSource().equals(myHowToPlayItem)) {
-//            new HowToPlay();
-//        }
-//        if (theEvent.getSource().equals(myFAQItem)) {
-//            new FrequentlyAsked();
-//        }
-//        if (theEvent.getSource().equals(myExitItem)) {
-//            new ExitOption();
-//        }
+//aaa
     }
 
     /**
@@ -396,24 +380,20 @@ public class MenuGUI extends JFrame implements ActionListener {
      * how to play Tetris.
      */
     private void createHowToPlay() {
-        final JFrame frame = new JFrame();
-
-        final JTextArea text = new JTextArea("Instructions to Play!");
-        text.append(System.lineSeparator());
-        text.append("1.      The pieces will automatically come down");
-        text.append(System.lineSeparator());
-        text.append("2.      To bring piece down faster, click the "
-                + "down key on your keyboard");
-        text.append(System.lineSeparator());
-        text.append("3.      Fit the pieces so they all fill the bottom row");
-        text.append(System.lineSeparator());
-        text.append("4.      Once the bottom row is filled, "
-                + "your score will increase!");
-
+        final JFrame frame = new JFrame("Instructions to Play!");
+        final JTextArea text = new JTextArea("""
+                Instructions to Play!
+                1. The pieces will automatically come down
+                2. To bring piece down faster, click the down key on your keyboard
+                3. Fit the pieces so they all fill the bottom row
+                4. Once the bottom row is filled, your score will increase!
+                """);
         text.setBounds(0, 0, MAGIC_NUMBER, MAGIC_NUMBER);
         frame.add(text);
-        frame.setSize(MAGIC_NUMBER, MAGIC_NUMBER);
+        frame.setSize(MAGIC_NUMBER, DIMENSION_150);
         frame.setLayout(null);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -421,67 +401,35 @@ public class MenuGUI extends JFrame implements ActionListener {
      * This method creates a window to answer a series of FAQs.
      */
     private void createFrequentlyAskedQuestions() {
-        final JFrame frame = new JFrame();
-        final JTextArea text = new JTextArea("Frequently Asked Questions");
-        text.append(System.lineSeparator());
-        text.append(System.lineSeparator());
-        text.append("1.");
-        text.append(System.lineSeparator());
-        text.append(" Question: Why play?");
-        text.append(System.lineSeparator());
-        text.append(" Answer: IT'S THE BEST GAME EVER!");
-        text.append(System.lineSeparator());
-        text.append(System.lineSeparator());
-        text.append("2.");
-        text.append(System.lineSeparator());
-        text.append(" Question: When was the first game of Tetris created?");
-        text.append(System.lineSeparator());
-        text.append(" Answer: 1984!");
-        text.append(System.lineSeparator());
-        text.append(System.lineSeparator());
-        text.append("3.");
-        text.append(System.lineSeparator());
-        text.append(" Question: My pieces won't fall?");
-        text.append(System.lineSeparator());
-        text.append(" Answer: There may be a chance there "
-                + "is a lag in the system."
-                + " Try restarting!");
-        text.append(System.lineSeparator());
-        text.append(System.lineSeparator());
-        text.append("4.");
-        text.append(System.lineSeparator());
-        text.append(" Question: Can I change the "
-                + "background color of my screen?");
-        text.append(System.lineSeparator());
-        text.append(" Answer: Unfortunately,we are unable to support that"
-                + " request at this time!");
-        text.append(System.lineSeparator());
-        text.append(System.lineSeparator());
-        text.append("5.");
-        text.append(System.lineSeparator());
-        text.append(" Question: Can I play with other players?");
-        text.append(System.lineSeparator());
-        text.append(" Answer: Unfortunately,this game of Tetris is"
-                + " to be played individually!");
-        text.append(System.lineSeparator());
-        text.append(System.lineSeparator());
-        text.append("Is your question not here?");
-        text.append(System.lineSeparator());
-        text.append("Try searching the web. Good Luck :)");
-
+        final JTextArea text = new JTextArea("""
+                  Frequently Asked Questions
+                  1. Question: Why play?
+                  Answer: IT'S THE BEST GAME EVER!
+                  2. Question: When was the first game of Tetris created?
+                  Answer: 1984!
+                  3. Question: My pieces won't fall?
+                  Answer: There may be a chance there is a lag in the system
+                  Try restarting!
+                  4. Question: Can I change the background color of my screen?
+                  Answer: Unfortunately, we are unable to support that request at this time!
+                  5. Question: Can I play with other players?
+                  Answer: Unfortunately, this game of Tetris is to be played individually!
+                  Is your question not here?
+                 `Try searching the web. Good Luck :)
+                """);
         text.setBounds(0, 0, BOUNDS_SIZE, BOUNDS_SIZE);
-        frame.add(text);
 
+        final JFrame frame = new JFrame();
+        frame.add(text);
         frame.setSize(SIZE_WIDTH, SIZE_HEIGHT);
         frame.setLayout(null);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
     private void createExitOption() {
-        final JFrame frame = new JFrame();
-        frame.setVisible(true);
-
-        final int selection = JOptionPane.showConfirmDialog(frame,
+        final int selection = JOptionPane.showConfirmDialog(null,
                 "Are you sure you want to "
                         + "exit?", "Confirm", JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
@@ -493,4 +441,5 @@ public class MenuGUI extends JFrame implements ActionListener {
             }
         }
     }
+
 }
