@@ -2,7 +2,10 @@
  * TCSS 305 – Winter 2023
  * Tetris Project – Sprint 1
  */
-package model;
+package view;
+
+import model.Board;
+import model.CreateBoard;
 
 import static java.lang.System.out;
 
@@ -24,6 +27,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 /**
  * This class creates the MenuGUI, and combines it with
@@ -112,6 +116,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      * Creating string holding breaklines commands.
      */
     private static final String HTML = "<html>";
+    private CreateBoard board;
 
     /**
      * Creates a menu option that displays, "About Tetris".
@@ -182,6 +187,7 @@ public class MenuGUI extends JFrame implements ActionListener {
         gameBoardGUISetUp();
         createLayout();
         createMenuGUI();
+        board = new Board();
     }
 
     /**

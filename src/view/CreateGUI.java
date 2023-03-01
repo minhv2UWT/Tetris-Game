@@ -3,7 +3,9 @@
  * Tetris Project – Sprint 1
  */
 
-package model;
+package view;
+
+import view.MenuGUI;
 
 import java.io.Serial;
 import javax.swing.JFrame;
