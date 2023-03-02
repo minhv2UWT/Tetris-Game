@@ -17,6 +17,7 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.Serial;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -116,7 +117,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      * Creating string holding breaklines commands.
      */
     private static final String HTML = "<html>";
-    private CreateBoard board;
+
 
     /**
      * Creates a menu option that displays, "About Tetris".
@@ -177,7 +178,42 @@ public class MenuGUI extends JFrame implements ActionListener {
      * This is the game board GUI that will be merged with the menu bar.
      */
     private JFrame myFrame;
-
+    /**
+     * Create board inside the JFrame.
+     */
+    private final CreateBoard myBoard;
+    /**
+     * 1 second delay.
+     */
+    private static final int TIMER_DELAY = 1000;
+    /**
+     * Instance of Timer.
+     */
+    private final Timer myTimer;
+    /**
+     * Instance of new panels/
+     */
+    private JPanel panel1;
+    /**
+     * Instance of new panels/
+     */
+    private JPanel panel2;
+    /**
+     * Instance of new panels/
+     */
+    private JPanel panel3;
+    /**
+     * Instance of new panels/
+     */
+    private JPanel panel4;
+    /**
+     * Instance of new panels/
+     */
+    private JPanel panel5;
+    /**
+     * Instance of new panels/
+     */
+    private JPanel panel6;
 
     /**
      * This method is a constructor that calls the createMenuGUI() method.
@@ -187,7 +223,73 @@ public class MenuGUI extends JFrame implements ActionListener {
         gameBoardGUISetUp();
         createLayout();
         createMenuGUI();
-        board = new Board();
+        myBoard = new Board();
+        myTimer = new Timer(TIMER_DELAY, new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+                myBoard.step();
+            }
+        });
+        myFrame.addKeyListener(new KeyListener() {
+            /**
+             * not used yet
+             * @param theEvent the event to be processed
+             */
+            @Override
+            public void keyTyped(final KeyEvent theEvent) {
+//
+            }
+
+            /**
+             * When pressing the key, trigger an event:
+             * Move Left: left arrow and 'a' and 'A'.
+             * Move Right: right arrow and 'd' and 'D'.
+             * Rotate: up arrow and 'w' and 'W'.
+             * Move Down: down arrow and 's' and 'S'.
+             * C TO ROTATE THE BLOCK CLOCKWISE.
+             * Drop: space.
+             *
+             * @param theEvent the event to be processed
+             */
+            @Override
+            public void keyPressed(final KeyEvent theEvent) {
+                final int keyCode = theEvent.getKeyCode();
+                final char keyChar = theEvent.getKeyChar();
+                if (keyCode == KeyEvent.VK_LEFT || keyChar == 'a' || keyChar == 'A') {
+                    // Call the appropriate method from the ModelUpdate interface
+                    myBoard.right();
+                }
+                if (keyCode == KeyEvent.VK_RIGHT || keyChar == 'd' || keyChar == 'D') {
+                    // Call the appropriate method from the ModelUpdate interface
+                    myBoard.right();
+                }
+                if (keyCode == KeyEvent.VK_SPACE) {
+                    // Call the appropriate method from the ModelUpdate interface
+                    myBoard.drop();
+                }
+                if (keyCode == KeyEvent.VK_DOWN || keyChar == 's' || keyChar == 'S') {
+                    // Call the appropriate method from the ModelUpdate interface
+                    myBoard.down();
+                }
+                if (keyCode == KeyEvent.VK_UP || keyChar == 'w' || keyChar == 'W') {
+                    // Call the appropriate method from the ModelUpdate interface
+                    myBoard.rotateCW();
+                }
+                if (keyCode == KeyEvent.VK_Z || keyChar == 'a' || keyChar == 'A') {
+                    // Call the appropriate method from the ModelUpdate interface
+                    myBoard.rotateCCW();
+                }
+            }
+
+            /**
+             * not yet used
+             * @param theEvent the event to be processed
+             */
+            @Override
+            public void keyReleased(final KeyEvent theEvent) {
+//
+            }
+        });
     }
 
     /**
@@ -282,17 +384,17 @@ public class MenuGUI extends JFrame implements ActionListener {
 
     private void createLayout() {
         // create panels
-        final JPanel panel1 = createPanel(Color.gray,
+        panel1 = createPanel(Color.gray,
                 new Dimension(DIMENSION_175, DIMENSION_100));
-        final JPanel panel2 = createPanel(Color.gray,
+        panel2 = createPanel(Color.gray,
                 new Dimension(DIMENSION_100, DIMENSION_100));
-        final JPanel panel3 = createPanel(Color.gray,
+        panel3 = createPanel(Color.gray,
                 new Dimension(DIMENSION_100, DIMENSION_20));
-        final JPanel panel4 = createPanel(Color.red,
+        panel4 = createPanel(Color.red,
                 new Dimension(DIMENSION_100, DIMENSION_100));
-        final JPanel panel5 = createPanel(Color.blue,
+        panel5 = createPanel(Color.blue,
                 new Dimension(DIMENSION_100, DIMENSION_100));
-        final JPanel panel6 = createPanel(Color.green,
+        panel6 = createPanel(Color.green,
                 new Dimension(DIMENSION_100, DIMENSION_100));
 
         // add labels to panels
@@ -378,7 +480,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
-//aaa
+//
     }
 
     /**

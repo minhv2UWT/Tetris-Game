@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import model.wallkicks.WallKick;
-import view.TetrisBoard;
-import view.TetrisNextPiece;
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
@@ -48,10 +46,7 @@ public class Board implements CreateBoard {
      */
     private static final int DEFAULT_HEIGHT = 20;
 
-    
     // Instance fields
-    private TetrisBoard myTetrisBoard;
-    private TetrisNextPiece myTetrisNextPiece;
     /**
      * Width of the game board.
      */
@@ -73,7 +68,7 @@ public class Board implements CreateBoard {
     private boolean myGameOver;
 
     /**
-     * Contains a non random sequence of TetrisPieces to loop through.
+     * Contains a non random sequence of TetrisPieces to loop thro  ugh.
      */
     private List<TetrisPiece> myNonRandomPieces;
 
