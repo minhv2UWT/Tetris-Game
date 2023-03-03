@@ -7,6 +7,8 @@
 package model;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,12 +71,12 @@ public class Board implements CreateBoard {
     private boolean myGameOver;
 
     /**
-     * Contains a non random sequence of TetrisPieces to loop thro  ugh.
+     * Contains a non-random sequence of TetrisPieces to loop through.
      */
     private List<TetrisPiece> myNonRandomPieces;
 
     /**
-     * The current index in the non random piece sequence.
+     * The current index in the non-random piece sequence.
      */
     private int mySequenceIndex;
     
@@ -94,7 +96,13 @@ public class Board implements CreateBoard {
      * down movement in the drop.
      */
     private boolean myDrop;
-    
+
+    /**
+     * This field stores all the property change listeners.
+     * COULDN'T MAKE THIS FINAL, NOT SURE IF NECESSARY - COME BACK TO THIS.
+     */
+    private PropertyChangeSupport myPCS;
+
     // Constructors
 
     /**
@@ -103,6 +111,8 @@ public class Board implements CreateBoard {
      */
     public Board() {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        myPCS = new PropertyChangeSupport(this);
+
     }
 
     /**
@@ -119,12 +129,34 @@ public class Board implements CreateBoard {
          
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
+        myPCS = new PropertyChangeSupport(this);
         
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
     }
-    
+
+    @Override
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPCS.addPropertyChangeListener(theListener);
+    }
+
+    @Override
+    public void addPropertyChangeListener(final String thePropertyName,
+                                          final PropertyChangeListener theListener) {
+        myPCS.addPropertyChangeListener(thePropertyName, theListener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        myPCS.removePropertyChangeListener(theListener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(final String thePropertyName,
+                                             final PropertyChangeListener theListener) {
+        myPCS.removePropertyChangeListener(thePropertyName, theListener);
+    }
 
     // public queries
     
@@ -343,7 +375,6 @@ public class Board implements CreateBoard {
 
     /**
      * Adds a movable Tetris piece into a list of board data.
-     * 
      * Allows a single data structure to represent the current piece
      * and the frozen blocks.
      * 

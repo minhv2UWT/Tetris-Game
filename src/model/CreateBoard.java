@@ -3,7 +3,75 @@ package model;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public interface CreateBoard{
+public interface CreateBoard {
+
+    /**
+     * A property name for the mutation of mySequenceIndex.
+     */
+    String PROPERTY_SEQUENCE_INDEX = "sequence index";
+
+    /**
+     * A property name for the mutation of myFrozenBlocks.
+     */
+    String PROPERTY_FROZEN_BLOCKS = "frozen blocks";
+
+    /**
+     * A property name for the mutation of myGameOver.
+     */
+    String PROPERTY_GAME_OVER = "game over";
+
+    /**
+     * A property name for the mutation of myCurrentPiece.
+     */
+    String PROPERTY_CURRENT_PIECE = "current piece";
+
+    /**
+     * A property name for the mutation of myDrop.
+     */
+    String PROPERTY_DROP = "drop";
+
+    /**
+     * A property name for the mutation of myNextPiece.
+     */
+    String PROPERTY_NEXT_PIECE = "next piece";
+
+    /**
+     * Add a PropertyChangeListener to the listener list. The listener is registered for
+     * all properties.
+     *
+     * @param theListener The PropertyChangeListener to be added
+     */
+    void addPropertyChangeListener(PropertyChangeListener theListener);
+
+
+    /**
+     * Add a PropertyChangeListener for a specific property. The listener will be invoked only
+     * when a call on firePropertyChange names that specific property.
+     *
+     * @param thePropertyName The name of the property to listen on.
+     * @param theListener The PropertyChangeListener to be added
+     */
+    void addPropertyChangeListener(String thePropertyName, PropertyChangeListener theListener);
+
+    /**
+     * Remove a PropertyChangeListener from the listener list. This removes a
+     * PropertyChangeListener that was registered for all properties.
+     *
+     * @param theListener The PropertyChangeListener to be removed
+     */
+    void removePropertyChangeListener(PropertyChangeListener theListener);
+
+    /**
+     * Remove a PropertyChangeListener for a specific property. If listener was added more than
+     * once to the same event source for the specified property, it will be notified one less
+     * time after being removed.
+     *
+     * @param thePropertyName The name of the property that was listened on.
+     * @param theListener The PropertyChangeListener to be removed
+     */
+    void removePropertyChangeListener(String thePropertyName,
+                                      PropertyChangeListener theListener);
+
     /**
      * Get the width of the board.
      *
