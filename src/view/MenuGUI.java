@@ -14,10 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.io.Serial;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -185,7 +182,7 @@ public class MenuGUI extends JFrame implements ActionListener {
     /**
      * 1 second delay.
      */
-    private static final int TIMER_DELAY = 1000;
+    private static final int TIMER_DELAY = 100;
     /**
      * Instance of Timer.
      */
@@ -230,68 +227,50 @@ public class MenuGUI extends JFrame implements ActionListener {
                 myBoard.step();
             }
         });
-        myFrame.addKeyListener(new KeyListener() {
-            /**
-             * not used yet
-             * @param theEvent the event to be processed
-             */
-            @Override
-            public void keyTyped(final KeyEvent theEvent) {
-//
-            }
-
-            /**
-             * When pressing the key, trigger an event:
-             * Move Left: left arrow and 'a' and 'A'.
-             * Move Right: right arrow and 'd' and 'D'.
-             * Rotate: up arrow and 'w' and 'W'.
-             * Move Down: down arrow and 's' and 'S'.
-             * C TO ROTATE THE BLOCK CLOCKWISE.
-             * Drop: space.
-             *
-             * @param theEvent the event to be processed
-             */
-            @Override
-            public void keyPressed(final KeyEvent theEvent) {
-                final int keyCode = theEvent.getKeyCode();
-                final char keyChar = theEvent.getKeyChar();
-                if (keyCode == KeyEvent.VK_LEFT || keyChar == 'a' || keyChar == 'A') {
-                    // Call the appropriate method from the ModelUpdate interface
-                    myBoard.right();
-                }
-                if (keyCode == KeyEvent.VK_RIGHT || keyChar == 'd' || keyChar == 'D') {
-                    // Call the appropriate method from the ModelUpdate interface
-                    myBoard.right();
-                }
-                if (keyCode == KeyEvent.VK_SPACE) {
-                    // Call the appropriate method from the ModelUpdate interface
-                    myBoard.drop();
-                }
-                if (keyCode == KeyEvent.VK_DOWN || keyChar == 's' || keyChar == 'S') {
-                    // Call the appropriate method from the ModelUpdate interface
-                    myBoard.down();
-                }
-                if (keyCode == KeyEvent.VK_UP || keyChar == 'w' || keyChar == 'W') {
-                    // Call the appropriate method from the ModelUpdate interface
-                    myBoard.rotateCW();
-                }
-                if (keyCode == KeyEvent.VK_Z || keyChar == 'a' || keyChar == 'A') {
-                    // Call the appropriate method from the ModelUpdate interface
-                    myBoard.rotateCCW();
-                }
-            }
-
-            /**
-             * not yet used
-             * @param theEvent the event to be processed
-             */
-            @Override
-            public void keyReleased(final KeyEvent theEvent) {
-//
-            }
-        });
+        myFrame.addKeyListener(new ControlAdapter());
     }
-
+    class ControlAdapter extends KeyAdapter {
+        /**
+         * When pressing the key, trigger an event:
+         * Move Left: left arrow and 'a' and 'A'.
+         * Move Right: right arrow and 'd' and 'D'.
+         * Rotate: up arrow and 'w' and 'W'.
+         * Move Down: down arrow and 's' and 'S'.
+         * C TO ROTATE THE BLOCK CLOCKWISE.
+         * Drop: space.
+         *
+         * @param theEvent the event to be processed
+         */
+        @Override
+        public void keyPressed(final KeyEvent theEvent) {
+            final int keyCode = theEvent.getKeyCode();
+            final char keyChar = theEvent.getKeyChar();
+            if (keyCode == KeyEvent.VK_LEFT || keyChar == 'a' || keyChar == 'A') {
+                // Call the appropriate method from the ModelUpdate interface
+                myBoard.right();
+            }
+            if (keyCode == KeyEvent.VK_RIGHT || keyChar == 'd' || keyChar == 'D') {
+                // Call the appropriate method from the ModelUpdate interface
+                myBoard.right();
+            }
+            if (keyCode == KeyEvent.VK_SPACE) {
+                // Call the appropriate method from the ModelUpdate interface
+                myBoard.drop();
+            }
+            if (keyCode == KeyEvent.VK_DOWN || keyChar == 's' || keyChar == 'S') {
+                // Call the appropriate method from the ModelUpdate interface
+                myBoard.down();
+            }
+            if (keyCode == KeyEvent.VK_UP || keyChar == 'w' || keyChar == 'W') {
+                // Call the appropriate method from the ModelUpdate interface
+                myBoard.rotateCW();
+            }
+            if (keyCode == KeyEvent.VK_Z || keyChar == 'a' || keyChar == 'A') {
+                // Call the appropriate method from the ModelUpdate interface
+                myBoard.rotateCCW();
+            }
+        }
+    }
     /**
      * This method creates the MenuGUI and inserts
      * it into a GameBoardGUI object.
@@ -310,7 +289,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 
         // Set ShortKey to Menu Options
         fileMenu.setMnemonic(KeyEvent.VK_F);
-        aboutMenu.setMnemonic(KeyEvent.VK_A);
+        aboutMenu.setMnemonic(KeyEvent.VK_U);
         helpMenu.setMnemonic(KeyEvent.VK_H);
         exitMenu.setMnemonic(KeyEvent.VK_X);
         optionsMenu.setMnemonic(KeyEvent.VK_O);

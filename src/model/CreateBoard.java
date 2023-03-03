@@ -1,8 +1,9 @@
 package model;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public interface CreateBoard {
+public interface CreateBoard{
     /**
      * Get the width of the board.
      *

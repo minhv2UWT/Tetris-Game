@@ -6,6 +6,7 @@
 
 package model;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -501,9 +502,10 @@ public class Board implements CreateBoard {
         if (share && !myGameOver) {
             // TODO Publish Update!
         }
-    }    
+    }
 
-    
+
+
     // Inner classes
 
     /**
