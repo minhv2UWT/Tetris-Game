@@ -26,6 +26,8 @@
 - Created and implemented NextPiece and TetrisGameBoard classes to be the representation of Tetris NextPiece and game board panel.
 
 #### Jack Chen
+- Created and implemented the TetrisNextPiece class
+- Implemented a PropertyChangeListener
 
 ### Sprint 2 Comments 
 - Simran had trouble committing as her program recieved a ClassNotFound error, which restricted her program from running succesfully. This issue was later resolved 
