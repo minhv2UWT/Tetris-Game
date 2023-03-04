@@ -29,7 +29,7 @@
 - Created and implemented the TetrisNextPiece class
 - Implemented a PropertyChangeListener
 
-###Sprint 2 Meeting Minutes
+### Sprint 2 Meeting Minutes
 - https://docs.google.com/document/d/1N2jN-uTNWGAEur-PbvrxyoRYTwcvAIuPmpRAlFfUdbE/edit 
 - We had one more meeting on 3/4/23 from 8:00-8:45pm via Discord voice channels. During this meeting we put together all of our completed work and discussed our individual parts so we could all understand how our code works.
 - Aside from formal meetings, our main form of communcation for sprint 2 was through our group project discord server.
