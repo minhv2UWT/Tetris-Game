@@ -12,9 +12,9 @@
 ### Sprint 2 Contribution 
 
 #### Simran Narwal
-- Worked on the second bullet point of the GUI update
-- Implemented a Property Change Listener to recieve updates from the board class
-- Created a paintComponent method, which was later redesigned to Minh's version 
+- Implemented a Property Change Listener 
+- Added the instaniated object to the MenuGUI, in order for it to receive any updates in the Board
+- Created a paintComponent method in which I filled in the rectangle to be color.cyan, which was later updated to Minh's version of the board
 
 #### Koji Yoshiyama
 - Instantiated and added a reference to a PropertyChangeSupport object in the board class
@@ -28,6 +28,6 @@
 #### Jack Chen
 
 ### Sprint 2 Comments 
-- Simran had trouble committing as her program recieved a ClassNotFound error, which was later resolved. 
+- Simran had trouble committing as her program recieved a ClassNotFound error, which restricted her program from running succesfully. This issue was later resolved 
 
 
