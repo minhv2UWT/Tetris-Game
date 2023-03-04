@@ -129,9 +129,9 @@ public class Board implements CreateBoard {
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
         myPCS = new PropertyChangeSupport(this);
-        TetrisNextPiece tetrisNextPiece = new TetrisNextPiece();
-        setMyTetrisNextPiece(tetrisNextPiece);
-        TetrisGUI tetrisGUI = new TetrisGUI();
+//        TetrisNextPiece tetrisNextPiece = new TetrisNextPiece();
+//        setMyTetrisNextPiece(tetrisNextPiece);
+//        TetrisGUI tetrisGUI = new TetrisGUI();
 
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.

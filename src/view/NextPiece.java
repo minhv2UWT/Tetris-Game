@@ -8,10 +8,10 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
-    private static int UNIT_SIZE = 10;
+public class NextPiece extends JPanel implements PropertyChangeListener {
+    private static int UNIT_SIZE = 25;
     Board myBoard;
-    public TetrisGameBoard() {
+    public NextPiece() {
         // other constructor code
         myBoard = new Board();
         this.setPreferredSize(new Dimension(getWidth(),getHeight()));
@@ -36,19 +36,19 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         draw(theGraphic);
     }
     public void draw(Graphics theGraphic) {
-        for (int i = 0; i <= getHeight()/UNIT_SIZE;i++) {
-            theGraphic.drawLine(i*UNIT_SIZE,0,i*UNIT_SIZE,getHeight());
-            theGraphic.drawLine(0,i*UNIT_SIZE,getWidth(),i*UNIT_SIZE);
-        }
-//        Color randomColor = new Color(
-//                (int) (Math.random() * 256),
-//                (int) (Math.random() * 256),
-//                (int) (Math.random() * 256)
-//        );
-//        theGraphic.setColor(randomColor);
-//
-//        // Fill the entire panel with the random color
-//        theGraphic.fillRect(0, 0, getWidth(), getHeight());
+//        for (int i = 0; i <= getHeight()/UNIT_SIZE;i++) {
+//            theGraphic.drawLine(i*UNIT_SIZE,0,i*UNIT_SIZE,getHeight());
+//            theGraphic.drawLine(0,i*UNIT_SIZE,getWidth(),i*UNIT_SIZE);
+//        }
+        Color randomColor = new Color(
+                (int) (Math.random() * 256),
+                (int) (Math.random() * 256),
+                (int) (Math.random() * 256)
+        );
+        theGraphic.setColor(randomColor);
+
+        // Fill the entire panel with the random color
+        theGraphic.fillRect(0, 0, getWidth(), getHeight());
     }
 
 }

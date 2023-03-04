@@ -390,7 +390,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 //        panel4.add(new TetrisGUI());
         // create nested panel for next piece/controls
         panel1.setLayout(new GridLayout(2, 1));
-        panel1.add(panel5);
+        panel1.add(new NextPiece());
 //        panel5.add(new TetrisNextPiece());
         panel1.add(panel6);
 
