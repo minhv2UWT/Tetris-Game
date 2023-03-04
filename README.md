@@ -12,25 +12,15 @@
 ### Sprint 1 Contribution 
 
 #### Simran Narwal
- - Created the file options for Help and Exit
- - Implemented ActionListener so events would be able to perform an action
- - For Help and FAQs, I created a window displaying How to Play and FAQs
- - For Exit, I created a confirm dialog to confirm if the user wants to exit from the program
 
 #### Koji Yoshiyama
- - Created GUI for Tetris Display including the gameboard, next piece region, and a scoreboard region. 
- - Also made extensive checkstyle edits across GameBoardGUI MenuGUI CreateGUI and AboutUs Classes.
+ 
 
 #### Minh Vu
-- Created the file menu and their menu items for File and About( Implemented actionListener using lambda expression for readability purpose).
-- Merging everyone codes together( combining all other classes into one class).
-- Fixing Checkstyles warnings and PMD across every classes.
-- Modifying other codes to work with the existed code.
-- Simplifying complicated methods when merging other classes( rewrite the methods with some helper methods). Making the codes more readable.
-- Debugging the code.
+
 
 #### Jack Chen
- - Created GUI window for Tetris Display
+
 ### Sprint 1 Comments 
 - Create MenuGUI to create GUI and CreateGUI to display the GUI.
 - Koji and Jack both created different Tetris Display GUIs so we decided it would be a good idea to add an option in the menu bar to be able to switch between the two, giving the user the ability to switch themes.
