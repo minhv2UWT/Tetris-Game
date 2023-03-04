@@ -25,5 +25,6 @@
 #### Jack Chen
 
 ### Sprint 2 Comments 
+- We had trouble with the implementation of firePropertyChange within checkRows() because we were unsure where to fire the change within the method and which states exactly were being changed.
 
 
