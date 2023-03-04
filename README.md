@@ -20,7 +20,7 @@
 #### Minh Vu
 - Instantiated and added a reference to Timer object in the MenuGUI class.
 - Added inner class for keyadapter.
-- Created NextPiece and TetrisGameBoard classes to be the representation of Tetris NextPiece and game board panel.
+- Created and implemented NextPiece and TetrisGameBoard classes to be the representation of Tetris NextPiece and game board panel.
 
 #### Jack Chen
 
