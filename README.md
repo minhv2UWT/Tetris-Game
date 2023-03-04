@@ -12,6 +12,9 @@
 ### Sprint 2 Contribution 
 
 #### Simran Narwal
+- Worked on the second bullet point of the GUI update
+- Implemented a Property Change Listener to recieve updates from the board class
+- Created a paintComponent method, which was later redesigned to Minh's version 
 
 #### Koji Yoshiyama
 - Instantiated and added a reference to a PropertyChangeSupport object in the board class
@@ -25,6 +28,6 @@
 #### Jack Chen
 
 ### Sprint 2 Comments 
-- We had trouble with the implementation of firePropertyChange within checkRows() because we were unsure where to fire the change within the method and which states exactly were being changed.
+- Simran had trouble committing as her program recieved a ClassNotFound error, which was later resolved. 
 
 
