@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import model.wallkicks.WallKick;
+import view.TetrisGameBoard;
+import view.TetrisNextPiece;
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
@@ -130,7 +132,10 @@ public class Board implements CreateBoard {
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
         myPCS = new PropertyChangeSupport(this);
-        
+//        TetrisNextPiece tetrisNextPiece = new TetrisNextPiece();
+//        setMyTetrisNextPiece(tetrisNextPiece);
+//        TetrisGUI tetrisGUI = new TetrisGUI();
+
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */

@@ -228,7 +228,10 @@ public class MenuGUI extends JFrame implements ActionListener {
             }
         });
         myFrame.addKeyListener(new ControlAdapter());
+        myBoard.newGame();
+
     }
+
     class ControlAdapter extends KeyAdapter {
         /**
          * When pressing the key, trigger an event:
@@ -246,31 +249,32 @@ public class MenuGUI extends JFrame implements ActionListener {
             final int keyCode = theEvent.getKeyCode();
             final char keyChar = theEvent.getKeyChar();
             if (keyCode == KeyEvent.VK_LEFT || keyChar == 'a' || keyChar == 'A') {
-                // Call the appropriate method from the ModelUpdate interface
-                myBoard.right();
+                System.out.println("left");
+                myBoard.left();
             }
             if (keyCode == KeyEvent.VK_RIGHT || keyChar == 'd' || keyChar == 'D') {
-                // Call the appropriate method from the ModelUpdate interface
+                System.out.println("right");
                 myBoard.right();
             }
             if (keyCode == KeyEvent.VK_SPACE) {
-                // Call the appropriate method from the ModelUpdate interface
+                System.out.println("drop");
                 myBoard.drop();
             }
             if (keyCode == KeyEvent.VK_DOWN || keyChar == 's' || keyChar == 'S') {
-                // Call the appropriate method from the ModelUpdate interface
+                System.out.println("down");
                 myBoard.down();
             }
             if (keyCode == KeyEvent.VK_UP || keyChar == 'w' || keyChar == 'W') {
-                // Call the appropriate method from the ModelUpdate interface
+                System.out.println("rotateCW");
                 myBoard.rotateCW();
             }
-            if (keyCode == KeyEvent.VK_Z || keyChar == 'a' || keyChar == 'A') {
-                // Call the appropriate method from the ModelUpdate interface
+            if (keyCode == KeyEvent.VK_Q || keyChar == 'q' || keyChar == 'Q') {
+                System.out.println("rotateCCW");
                 myBoard.rotateCCW();
             }
         }
     }
+
     /**
      * This method creates the MenuGUI and inserts
      * it into a GameBoardGUI object.
@@ -316,7 +320,7 @@ public class MenuGUI extends JFrame implements ActionListener {
         exitMenu.add(myExitItem);
 
         // Creating performances of file menu items
-        myNewGameItem.addActionListener(e -> out.println("New game"));
+        myNewGameItem.addActionListener(e -> myBoard.newGame());
         mySaveItem.addActionListener(e -> out.println("Game Saved"));
         myLoadItem.addActionListener(e -> out.println("Game Loaded"));
         myDeleteItem.addActionListener(e -> out.println("Game Deleted"));
@@ -383,16 +387,18 @@ public class MenuGUI extends JFrame implements ActionListener {
         panel5.add(createLabel("Next Piece Panel"));
         panel6.add(createLabel("Game Controls"));
 
+//        panel4.add(new TetrisGUI());
         // create nested panel for next piece/controls
         panel1.setLayout(new GridLayout(2, 1));
         panel1.add(panel5);
+//        panel5.add(new TetrisNextPiece());
         panel1.add(panel6);
 
         // add panels to frame
         myFrame.add(panel1, BorderLayout.EAST);
         myFrame.add(panel2, BorderLayout.NORTH);
         myFrame.add(panel3, BorderLayout.SOUTH);
-        myFrame.add(panel4, BorderLayout.CENTER);
+        myFrame.add(new TetrisGameBoard(), BorderLayout.CENTER);
     }
 
     private JPanel createPanel(final Color theColor, final Dimension theSize) {
