@@ -410,7 +410,6 @@ public class Board implements CreateBoard {
             }
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
-             // TODO Publish Update!
             }
         }
         // loop through list backwards removing items by index
@@ -421,6 +420,7 @@ public class Board implements CreateBoard {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
+        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
     }
     
     /**
