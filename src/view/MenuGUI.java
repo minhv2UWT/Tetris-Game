@@ -15,17 +15,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serial;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.Timer;
+import javax.swing.*;
 
 /**
  * This class creates the MenuGUI, and combines it with
@@ -39,7 +32,7 @@ import javax.swing.Timer;
  * @author Minh Vu
  * @version Winter 2023
  */
-public class MenuGUI extends JFrame implements ActionListener {
+public class MenuGUI extends JFrame implements PropertyChangeListener {
     /**
      * This constant is made to avoid magic numbers.
      */
@@ -215,12 +208,12 @@ public class MenuGUI extends JFrame implements ActionListener {
     /**
      * This method is a constructor that calls the createMenuGUI() method.
      */
-    public MenuGUI() {
+    public MenuGUI(CreateBoard theBoard) {
         super();
         gameBoardGUISetUp();
         createLayout();
         createMenuGUI();
-        myBoard = new Board();
+        myBoard = theBoard;
         myTimer = new Timer(TIMER_DELAY, new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
@@ -228,7 +221,13 @@ public class MenuGUI extends JFrame implements ActionListener {
             }
         });
         myFrame.addKeyListener(new ControlAdapter());
-        myBoard.newGame();
+//        setFocusable(true);
+//        requestFocus();
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
 
     }
 
@@ -262,7 +261,7 @@ public class MenuGUI extends JFrame implements ActionListener {
             }
             if (keyCode == KeyEvent.VK_DOWN || keyChar == 's' || keyChar == 'S') {
                 System.out.println("down");
-                myBoard.down();
+//                myBoard.down();
             }
             if (keyCode == KeyEvent.VK_UP || keyChar == 'w' || keyChar == 'W') {
                 System.out.println("rotateCW");
@@ -463,10 +462,7 @@ public class MenuGUI extends JFrame implements ActionListener {
      *
      * @param theEvent the event to be processed
      */
-    @Override
-    public void actionPerformed(final ActionEvent theEvent) {
-//
-    }
+
 
     /**
      * This method creates a window of text, displaying the instructions on
@@ -533,6 +529,16 @@ public class MenuGUI extends JFrame implements ActionListener {
                 window.dispose(); // close all windows
             }
         }
+    }
+    public static void main(final String... theArgs) {
+        SwingUtilities.invokeLater(MenuGUI::createAndShowGui);
+    }
+
+    public static void createAndShowGui() {
+        final Board board = new Board();
+
+        final MenuGUI panel = new MenuGUI(board);
+        board.addPropertyChangeListener(panel);
     }
 
 }
