@@ -306,7 +306,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myNewGameItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+// TODO: implement new game.
                 clip.setMicrosecondPosition(0);
                 clip.start();
             }
@@ -315,12 +315,15 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myLoadItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO: implement continue the game.
                 clip.start();
             }
         });
         myPauseItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //TODO: implement pause game
                 if (clip != null) {
                     clip.stop();
                 }

@@ -7,7 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
-    private static final int ROWS = 20;
+    private static final int ROWS = 30;
     private static final int COLUMNS = 10;
 
 
