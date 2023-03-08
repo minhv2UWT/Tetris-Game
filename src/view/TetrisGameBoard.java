@@ -28,6 +28,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     public void paintComponent(Graphics theGraphic) {
         super.paintComponent(theGraphic);
         draw(theGraphic);
+        //g2d.setColor(block.getColor);
     }
 
     public void draw(Graphics theGraphic) {
