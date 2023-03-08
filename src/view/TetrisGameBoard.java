@@ -1,7 +1,5 @@
 package view;
 
-import model.Board;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,17 +7,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
-    private static int UNIT_SIZE = 10;
-    Board myBoard;
+    private static final int ROWS = 20;
+    private static final int COLUMNS = 10;
+
+
     public TetrisGameBoard() {
-        // other constructor code
-        myBoard = new Board();
-        this.setPreferredSize(new Dimension(getWidth(),getHeight()));
-        this.setBackground(Color.black);
-        myBoard.addPropertyChangeListener(this);
-
+        this.setBackground(Color.BLACK);
     }
-
 
 
     @Override
@@ -35,20 +29,24 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         super.paintComponent(theGraphic);
         draw(theGraphic);
     }
+
     public void draw(Graphics theGraphic) {
-        for (int i = 0; i <= getHeight()/UNIT_SIZE;i++) {
-            theGraphic.drawLine(i*UNIT_SIZE,0,i*UNIT_SIZE,getHeight());
-            theGraphic.drawLine(0,i*UNIT_SIZE,getWidth(),i*UNIT_SIZE);
+        final Graphics2D g2d = (Graphics2D) theGraphic;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(Color.RED);
+        int width = getWidth();
+        int height = getHeight();
+        int boxWidth = width / COLUMNS;
+        int boxHeight = height / ROWS;
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
+                int x = column * boxWidth;
+                int y = row * boxHeight;
+                g2d.drawRect(x, y, boxWidth, boxHeight);
+            }
         }
-//        Color randomColor = new Color(
-//                (int) (Math.random() * 256),
-//                (int) (Math.random() * 256),
-//                (int) (Math.random() * 256)
-//        );
-//        theGraphic.setColor(randomColor);
-//
-//        // Fill the entire panel with the random color
-//        theGraphic.fillRect(0, 0, getWidth(), getHeight());
     }
 
 }
