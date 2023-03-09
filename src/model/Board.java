@@ -37,7 +37,11 @@ import view.NextPiece;
  * @version 1.3
  */
 public class Board implements CreateBoard {
-    public static final String NEXT_PIECE_PROPERTY = "Next Piece";
+
+    /**
+     * This variable prevents more than one instantiation of board.
+     */
+    private static int myCount;
 
     // Class constants
 
@@ -124,6 +128,11 @@ public class Board implements CreateBoard {
      */
     public Board(final int theWidth, final int theHeight) {
         super();
+        if (myCount > 0) {
+            throw new IllegalStateException("You have "
+                    + "instantiated more than one board. This is not allowed");
+        }
+        myCount++;
         myWidth = theWidth;
         myHeight = theHeight;
         myFrozenBlocks = new LinkedList<Block[]>();
@@ -183,11 +192,11 @@ public class Board implements CreateBoard {
         myGameOver = false;
         myCurrentPiece = nextMovablePiece(true);
         myDrop = false;
-        myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX, null, mySequenceIndex);
-        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
-        myPCS.firePropertyChange(PROPERTY_GAME_OVER, null, myGameOver);
-        myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, myCurrentPiece);
-        myPCS.firePropertyChange(PROPERTY_DROP, null, myDrop);
+        myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, null, mySequenceIndex);
+        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myFrozenBlocks);
+        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myGameOver);
+        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myCurrentPiece);
+        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myDrop);
     }
 
     @Override
@@ -218,7 +227,7 @@ public class Board implements CreateBoard {
             if (!myGameOver) {
                 myCurrentPiece = nextMovablePiece(false);
             }
-            myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, oldCurrentPiece, myCurrentPiece);
+            myPCS.firePropertyChange(PROPERTY_GAME_BOARD, oldCurrentPiece, myCurrentPiece);
         }
     }
 
@@ -346,7 +355,7 @@ public class Board implements CreateBoard {
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
-                myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE,
+                myPCS.firePropertyChange(PROPERTY_GAME_BOARD,
                         oldCurrentPiece, myCurrentPiece);
             }
         }
@@ -417,7 +426,7 @@ public class Board implements CreateBoard {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
-        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
+        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myFrozenBlocks);
     }
 
     /**
@@ -460,7 +469,7 @@ public class Board implements CreateBoard {
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
-            myPCS.firePropertyChange(PROPERTY_GAME_OVER, false, true);
+            myPCS.firePropertyChange(PROPERTY_GAME_BOARD, false, true);
         }
     }
 
@@ -536,7 +545,7 @@ public class Board implements CreateBoard {
         }
         if (share && !myGameOver) {
             myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
-            myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX,
+            myPCS.firePropertyChange(PROPERTY_NEXT_PIECE,
                     oldSequenceIndex, mySequenceIndex);
 
         }

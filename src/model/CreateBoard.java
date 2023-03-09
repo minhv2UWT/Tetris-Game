@@ -6,34 +6,14 @@ import java.util.List;
 public interface CreateBoard {
 
     /**
-     * A property name for the mutation of mySequenceIndex.
+     * A property name for changes that affect the GameBoard.
      */
-    String PROPERTY_SEQUENCE_INDEX = "sequence index";
+    String PROPERTY_GAME_BOARD = "GameBoard mutation";
 
     /**
-     * A property name for the mutation of myFrozenBlocks.
+     * A property name for changes that affect the NextPiece Panel.
      */
-    String PROPERTY_FROZEN_BLOCKS = "frozen blocks";
-
-    /**
-     * A property name for the mutation of myGameOver.
-     */
-    String PROPERTY_GAME_OVER = "game over";
-
-    /**
-     * A property name for the mutation of myCurrentPiece.
-     */
-    String PROPERTY_CURRENT_PIECE = "current piece";
-
-    /**
-     * A property name for the mutation of myDrop.
-     */
-    String PROPERTY_DROP = "drop";
-
-    /**
-     * A property name for the mutation of myNextPiece.
-     */
-    String PROPERTY_NEXT_PIECE = "next piece";
+    String PROPERTY_NEXT_PIECE = "NextPiece Mutation";
 
     /**
      * Add a PropertyChangeListener to the listener list. The listener is registered for
