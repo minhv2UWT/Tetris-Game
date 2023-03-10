@@ -4,6 +4,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -12,17 +13,18 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     /**
      * Number of rows in the gameBoard.
      */
-    private static final int ROWS = 30;
+    private static final int ROWS = 20;
 
     /**
      * Number of columns in the gameBoard.
      */
     private static final int COLUMNS = 10;
-
+private Dimension myDimension;
     /**
      * This is a constructor for TetrisGameBoard.
      */
-    public TetrisGameBoard() {
+    public TetrisGameBoard(Dimension dimension) {
+myDimension = dimension;
         this.setBackground(Color.BLACK);
     }
 
@@ -40,12 +42,13 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         super.paintComponent(theGraphic);
         // all the method state change checks from the board class that
         // have state changes which affect the GameBoard
-        checkRows(theGraphic);
-        down(theGraphic);
-        setPoint(theGraphic);
-        move(theGraphic);
-        newGame(theGraphic);
         draw(theGraphic);
+//        checkRows(theGraphic);
+//        down(theGraphic);
+//        setPoint(theGraphic);
+//        move(theGraphic);
+//        newGame(theGraphic);
+
     }
 
     private void draw(final Graphics theGraphic) {
@@ -53,16 +56,13 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.RED);
-        final int width = getWidth();
-        final int height = getHeight();
-        final int boxWidth = width / COLUMNS;
-        final int boxHeight = height / ROWS;
 
-        for (int row = 0; row < ROWS; row++) {
-            for (int column = 0; column < COLUMNS; column++) {
-                final int x = column * boxWidth;
-                final int y = row * boxHeight;
-                g2d.drawRect(x, y, boxWidth, boxHeight);
+
+
+        for(int row = 0; row <= 20; row++) {
+            for (int col = 0; col <= 10; col++) {
+                g2d.draw(new Rectangle2D.Double(col * getWidth()/10, row * getHeight()/20,
+                        20*getWidth()/10, 20*getHeight()/20));
             }
         }
     }

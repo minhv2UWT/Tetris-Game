@@ -64,7 +64,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     /**
      * This constant sets the size of the gameBoardGUI.
      */
-    private static final int WINDOW_HEIGHT = 700;
+    private static final int WINDOW_HEIGHT = 720;
     /**
      * This constant sets the size of the gameBoardGUI.
      */
@@ -167,7 +167,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     /**
      * 1 second delay.
      */
-    private static final int TIMER_DELAY = 100;
+    private static final int TIMER_DELAY = 500;
     /**
      * Instance of Timer.
      */
@@ -186,7 +186,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private JPanel myInforPanel;
     private TetrisGameBoard myGameBoard;
     private NextPiece myNextPiecePanel;
-    Clip clip;
+    private Clip clip;
 
     /**
      * This method is a constructor that calls the createMenuGUI() method.
@@ -199,9 +199,12 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         createMenuGUI();
         myBoard = theBoard;
         myTimer = new Timer(TIMER_DELAY, new ActionListener() {
+            int n = 0;
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
-                myBoard.step();
+
+//                myBoard.step();
+                System.out.println(n++);
             }
         });
         this.addKeyListener(new ControlAdapter());
@@ -306,9 +309,11 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myNewGameItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-// TODO: implement new game.
                 clip.setMicrosecondPosition(0);
                 clip.start();
+                myBoard.newGame();
+                myTimer.restart();
+
             }
         });
         mySaveItem.addActionListener(e -> out.println("Game Saved"));
@@ -317,6 +322,9 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 //TODO: implement continue the game.
                 clip.start();
+                myBoard.step();
+                myTimer.start();
+
             }
         });
         myPauseItem.addActionListener(new ActionListener() {
@@ -327,6 +335,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                 if (clip != null) {
                     clip.stop();
                 }
+                myTimer.stop();
             }
         });
         // Adding Items to file menu
@@ -382,17 +391,17 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private void createLayout() {
         // create panels
         myContainerPanel = createPanel(Color.gray,
-                new Dimension(200, 550));
+                new Dimension(200, 600));
 
         myTetrisTitlePanel = createPanel(Color.black,
                 new Dimension(500, 120));
 
-        myGameBoard = new TetrisGameBoard();
+        myGameBoard = new TetrisGameBoard(new Dimension(300, 600));
         myNextPiecePanel = new NextPiece();
 
 
         myInforPanel = createPanel(Color.green,
-                new Dimension(200, 275));
+                new Dimension(200, 250));
 
 
         final ImageIcon image = new ImageIcon("TetrisBackGround.PNG");
@@ -429,7 +438,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setLayout(new BorderLayout());
-        this.setResizable(false);
+        this.setResizable(true);
 
         this.setLocationRelativeTo(null);
 
@@ -529,6 +538,8 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             final Window[] windows = Window.getWindows();
             for (final Window window : windows) {
                 window.dispose(); // close all windows
+                myTimer.stop();
+                clip.close();
             }
         }
     }
