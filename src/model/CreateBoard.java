@@ -8,7 +8,11 @@ public interface CreateBoard {
     /**
      * A property name for changes that affect the GameBoard.
      */
-    String PROPERTY_GAME_BOARD = "GameBoard mutation";
+    public static final String PROPERTY_FROZEN_BLOCKS = "frozen block";
+    public static final String PROPERTY_SEQUENCE_INDEX = "sequence index";
+    public static final String PROPERTY_GAME_OVER = "game over";
+    public static final String PROPERTY_CURRENT_PIECE = "current piece";
+    public static final String PROPERTY_DROP = "drop";
 
     /**
      * A property name for changes that affect the NextPiece Panel.

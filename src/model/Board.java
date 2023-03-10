@@ -6,14 +6,14 @@
 
 package model;
 
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import model.wallkicks.WallKick;
-import view.NextPiece;
+
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern.
@@ -37,11 +37,6 @@ import view.NextPiece;
  * @version 1.3
  */
 public class Board implements CreateBoard {
-
-    /**
-     * This variable prevents more than one instantiation of board.
-     */
-    private static int myCount;
 
     // Class constants
 
@@ -109,7 +104,6 @@ public class Board implements CreateBoard {
     private final PropertyChangeSupport myPCS;
 
     // Constructors
-    private NextPiece myNextPiecePanel;
 
     /**
      * Default Tetris board constructor.
@@ -117,22 +111,16 @@ public class Board implements CreateBoard {
      */
     public Board() {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-
     }
 
     /**
      * Tetris board constructor for non-default sized boards.
      *
-     * @param theWidth  Width of the Tetris game board.
+     * @param theWidth Width of the Tetris game board.
      * @param theHeight Height of the Tetris game board.
      */
     public Board(final int theWidth, final int theHeight) {
         super();
-        if (myCount > 0) {
-            throw new IllegalStateException("You have "
-                    + "instantiated more than one board. This is not allowed");
-        }
-        myCount++;
         myWidth = theWidth;
         myHeight = theHeight;
         myFrozenBlocks = new LinkedList<Block[]>();
@@ -140,7 +128,7 @@ public class Board implements CreateBoard {
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
         myPCS = new PropertyChangeSupport(this);
-        myNextPiecePanel = new NextPiece();
+
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
@@ -181,6 +169,7 @@ public class Board implements CreateBoard {
     }
 
 
+
     @Override
     public void newGame() {
         mySequenceIndex = 0;
@@ -192,11 +181,11 @@ public class Board implements CreateBoard {
         myGameOver = false;
         myCurrentPiece = nextMovablePiece(true);
         myDrop = false;
-        myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, null, mySequenceIndex);
-        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myFrozenBlocks);
-        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myGameOver);
-        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myCurrentPiece);
-        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myDrop);
+        myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX, null, mySequenceIndex);
+        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
+        myPCS.firePropertyChange(PROPERTY_GAME_OVER, null, myGameOver);
+        myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, myCurrentPiece);
+        myPCS.firePropertyChange(PROPERTY_DROP, null, myDrop);
     }
 
     @Override
@@ -227,7 +216,7 @@ public class Board implements CreateBoard {
             if (!myGameOver) {
                 myCurrentPiece = nextMovablePiece(false);
             }
-            myPCS.firePropertyChange(PROPERTY_GAME_BOARD, oldCurrentPiece, myCurrentPiece);
+            myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, oldCurrentPiece, myCurrentPiece);
         }
     }
 
@@ -300,6 +289,7 @@ public class Board implements CreateBoard {
     }
 
 
+
     @Override
     public String toString() {
         final List<Block[]> board = getBoard();
@@ -355,7 +345,7 @@ public class Board implements CreateBoard {
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
-                myPCS.firePropertyChange(PROPERTY_GAME_BOARD,
+                myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE,
                         oldCurrentPiece, myCurrentPiece);
             }
         }
@@ -364,7 +354,7 @@ public class Board implements CreateBoard {
 
     /**
      * Helper function to test if the piece is in a legal state.
-     * <p>
+     *
      * Illegal states:
      * - points of the piece exceed the bounds of the board
      * - points of the piece collide with frozen blocks on the board
@@ -392,7 +382,7 @@ public class Board implements CreateBoard {
      * and the frozen blocks.
      *
      * @param theFrozenBlocks Board to set the piece on.
-     * @param thePiece        Piece to set on the board.
+     * @param thePiece Piece to set on the board.
      */
     private void addPieceToBoardData(final List<Block[]> theFrozenBlocks,
                                      final MovableTetrisPiece thePiece) {
@@ -426,7 +416,7 @@ public class Board implements CreateBoard {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
-        myPCS.firePropertyChange(PROPERTY_GAME_BOARD, null, myFrozenBlocks);
+        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
     }
 
     /**
@@ -469,7 +459,7 @@ public class Board implements CreateBoard {
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
-            myPCS.firePropertyChange(PROPERTY_GAME_BOARD, false, true);
+            myPCS.firePropertyChange(PROPERTY_GAME_OVER, false, true);
         }
     }
 
@@ -493,7 +483,7 @@ public class Board implements CreateBoard {
      *
      * @param theTest movable TetrisPiece to test for collision.
      * @return Returns true if any of the blocks has collided with a set board
-     * block.
+     *         block.
      */
     private boolean collision(final MovableTetrisPiece theTest) {
         boolean res = false;
@@ -545,11 +535,12 @@ public class Board implements CreateBoard {
         }
         if (share && !myGameOver) {
             myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
-            myPCS.firePropertyChange(PROPERTY_NEXT_PIECE,
+            myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX,
                     oldSequenceIndex, mySequenceIndex);
 
         }
     }
+
 
 
     // Inner classes
