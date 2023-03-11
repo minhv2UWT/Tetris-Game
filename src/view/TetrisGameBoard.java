@@ -170,37 +170,15 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         return true;
     }
 
-    private void step() {
-        Point newPosition = new Point(myCurrentPosition.x(), myCurrentPosition.y() + 1);
-        MovableTetrisPiece newPiece = new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-                newPosition, myCurrentPiece.getRotation());
-        if (isValidMove(newPiece)) {
-            myCurrentPosition = newPosition;
-            myCurrentPiece = newPiece;
-        } else {
-            // The piece has hit something, so add it to the game board and create a new piece.
-            addCurrentPieceToBoard();
-            createPiece();
-        }
-    }
-    private void moveRight() {
-        Point newPosition = new Point(myCurrentPosition.x(), myCurrentPosition.y() + 1);
-        MovableTetrisPiece newPiece = new MovableTetrisPiece(myCurrentPiece.getTetrisPiece(),
-                newPosition, myCurrentPiece.getRotation());
-        if (isValidMove(newPiece)) {
-            myCurrentPosition = newPosition;
-            myCurrentPiece = newPiece;
-        } else {
-            // The piece has hit something, so add it to the game board and create a new piece.
-            addCurrentPieceToBoard();
-            createPiece();
-        }
-    }
+
+
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (PROPERTY_CURRENT_PIECE.equals(evt.getPropertyName())) {
+            MovableTetrisPiece newPiece = (MovableTetrisPiece) evt.getNewValue();
+            myCurrentPiece = newPiece;
 
-            step();
             repaint();
         } else if (CreateBoard.PROPERTY_GAME_OVER.equals(evt.getPropertyName())) {
 

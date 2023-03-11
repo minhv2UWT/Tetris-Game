@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.wallkicks.WallKick;
+import view.ScorePanel;
 import view.TetrisGameBoard;
 
 
@@ -67,6 +68,8 @@ public class Board implements CreateBoard {
      * The frozen blocks on the board.
      */
     private final List<Block[]> myFrozenBlocks;
+    private final ScorePanel myScorePanel;
+
 
     /**
      * The game over state.
@@ -130,10 +133,12 @@ public class Board implements CreateBoard {
 
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
-        myPCS = new PropertyChangeSupport(this);
         myGameBoard = new TetrisGameBoard();
-        myPCS.addPropertyChangeListener(myGameBoard);
+        myScorePanel = new ScorePanel();
+        myPCS = new PropertyChangeSupport(this);
 
+        myPCS.addPropertyChangeListener(myGameBoard);
+        myPCS.addPropertyChangeListener(myScorePanel);
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
@@ -420,7 +425,7 @@ public class Board implements CreateBoard {
             }
         }
         myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
-        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null,new Integer[completeRows.size()]);
+//        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, new Integer[completeRows.size()]);
     }
 
     /**
