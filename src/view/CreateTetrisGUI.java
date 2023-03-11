@@ -396,7 +396,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myTetrisTitlePanel = createPanel(Color.black,
                 new Dimension(500, 120));
 
-        myGameBoard = new TetrisGameBoard(new Dimension(300, 600));
+        myGameBoard = new TetrisGameBoard();
         myNextPiecePanel = new NextPiece();
 
 

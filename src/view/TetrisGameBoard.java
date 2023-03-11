@@ -1,125 +1,144 @@
 package view;
 
+import model.*;
 
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.*;
+
+import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
 
 public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
 
     /**
-     * Number of rows in the gameBoard.
+     * Number of rows in the game board.
      */
     private static final int ROWS = 20;
 
     /**
-     * Number of columns in the gameBoard.
+     * Number of columns in the game board.
      */
     private static final int COLUMNS = 10;
-private Dimension myDimension;
+
     /**
-     * This is a constructor for TetrisGameBoard.
+     * The width of each block in pixels.
      */
-    public TetrisGameBoard(Dimension dimension) {
-myDimension = dimension;
-        this.setBackground(Color.BLACK);
+    private static final int BLOCK_SIZE = 28;
+    private MovableTetrisPiece myCurrentPiece;
+    private TetrisPiece myNextPiece;
+    private Point myCurrentPosition;
+    private Rotation myRotation;
+    private Timer myTimer;
+
+    /**
+     * The current state of the game board.
+     * 0 = empty, 1 = occupied.
+     */
+    private int[][] myBoardState = new int[ROWS][COLUMNS];
+
+    public TetrisGameBoard() {
+        myTimer = new Timer(300, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myCurrentPiece.getPosition().transform(myCurrentPosition.x(), myCurrentPosition.y() + BLOCK_SIZE);
+                repaint();
+            }
+        });
+        myNextPiece = TetrisPiece.getRandomPiece();
+        myRotation = Rotation.random();
+        myCurrentPosition = new Point(0, 0);
+        myCurrentPiece = new MovableTetrisPiece(myNextPiece, myCurrentPosition, myRotation);
+
+        setBackground(Color.BLACK);
+        setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
+        myTimer.start();
     }
 
+    /**
+     * Updates the state of the game board with the given board state.
+     *
+     * @param boardState The new board state to display.
+     */
+    public void setBoardState(int[][] boardState) {
+        myBoardState = boardState;
+        repaint();
+    }
 
     @Override
-    public void propertyChange(final PropertyChangeEvent theEvt) {
-        if (theEvt.getPropertyName().equals(theEvt.getPropertyName())) {
-            // repaint the panel to reflect the new board state
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Draw the blocks on the game board.
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                if (myBoardState[row][col] == 1) {
+                    g.setColor(Color.WHITE);
+                    g.fillRect(col * BLOCK_SIZE, row * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(col * BLOCK_SIZE, row * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                }
+            }
+        }
+
+
+        // Draw the grid lines.
+        g.setColor(Color.RED);
+        for (int row = 0; row <= ROWS; row++) {
+            g.drawLine(0, row * BLOCK_SIZE, COLUMNS * BLOCK_SIZE, row * BLOCK_SIZE);
+        }
+        for (int col = 0; col <= COLUMNS; col++) {
+            g.drawLine(col * BLOCK_SIZE, 0, col * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+        }
+        if (myCurrentPiece != null) {
+            TetrisPiece piece = myCurrentPiece.getTetrisPiece();
+            int[][] points = piece.getPointsByRotation(myCurrentPiece.getRotation());
+            for (int i = 0; i < points.length; i++) {
+                int x = points[i][0] + myCurrentPiece.getPosition().x();
+                int y = points[i][1] + myCurrentPiece.getPosition().y();
+                g.setColor(getColor(myCurrentPiece.getTetrisPiece().getBlock()));
+                g.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+            }
+        }
+    }
+
+    private void step() {
+        myCurrentPiece.getPosition().transform(myCurrentPosition.x(), myCurrentPosition.y() + BLOCK_SIZE);
+        repaint();
+    }
+
+    private Color getColor(Block block) {
+        Color blockColor = Color.BLACK;
+        switch (block) {
+            case I:
+                blockColor = Color.CYAN;
+            case J:
+                blockColor = Color.BLUE;
+            case L:
+                blockColor = Color.ORANGE;
+            case O:
+                blockColor = Color.YELLOW;
+            case S:
+                blockColor = Color.GREEN;
+            case T:
+                blockColor = Color.decode("#A020F0"); // purple
+            case Z:
+                blockColor = Color.RED;
+        }
+        return blockColor;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (PROPERTY_CURRENT_PIECE.equals(evt.getNewValue())) {
+            myCurrentPiece.getPosition().transform(myCurrentPosition.x(), myCurrentPosition.y() + BLOCK_SIZE);
             repaint();
         }
-    }
 
-    @Override
-    public void paintComponent(final Graphics theGraphic) {
-        super.paintComponent(theGraphic);
-        // all the method state change checks from the board class that
-        // have state changes which affect the GameBoard
-        draw(theGraphic);
-//        checkRows(theGraphic);
-//        down(theGraphic);
-//        setPoint(theGraphic);
-//        move(theGraphic);
-//        newGame(theGraphic);
-
-    }
-
-    private void draw(final Graphics theGraphic) {
-        final Graphics2D g2d = (Graphics2D) theGraphic;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.RED);
-
-
-
-        for(int row = 0; row <= 20; row++) {
-            for (int col = 0; col <= 10; col++) {
-                g2d.draw(new Rectangle2D.Double(col * getWidth()/10, row * getHeight()/20,
-                        20*getWidth()/10, 20*getHeight()/20));
-            }
-        }
-    }
-
-    // isn't the point of an observer design pattern to not have to check when states are changed?
-    // propertyChange() method will get all the properties that are changed as
-    // they change, then we repaint the board, isn't that all we need?
-    // should we just choose the color of each piece first and then when the board is
-    // repainted after a state change it just remembers the corresponding colors?
-    private void checkRows(final Graphics theGraphic) {
-        final Graphics2D g2d = (Graphics2D) theGraphic;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        // myBoard.checkRows();------- how to call this method without instantiating a new board??
- //     if (/*checkRows has been mutated*/) {
-            //set color - not sure why, do we need to set color each time a state change occurs?
-            //g2d.setColor(); to whatever the color of each piece should be
-//      }
-    }
-
-    private void move(final Graphics theGraphic) {
-        final Graphics2D g2d = (Graphics2D) theGraphic;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        // if the property ends up changing then set colors
-            if(true) {
-               // g2d.setColor();
-            }
-    }
-    private void setPoint(final Graphics theGraphic) {
-        final Graphics2D g2d = (Graphics2D) theGraphic;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        // if the property ends up changing then set colors
-        if(true) {
-            // g2d.setColor();
-        }
-    }
-
-    private void down(final Graphics theGraphic) {
-        final Graphics2D g2d = (Graphics2D) theGraphic;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        // if the property ends up changing then set colors
-        if(true) {
-            // g2d.setColor();
-        }
-    }
-
-    private void newGame(final Graphics theGraphic) {
-        final Graphics2D g2d = (Graphics2D) theGraphic;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        // if the property ends up changing then set colors
-        if(true) {
-            // g2d.setColor();
-        }
     }
 
 }
