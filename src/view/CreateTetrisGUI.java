@@ -6,8 +6,10 @@ package view;
 
 import model.Board;
 import model.CreateBoard;
+import model.MovableTetrisPiece;
 
 import static java.lang.System.out;
+import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -203,22 +205,23 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
 
-//                myBoard.step();
+                myBoard.step();
                 System.out.println(n++);
             }
         });
-        this.addKeyListener(new ControlAdapter());
-
-
+        addKeyListener(new ControlAdapter());
+        myGameBoard.addKeyListener(new ControlAdapter());
+        myGameBoard.setFocusable(true);
+        myGameBoard.requestFocus();;
     }
 
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(PropertyChangeEvent theEvent) {
 
     }
 
-    class ControlAdapter extends KeyAdapter {
+     class ControlAdapter extends KeyAdapter {
         /**
          * When pressing the key, trigger an event:
          * Move Left: left arrow and 'a' and 'A'.
@@ -248,7 +251,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             }
             if (keyCode == KeyEvent.VK_DOWN || keyChar == 's' || keyChar == 'S') {
                 System.out.println("down");
-//                myBoard.down();
+                myBoard.down();
             }
             if (keyCode == KeyEvent.VK_UP || keyChar == 'e' || keyChar == 'E') {
                 System.out.println("rotateCW");
@@ -310,7 +313,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clip.setMicrosecondPosition(0);
-                clip.start();
+//                clip.start();
                 myBoard.newGame();
                 myTimer.restart();
 
@@ -320,7 +323,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myLoadItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: implement continue the game.
                 clip.start();
                 myBoard.step();
                 myTimer.start();
@@ -330,8 +332,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myPauseItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //TODO: implement pause game
                 if (clip != null) {
                     clip.stop();
                 }
@@ -400,8 +400,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myNextPiecePanel = new NextPiece();
 
 
-        myInforPanel = createPanel(Color.green,
-                new Dimension(200, 250));
+        myInforPanel = new ScorePanel();
 
 
         final ImageIcon image = new ImageIcon("TetrisBackGround.PNG");
@@ -553,6 +552,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
         final CreateTetrisGUI panel = new CreateTetrisGUI(board);
         board.addPropertyChangeListener(panel);
+        board.addPropertyChangeListener(panel.myGameBoard);
     }
 
 }

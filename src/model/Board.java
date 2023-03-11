@@ -12,7 +12,9 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import model.wallkicks.WallKick;
+import view.TetrisGameBoard;
 
 
 /**
@@ -102,6 +104,7 @@ public class Board implements CreateBoard {
      * This field stores all the property change listeners.
      */
     private final PropertyChangeSupport myPCS;
+    private final TetrisGameBoard myGameBoard;
 
     // Constructors
 
@@ -116,7 +119,7 @@ public class Board implements CreateBoard {
     /**
      * Tetris board constructor for non-default sized boards.
      *
-     * @param theWidth Width of the Tetris game board.
+     * @param theWidth  Width of the Tetris game board.
      * @param theHeight Height of the Tetris game board.
      */
     public Board(final int theWidth, final int theHeight) {
@@ -128,6 +131,8 @@ public class Board implements CreateBoard {
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
         myPCS = new PropertyChangeSupport(this);
+        myGameBoard = new TetrisGameBoard();
+        myPCS.addPropertyChangeListener(myGameBoard);
 
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
@@ -167,7 +172,6 @@ public class Board implements CreateBoard {
     public int getHeight() {
         return myHeight;
     }
-
 
 
     @Override
@@ -289,7 +293,6 @@ public class Board implements CreateBoard {
     }
 
 
-
     @Override
     public String toString() {
         final List<Block[]> board = getBoard();
@@ -354,7 +357,7 @@ public class Board implements CreateBoard {
 
     /**
      * Helper function to test if the piece is in a legal state.
-     *
+     * <p>
      * Illegal states:
      * - points of the piece exceed the bounds of the board
      * - points of the piece collide with frozen blocks on the board
@@ -382,7 +385,7 @@ public class Board implements CreateBoard {
      * and the frozen blocks.
      *
      * @param theFrozenBlocks Board to set the piece on.
-     * @param thePiece Piece to set on the board.
+     * @param thePiece        Piece to set on the board.
      */
     private void addPieceToBoardData(final List<Block[]> theFrozenBlocks,
                                      final MovableTetrisPiece thePiece) {
@@ -417,6 +420,7 @@ public class Board implements CreateBoard {
             }
         }
         myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
+        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null,new Integer[completeRows.size()]);
     }
 
     /**
@@ -483,7 +487,7 @@ public class Board implements CreateBoard {
      *
      * @param theTest movable TetrisPiece to test for collision.
      * @return Returns true if any of the blocks has collided with a set board
-     *         block.
+     * block.
      */
     private boolean collision(final MovableTetrisPiece theTest) {
         boolean res = false;
@@ -540,7 +544,6 @@ public class Board implements CreateBoard {
 
         }
     }
-
 
 
     // Inner classes
