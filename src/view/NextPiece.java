@@ -10,37 +10,109 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class NextPiece extends JPanel implements PropertyChangeListener {
-    private TetrisPiece myNextPiece;
+    private TetrisPiece nextPiece =null;
+    private Point[] myPoint =null;
+    private Block block=null;
+    private final JPanel[][] panels = new JPanel[4][4];
 
     public NextPiece() {
-        setBackground(Color.BLACK);
-        setBorder(BorderFactory.createLineBorder(Color.RED));
+        setPreferredSize(new Dimension(100, 100));
+        setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        setLayout(new GridLayout(4, 4, 1, 1));
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                JPanel panel = new JPanel();
+                panel.setBackground(Color.BLACK);
+                panels[i][j] = panel;
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                add(panels[i][j]);
+            }
+        }
     }
-
+    // Override the paintComponent method to paint the Tetris piece
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
 
+        System.out.println("paint1");
+        if (this.myPoint!=null){
+            super.paintComponent(g);
+
+            for (int i = 0; i <4; i++) {
+                for (int j = 0; j <4; j++) {
+                    panels[i][j].setBackground(Color.BLACK);
+                }
+            }
+
+            for (Point p : this.myPoint) {
+                System.out.println(p);
+                // Set the background color of each block in the Tetris piece
+                panels[p.x()][p.y()].setBackground(getBlockColor(nextPiece));
+            }
+            // Add the updated panels to the panel
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    add(panels[i][j]);
+                }
+            }
+            // Repaint the panel
+            System.out.println(true);
+        }
+    }
+    // A helper method to return the color for each block type
+    private Color getBlockColor(TetrisPiece piece) {
+        switch (piece.getBlock()) {
+            case I:
+                return Color.CYAN;
+            case J:
+                return Color.BLUE;
+            case L:
+                return Color.ORANGE;
+            case O:
+                return Color.YELLOW;
+            case S:
+                return Color.GREEN;
+            case T:
+                return Color.PINK;
+            case Z:
+                return Color.RED;
+            default:
+                return Color.WHITE;
+        }
+    }
+
+    public Point[] getMyPoint() {
+        return myPoint;
+    }
+
+    public void setMyPoint(Point[] myPoint) {
+        this.myPoint = myPoint;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("nextPiece".equals(evt.getPropertyName())) {
-            myNextPiece = (TetrisPiece) evt.getNewValue();
-            repaint();
+        if (evt.getPropertyName().equals("myNextPiece")) {
+            this.nextPiece = (TetrisPiece) evt.getNewValue();
+            System.out.println(nextPiece);
+            Block block1 = this.nextPiece.getBlock();
+            Point[] points = this.nextPiece.getPoints();
+            setBlock(block1);
+            setMyPoint(points);
+            if (this.block != null && this.myPoint != null) {
+                // Remove all components from the panel
+                // Set the background color of each block in the Tetris piece
+                repaint();
+            }
         }
-    }
-    private Color getColor(Block block) {
-        Color blockColor = Color.BLACK;
-        switch (block) {
-            case I: blockColor = Color.CYAN;
-            case J: blockColor = Color.BLUE;
-            case L: blockColor = Color.ORANGE;
-            case O: blockColor = Color.YELLOW;
-            case S: blockColor = Color.GREEN;
-            case T: blockColor = Color.decode("#A020F0"); // purple
-            case Z: blockColor = Color.RED;
-        }
-        return blockColor;
     }
 }

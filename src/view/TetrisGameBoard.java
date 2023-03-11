@@ -29,11 +29,23 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      * The width of each block in pixels.
      */
     private static final int BLOCK_SIZE = 28;
+    /**
+     * my Movable Piece
+     */
     private MovableTetrisPiece myCurrentPiece;
+    /**
+     * The Next Piece
+     */
     private TetrisPiece myNextPiece;
+    /**
+     * current point position.
+     */
     private Point myCurrentPosition;
+    /*
+    * Instantiate random rotation.
+     */
     private Rotation myRotation;
-    private Timer myTimer;
+
 
     /**
      * The current state of the game board.
@@ -42,13 +54,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     private int[][] myBoardState = new int[ROWS][COLUMNS];
 
     public TetrisGameBoard() {
-        myTimer = new Timer(300, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myCurrentPiece.getPosition().transform(myCurrentPosition.x(), myCurrentPosition.y() + BLOCK_SIZE);
-                repaint();
-            }
-        });
+
         myNextPiece = TetrisPiece.getRandomPiece();
         myRotation = Rotation.random();
         myCurrentPosition = new Point(0, 0);
@@ -56,7 +62,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
 
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
-        myTimer.start();
+
     }
 
     /**
@@ -107,8 +113,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     }
 
     private void step() {
-        myCurrentPiece.getPosition().transform(myCurrentPosition.x(), myCurrentPosition.y() + BLOCK_SIZE);
-        repaint();
+
     }
 
     private Color getColor(Block block) {
@@ -135,8 +140,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (PROPERTY_CURRENT_PIECE.equals(evt.getNewValue())) {
-            myCurrentPiece.getPosition().transform(myCurrentPosition.x(), myCurrentPosition.y() + BLOCK_SIZE);
-            repaint();
+
         }
 
     }
