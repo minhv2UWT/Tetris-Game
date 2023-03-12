@@ -10,6 +10,7 @@ import model.MovableTetrisPiece;
 
 import static java.lang.System.out;
 import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
+import static model.CreateBoard.PROPERTY_GAME_OVER;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -189,6 +190,8 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private TetrisGameBoard myGameBoard;
     private NextPiece myNextPiecePanel;
     private Clip clip;
+    private boolean myGameOver;
+    private ControlAdapter myKeys;
 
 
     /**
@@ -201,9 +204,11 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         createLayout();
         createMenuGUI();
         myBoard = theBoard;
+        myKeys = new ControlAdapter();
 
         myTimer = new Timer(TIMER_DELAY, new ActionListener() {
             int n = 0;
+
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
 
@@ -211,19 +216,21 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                 System.out.println(n++);
             }
         });
-        addKeyListener(new ControlAdapter());
-
-        myBoard.newGame();
-        myTimer.start();
     }
 
 
     @Override
     public void propertyChange(PropertyChangeEvent theEvent) {
-
+        if (PROPERTY_GAME_OVER.equals(theEvent.getPropertyName())) {
+            myGameOver = (boolean) theEvent.getNewValue();
+            if(myGameOver) {
+                myTimer.stop();
+                clip.stop();
+            }
+        }
     }
 
-     class ControlAdapter extends KeyAdapter {
+    class ControlAdapter extends KeyAdapter {
         /**
          * When pressing the key, trigger an event:
          * Move Left: left arrow and 'a' and 'A'.
@@ -318,7 +325,8 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                 clip.start();
                 myBoard.newGame();
                 myTimer.restart();
-
+                myGameOver = false;
+                addKeyListener(myKeys);
             }
         });
         mySaveItem.addActionListener(e -> out.println("Game Saved"));
@@ -328,6 +336,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                 clip.start();
                 myBoard.step();
                 myTimer.start();
+                addKeyListener(myKeys);
 
             }
         });
@@ -338,6 +347,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                     clip.stop();
                 }
                 myTimer.stop();
+                removeKeyListener(myKeys);
             }
         });
         // Adding Items to file menu

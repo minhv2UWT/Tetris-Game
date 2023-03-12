@@ -1,22 +1,16 @@
 package view;
 
-import model.*;
-import model.Point;
 import model.Block;
 
 import java.awt.*;
 
-import java.awt.geom.RectangularShape;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
 
-import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
-import static model.CreateBoard.PROPERTY_FROZEN_BLOCKS;
+import static model.CreateBoard.*;
 
 
 public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
@@ -38,27 +32,31 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     /**
      * my Movable Piece
      */
-    private MovableTetrisPiece myCurrentPiece;
-    private RectangularShape myPiece;
-    private List<Block[]> myFrozenBlocks;
-
+    private List<Block[]> myBlocksOnBoard;
+    private boolean myGameOver;
 
     public TetrisGameBoard() {
-
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
-        myFrozenBlocks = new LinkedList<Block[]>();
+        myBlocksOnBoard = new LinkedList<Block[]>();
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (PROPERTY_CURRENT_PIECE.equals(evt.getPropertyName())) {
-            myFrozenBlocks = (List<Block[]>) evt.getNewValue();
+            myBlocksOnBoard = (List<Block[]>) evt.getNewValue();
             repaint();
         }
         if (PROPERTY_FROZEN_BLOCKS.equals(evt.getPropertyName())) {
-            myFrozenBlocks = (List<Block[]>) evt.getNewValue();
+            myBlocksOnBoard = (List<Block[]>) evt.getNewValue();
             repaint();
+        }
+        if (PROPERTY_GAME_OVER.equals(evt.getPropertyName())) {
+            myGameOver = (Boolean) evt.getNewValue();
+            if(checkGameOver(myGameOver)) {
+                JOptionPane.showMessageDialog(null, "GAME OVER YOU SUCK!!!", "GAME OVER LOL", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }
 
@@ -69,12 +67,21 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        if (myCurrentPiece != null) {
-            drawCurrentPiece(g2d);
-        }
-        drawFrozenBlock(g2d);
+        drawUpdatedBoard(g2d);
         drawGrid(g2d);
 
+    }
+
+    private boolean checkGameOver(boolean theGameOver) {
+        System.out.println("I'm called!!!" + this.getClass());
+        Block[] firstRow = myBlocksOnBoard.get(0);
+        for (int i = 2; i < firstRow.length - 3; i++) {
+            if (firstRow[i] != null) {
+                myGameOver = theGameOver;
+                break;
+            }
+        }
+        return myGameOver;
     }
 
     private void drawGrid(Graphics2D g2d) {
@@ -87,28 +94,15 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private void drawFrozenBlock(Graphics2D g2d) {
+    private void drawUpdatedBoard(Graphics2D g2d) {
         g2d.setColor(Color.GRAY);
-        for (int rowNumber = 0; rowNumber < myFrozenBlocks.size(); rowNumber++) {
-            Block[] row = myFrozenBlocks.get(rowNumber);
+        for (int i = 0; i < myBlocksOnBoard.size(); i++) {
+            Block[] row = myBlocksOnBoard.get(i);
             for (int column = 0; column < row.length; column++) {
-                if (row[column] != null) {
-                    int x = column * BLOCK_SIZE;
-                    int y = (ROWS - 1 - rowNumber) * BLOCK_SIZE;
-                    g2d.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
-                }
-            }
-        }
-    }
-
-
-    private void drawCurrentPiece(Graphics2D g2d) {
-
-        for (int i = 0; i < myFrozenBlocks.size(); i++) {
-            for (int j = 0; j < myFrozenBlocks.get(i).length; j++) {
-                if (myFrozenBlocks.get(i)[j] != null) {
-                    g2d.setColor(getColor(myFrozenBlocks.get(i)[j]));
-                    myPiece.setFrame(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                Block blocks = row[column];
+                if (blocks != null) {
+                    g2d.setColor(getColor(blocks));
+                    g2d.fillRect(column * BLOCK_SIZE, (ROWS - 1 - i) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
         }
