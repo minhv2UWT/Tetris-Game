@@ -6,10 +6,7 @@ package view;
 
 import model.Board;
 import model.CreateBoard;
-import model.MovableTetrisPiece;
-
 import static java.lang.System.out;
-import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
 import static model.CreateBoard.PROPERTY_GAME_OVER;
 
 import java.awt.BorderLayout;
@@ -95,11 +92,11 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private static final String EXIT = "Exit";
 
     /**
-     * Creating string holding breaklines commands.
+     * Creating string holding break lines commands.
      */
     private static final String BR_BR = "<br><br>";
     /**
-     * Creating string holding breaklines commands.
+     * Creating string holding break lines commands.
      */
     private static final String HTML = "<html>";
 
@@ -145,10 +142,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      */
     private final JMenuItem myLayout2 = new JMenuItem("Layout 2");
 
-    /**
-     * This is the game board GUI that will be merged with the menu bar.
-     */
-//    private JFrame this;
+    //    private JFrame this;
     /**
      * Create board inside the JFrame.
      */
@@ -161,24 +155,30 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      * Instance of Timer.
      */
     private final Timer myTimer;
+
     /**
-     * Instance of new panels/
+     * Instance of new panel
      */
-    private JPanel myContainerPanel;
-    /**
-     * Instance of new panels/
-     */
-    private JPanel myTetrisTitlePanel;
-    /**
-     * Instance of new panels/
-     */
-    private JPanel myInforPanel;
     private TetrisGameBoard myGameBoard;
-    private NextPiece myNextPiecePanel;
+    /**
+     * Instance of new panel
+     */
     private Clip clip;
+    /**
+     * Instance of new panel
+     */
     private boolean myGameOver;
-    private ControlAdapter myKeys;
-    private PauseKey myPauseKey;
+    /**
+     * Instance of new keys
+     */
+    private final ControlAdapter myKeys;
+    /**
+     * Instance of new panel
+     */
+    private final PauseKey myPauseKey;
+    /**
+     * Boolean for if game is paused
+     */
     private boolean myPause;
 
     /**
@@ -198,7 +198,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
-
                 myBoard.step();
                 System.out.println(n++);
             }
@@ -253,7 +252,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
          * Move Down: down arrow and 's' and 'S'.
          * C TO ROTATE THE BLOCK CLOCKWISE.
          * Drop: space.
-         *
          * @param theEvent the event to be processed
          */
         @Override
@@ -330,22 +328,19 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         exitMenu.add(myExitItem);
 
         // Creating performances of file menu items
-        myNewGameItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        myNewGameItem.addActionListener(e -> {
 
-                clip.setMicrosecondPosition(0);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.start();
-                myBoard.newGame();
-                myTimer.restart();
-                myGameOver = false;
+            clip.setMicrosecondPosition(0);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+            myBoard.newGame();
+            myTimer.restart();
+            myGameOver = false;
 
-                removeKeyListener(myPauseKey);
-                addKeyListener(myPauseKey);
-                removeKeyListener(myKeys);
-                addKeyListener(myKeys);
-            }
+            removeKeyListener(myPauseKey);
+            addKeyListener(myPauseKey);
+            removeKeyListener(myKeys);
+            addKeyListener(myKeys);
         });
         // Adding Items to file menu
         fileMenu.add(myNewGameItem);
@@ -398,6 +393,12 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
     private void createLayout() {
         // create panels
+        JPanel myContainerPanel;
+        JPanel myTetrisTitlePanel;
+        JPanel myInfoPanel;
+        NextPiece myNextPiecePanel;
+
+
         myContainerPanel = createPanel(Color.gray,
                 new Dimension(200, 600));
 
@@ -408,7 +409,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myNextPiecePanel = new NextPiece();
 
 
-        myInforPanel = new ScorePanel();
+        myInfoPanel = new ScorePanel();
 
 
         final ImageIcon image = new ImageIcon("TetrisBackGround.PNG");
@@ -418,7 +419,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
         myContainerPanel.setLayout(new GridLayout(2, 1));
         myContainerPanel.add(myNextPiecePanel);
-        myContainerPanel.add(myInforPanel);
+        myContainerPanel.add(myInfoPanel);
 
         // add panels to frame
         this.add(myContainerPanel, BorderLayout.EAST);

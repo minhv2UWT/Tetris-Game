@@ -38,7 +38,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         super();
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * UNIT, ROWS * UNIT));
-        myBlocksOnBoard = new LinkedList<Block[]>();
+        myBlocksOnBoard = new LinkedList<>();
     }
 
     @Override
@@ -86,31 +86,15 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     }
 
     private Color getColor(Block block) {
-        Color blockColor = Color.BLACK;
-         switch (block) {
-            case I:
-                blockColor = Color.CYAN;
-                break;
-            case J:
-                blockColor = Color.BLUE;
-                break;
-            case L:
-                blockColor = Color.ORANGE;
-                break;
-            case O:
-                blockColor = Color.YELLOW;
-                break;
-            case S:
-                blockColor = Color.GREEN;
-                break;
-            case T:
-                blockColor = Color.decode("#A020F0"); // purple
-                break;
-            case Z:
-                blockColor = Color.RED;
-                break;
-        }
-        return blockColor;
+        return switch (block) {
+            case I -> Color.CYAN;
+            case J -> Color.BLUE;
+            case L -> Color.ORANGE;
+            case O -> Color.YELLOW;
+            case S -> Color.GREEN;
+            case T -> Color.decode("#A020F0"); // purple
+            case Z -> Color.RED;
+        };
     }
 }
 

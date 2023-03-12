@@ -7,9 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.LinkedList;
-import java.util.List;
-
 
 import static model.CreateBoard.PROPERTY_NEXT_PIECE;
 
@@ -28,12 +25,9 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     private static final int BLOCK_SIZE = 40;
     private TetrisPiece myNextPiece;
 
-    private List<Block[]> myBlock;
-
     public NextPiece() {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
-        myBlock = new LinkedList<Block[]>();
 
 
     }
@@ -83,31 +77,15 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     }
 
     private Color getColor(Block block) {
-        Color blockColor = Color.BLACK;
-        switch (block) {
-            case I:
-                blockColor = Color.CYAN;
-                break;
-            case J:
-                blockColor = Color.BLUE;
-                break;
-            case L:
-                blockColor = Color.ORANGE;
-                break;
-            case O:
-                blockColor = Color.YELLOW;
-                break;
-            case S:
-                blockColor = Color.GREEN;
-                break;
-            case T:
-                blockColor = Color.decode("#A020F0"); // purple
-                break;
-            case Z:
-                blockColor = Color.RED;
-                break;
-        }
-        return blockColor;
+        return switch (block) {
+            case I -> Color.CYAN;
+            case J -> Color.BLUE;
+            case L -> Color.ORANGE;
+            case O -> Color.YELLOW;
+            case S -> Color.GREEN;
+            case T -> Color.decode("#A020F0"); // purple
+            case Z -> Color.RED;
+        };
     }
 
 

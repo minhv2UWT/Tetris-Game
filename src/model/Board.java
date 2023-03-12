@@ -334,7 +334,7 @@ public class Board implements CreateBoard {
             }
         }
             for (int w = 0; w < myWidth; w++) {
-                stringB.append('|');
+                stringB.append("|");
                 stringB.append('-');
             }
             stringB.append('|');
