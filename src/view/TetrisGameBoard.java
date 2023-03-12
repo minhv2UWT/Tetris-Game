@@ -51,9 +51,6 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
             myBlocksOnBoard = (List<Block[]>) evt.getNewValue();
             repaint();
         }
-        if (PROPERTY_GAME_OVER.equals(evt.getPropertyName())) {
-            myGameOver = (Boolean) evt.getNewValue();
-        }
     }
 
     @Override
@@ -69,7 +66,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     }
 
     private void drawGrid(Graphics2D g2d) {
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.WHITE);
         for (int i = 0; i <= ROWS; i++) {
             for (int j = 0; j <= COLUMNS; j++) {
                 g2d.drawLine(0, i * BLOCK_SIZE, COLUMNS * BLOCK_SIZE, i * BLOCK_SIZE);

@@ -134,20 +134,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      */
     private final JMenuItem myNewGameItem = new JMenuItem("New Game");
 
-    /**
-     * Creates a menu option that displays, "Save".
-     */
-    private final JMenuItem mySaveItem = new JMenuItem("Save");
-
-    /**
-     * Creates a menu option that displays, "Load".
-     */
-    private final JMenuItem myLoadItem = new JMenuItem("Load");
-
-    /**
-     * Creates a menu option that displays, "Delete".
-     */
-    private final JMenuItem myPauseItem = new JMenuItem("Pause");
 
     /**
      * Creates a menu option that displays, "Layout 1".
@@ -329,9 +315,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
         // Set ShortKey to File Menu Items
         myNewGameItem.setMnemonic(KeyEvent.VK_N);
-        mySaveItem.setMnemonic(KeyEvent.VK_S);
-        myLoadItem.setMnemonic(KeyEvent.VK_L);
-        myPauseItem.setMnemonic(KeyEvent.VK_P);
+
 
         // Creating performance for these layouts
         myLayout1.addActionListener(e -> out.println("layout 1 generated"));
