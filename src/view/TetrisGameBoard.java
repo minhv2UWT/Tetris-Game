@@ -79,7 +79,8 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
             for (int column = 0; column < myBlocksOnBoard.get(row).length; column++) {
                 if (myBlocksOnBoard.get(row)[column] != null) {
                     g2d.setColor(getColor(myBlocksOnBoard.get(row)[column]));
-                    g2d.fillRect(column * UNIT, (ROWS - (1 + row)) * UNIT, UNIT, UNIT);
+                    int upsideDown = ROWS - (1 + row);
+                    g2d.fillRect(column * UNIT, upsideDown * UNIT, UNIT, UNIT);
                 }
             }
         }
