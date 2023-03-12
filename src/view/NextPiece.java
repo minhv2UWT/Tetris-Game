@@ -34,12 +34,14 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
         myBlock = new LinkedList<Block[]>();
-        myNextPiece = TetrisPiece.J;
+
+
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (PROPERTY_NEXT_PIECE.equals(evt.getPropertyName())) {
+            System.out.println("I'm called");
             myNextPiece = (TetrisPiece) evt.getNewValue();
             repaint();
         }
@@ -53,13 +55,19 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         // for better graphics display
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-
-        drawNextPiece(g2d);
+        if (myNextPiece != null) {
+            drawNextPiece(g2d);
+        }
+        System.out.println("aaa");
         drawGrid(g2d);
     }
 
     private void drawNextPiece(Graphics2D g2d) {
-if(myNextPiece!= null) {
+        System.out.println("drawn");
+
+        for (Point p : myNextPiece.getPoints()) {
+            g2d.setColor(getColor(myNextPiece.getBlock()));
+            g2d.fillRect(p.x() * BLOCK_SIZE, p.y() * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
         }
     }
