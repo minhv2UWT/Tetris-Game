@@ -22,7 +22,7 @@ import view.TetrisGameBoard;
 
 /** Represents a Tetris board. Board objects communicate with
  * clients via Observer pattern.
- * <p>Clients can expect Board objects to call norifyObservers with four different
+ * <p>Clients can expect Board objects to call notify Observers with four different
  * data types:</p>
  * <dl>
  * <dt>{@code List<Block[]>}</dt>
@@ -510,7 +510,7 @@ public class Board implements CreateBoard {
     /**
      * Gets the next MovableTetrisPiece.
      *
-     * @param theRestart Restart the non random cycle.
+     * @param theRestart Restart the non-random cycle.
      * @return A new MovableTetrisPiece.
      */
     private MovableTetrisPiece nextMovablePiece(final boolean theRestart) {
