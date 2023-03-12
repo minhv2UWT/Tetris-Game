@@ -33,9 +33,9 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      * my Movable Piece
      */
     private List<Block[]> myBlocksOnBoard;
-    private boolean myGameOver;
 
     public TetrisGameBoard() {
+        super();
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * UNIT, ROWS * UNIT));
         myBlocksOnBoard = new LinkedList<Block[]>();
@@ -87,7 +87,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
 
     private Color getColor(Block block) {
         Color blockColor = Color.BLACK;
-        switch (block) {
+         switch (block) {
             case I:
                 blockColor = Color.CYAN;
                 break;

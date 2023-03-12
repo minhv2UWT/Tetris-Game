@@ -19,8 +19,9 @@ import view.ScorePanel;
 import view.TetrisGameBoard;
 
 
-/**
- * Represents a Tetris board. Board objects communicate with clients via Observer pattern.
+
+/** Represents a Tetris board. Board objects communicate with
+ * clients via Observer pattern.
  * <p>Clients can expect Board objects to call norifyObservers with four different
  * data types:</p>
  * <dl>
@@ -31,15 +32,15 @@ import view.TetrisGameBoard;
  * <dt>{@link model.TetrisPiece TertisPiece}</dt>
  * <dd>Represents next Piece.</dd>
  * <dt>{@code Integer[]}</dt>
- * <dd>The size of the array represents the number of rows of Frozen Blocks removed.</dd>
+ * <dd>The size of the array represents the number
+ * of rows of Frozen Blocks removed.</dd>
  * <dt>{@code Boolean}</dt>
  * <dd>When true, the game is over. </dd>
  * </dl>
- *
  * @author Charles Bryan
  * @author Alan Fowler
  * @version 1.3
- */
+ **/
 public class Board implements CreateBoard {
 
     // Class constants
@@ -69,9 +70,6 @@ public class Board implements CreateBoard {
      * The frozen blocks on the board.
      */
     private final List<Block[]> myFrozenBlocks;
-    private final ScorePanel myScorePanel;
-    private final NextPiece myNextPiecePanel;
-
 
     /**
      * The game over state.
@@ -109,7 +107,7 @@ public class Board implements CreateBoard {
      * This field stores all the property change listeners.
      */
     private final PropertyChangeSupport myPCS;
-    private final TetrisGameBoard myGameBoard;
+   //private final TetrisGameBoard myGameBoard;
     // Constructors
 
     /**
@@ -128,11 +126,14 @@ public class Board implements CreateBoard {
      */
     public Board(final int theWidth, final int theHeight) {
         super();
+         ScorePanel myScorePanel;
+         NextPiece myNextPiecePanel;
+         TetrisGameBoard myGameBoard;
         myWidth = theWidth;
         myHeight = theHeight;
-        myFrozenBlocks = new LinkedList<Block[]>();
+        myFrozenBlocks = new LinkedList<>();
 
-        myNonRandomPieces = new ArrayList<TetrisPiece>();
+        myNonRandomPieces = new ArrayList<>();
         mySequenceIndex = 0;
         myGameBoard = new TetrisGameBoard();
         myScorePanel = new ScorePanel();
@@ -203,7 +204,7 @@ public class Board implements CreateBoard {
 
     @Override
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
-        myNonRandomPieces = new ArrayList<TetrisPiece>(thePieces);
+        myNonRandomPieces = new ArrayList<>(thePieces);
         mySequenceIndex = 0;
         myCurrentPiece = nextMovablePiece(true);
     }
@@ -312,34 +313,33 @@ public class Board implements CreateBoard {
         if (myCurrentPiece != null) {
             addPieceToBoardData(board, myCurrentPiece);
         }
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder stringB = new StringBuilder();
         for (int i = board.size() - 1; i >= 0; i--) {
             final Block[] row = board.get(i);
-            sb.append('|');
+            stringB.append('|');
             for (final Block c : row) {
                 if (c == null) {
-                    sb.append(' ');
+                    stringB.append(' ');
                 } else {
-                    sb.append('*');
+                    stringB.append('*');
                 }
             }
-            sb.append("|\n");
+            stringB.append("|\n");
             if (i == this.myHeight) {
-                sb.append(' ');
+                stringB.append(' ');
                 for (int j = 0; j < this.myWidth; j++) {
-                    sb.append('-');
+                    stringB.append('-');
+                    stringB.append('\n');
                 }
-                sb.append('\n');
             }
         }
-        sb.append('|');
-        for (int w = 0; w < myWidth; w++) {
-            sb.append('-');
-        }
-        sb.append('|');
-        return sb.toString();
+            for (int w = 0; w < myWidth; w++) {
+                stringB.append('|');
+                stringB.append('-');
+            }
+            stringB.append('|');
+            return stringB.toString();
     }
-
 
     // private helper methods
 
@@ -352,8 +352,8 @@ public class Board implements CreateBoard {
      */
     private boolean move(final MovableTetrisPiece theMovedPiece) {
         boolean result = false;
-        final MovableTetrisPiece oldCurrentPiece = myCurrentPiece;
         if (isPieceLegal(theMovedPiece)) {
+            final MovableTetrisPiece oldCurrentPiece = myCurrentPiece;
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
@@ -370,7 +370,6 @@ public class Board implements CreateBoard {
      * Illegal states:
      * - points of the piece exceed the bounds of the board
      * - points of the piece collide with frozen blocks on the board
-     *
      * @param thePiece MovableTetrisPiece to test.
      * @return Returns true if the piece is in a legal state; false otherwise
      */
@@ -438,7 +437,7 @@ public class Board implements CreateBoard {
      * @return A new copy of the board.
      */
     private List<Block[]> getBoard() {
-        final List<Block[]> board = new ArrayList<Block[]>();
+        final List<Block[]> board = new ArrayList<>();
         for (final Block[] row : myFrozenBlocks) {
             board.add(row.clone());
         }
@@ -483,11 +482,11 @@ public class Board implements CreateBoard {
      * @return the Block type at point or null if no block exists.
      */
     private Block getPoint(final Point thePoint) {
-        Block b = null;
+        Block block = null;
         if (isPointOnBoard(myFrozenBlocks, thePoint)) {
-            b = myFrozenBlocks.get(thePoint.y())[thePoint.x()];
+            block = myFrozenBlocks.get(thePoint.y())[thePoint.x()];
         }
-        return b;
+        return block;
     }
 
     /**
@@ -537,7 +536,7 @@ public class Board implements CreateBoard {
      * Prepares the Next movable piece for preview.
      */
     private void prepareNextMovablePiece() {
-        TetrisPiece oldPiece = myNextPiece;
+        final TetrisPiece oldPiece = myNextPiece;
         final boolean share = myNextPiece != null;
         if (myNonRandomPieces == null || myNonRandomPieces.isEmpty()) {
             myNextPiece = TetrisPiece.getRandomPiece();
@@ -567,7 +566,7 @@ public class Board implements CreateBoard {
         /**
          * Constructor of the Board Data object.
          */
-        protected BoardData() {
+        private BoardData() {
             myBoardData = getBoard();
             myBoardData.add(new Block[myWidth]);
             myBoardData.add(new Block[myWidth]);
@@ -583,8 +582,8 @@ public class Board implements CreateBoard {
          *
          * @return Copy of the Board Data.
          */
-        protected List<Block[]> getBoardData() {
-            final List<Block[]> board = new ArrayList<Block[]>();
+        private List<Block[]> getBoardData() {
+            final List<Block[]> board = new ArrayList<>();
             for (final Block[] row : myBoardData) {
                 board.add(row.clone());
             }
