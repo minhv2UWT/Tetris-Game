@@ -110,7 +110,7 @@ public class Board implements CreateBoard {
      */
     private final PropertyChangeSupport myPCS;
     private final TetrisGameBoard myGameBoard;
-
+    private BoardData myBoardData;
     // Constructors
 
     /**
@@ -132,7 +132,7 @@ public class Board implements CreateBoard {
         myWidth = theWidth;
         myHeight = theHeight;
         myFrozenBlocks = new LinkedList<Block[]>();
-
+        myBoardData = new BoardData();
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
         myGameBoard = new TetrisGameBoard();
@@ -428,7 +428,7 @@ public class Board implements CreateBoard {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
-        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
+        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myBoardData.getBoardData());
 
     }
 
@@ -537,8 +537,7 @@ public class Board implements CreateBoard {
      * Prepares the Next movable piece for preview.
      */
     private void prepareNextMovablePiece() {
-        final TetrisPiece oldNextPiece = myNextPiece;
-        final int oldSequenceIndex = mySequenceIndex;
+
         final boolean share = myNextPiece != null;
         if (myNonRandomPieces == null || myNonRandomPieces.isEmpty()) {
             myNextPiece = TetrisPiece.getRandomPiece();
@@ -547,10 +546,7 @@ public class Board implements CreateBoard {
             myNextPiece = myNonRandomPieces.get(mySequenceIndex++);
         }
         if (share && !myGameOver) {
-            myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, null, myNextPiece);
-            myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX,
-                    oldSequenceIndex, mySequenceIndex);
-
+            myPCS.firePropertyChange(CreateBoard.PROPERTY_NEXT_PIECE, null, myNextPiece);
         }
     }
 

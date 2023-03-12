@@ -23,15 +23,16 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     /**
      * The width of each block in pixels.
      */
-    private static final int BLOCK_SIZE = 30;
+    private static final int BLOCK_SIZE = 50;
 
     private TetrisPiece myNextPiece;
 
 
     public NextPiece() {
-        setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
+        setBackground(Color.BLACK);
+        setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE , ROWS * BLOCK_SIZE));
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (PROPERTY_NEXT_PIECE.equals(evt.getPropertyName())) {
@@ -49,23 +50,18 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        if (myNextPiece != null) {
-            Point[] points = myNextPiece.getPoints();
-            g2d.setColor(getColor(myNextPiece.getBlock()));
-            for (Point point : points) {
-                int x = point.x();
-                int y = point.y();
-                g2d.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-            }
-        }
+        drawGrid(g2d);
+    }
+private void drawNextPiece() {
 
-        // Draw the grid lines.
+}
+    private void drawGrid(Graphics2D g2d) {
         g2d.setColor(Color.RED);
-        for (int row = 0; row <= ROWS; row++) {
-            g2d.drawLine(0, row * BLOCK_SIZE, COLUMNS * BLOCK_SIZE, row * BLOCK_SIZE);
-        }
-        for (int col = 0; col <= COLUMNS; col++) {
-            g2d.drawLine(col * BLOCK_SIZE, 0, col * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+        for (int i = 0; i <= ROWS; i++) {
+            for (int j = 0; j <= COLUMNS; j++) {
+                g2d.drawLine(0, i * BLOCK_SIZE, COLUMNS * BLOCK_SIZE, i * BLOCK_SIZE);
+                g2d.drawLine(j * BLOCK_SIZE, 0, j * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+            }
         }
     }
 
