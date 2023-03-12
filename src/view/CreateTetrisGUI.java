@@ -66,7 +66,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     /**
      * This constant sets the size of the gameBoardGUI.
      */
-    private static final int WINDOW_HEIGHT = 720;
+    private static final int WINDOW_HEIGHT = 750;
     /**
      * This constant sets the size of the gameBoardGUI.
      */
@@ -190,6 +190,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private NextPiece myNextPiecePanel;
     private Clip clip;
 
+
     /**
      * This method is a constructor that calls the createMenuGUI() method.
      */
@@ -200,6 +201,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         createLayout();
         createMenuGUI();
         myBoard = theBoard;
+
         myTimer = new Timer(TIMER_DELAY, new ActionListener() {
             int n = 0;
             @Override
@@ -210,9 +212,9 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             }
         });
         addKeyListener(new ControlAdapter());
-        myGameBoard.addKeyListener(new ControlAdapter());
-        myGameBoard.setFocusable(true);
-        myGameBoard.requestFocus();;
+
+        myBoard.newGame();
+        myTimer.start();
     }
 
 
@@ -313,7 +315,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clip.setMicrosecondPosition(0);
-//                clip.start();
+                clip.start();
                 myBoard.newGame();
                 myTimer.restart();
 

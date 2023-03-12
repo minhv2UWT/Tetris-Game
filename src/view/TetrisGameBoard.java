@@ -2,16 +2,21 @@ package view;
 
 import model.*;
 import model.Point;
+import model.Block;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.*;
 
 import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
+import static model.CreateBoard.PROPERTY_FROZEN_BLOCKS;
+
 
 public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
 
@@ -33,44 +38,29 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      * my Movable Piece
      */
     private MovableTetrisPiece myCurrentPiece;
-    /**
-     * The Next Piece
-     */
-    private TetrisPiece myNextPiece;
-    /**
-     * current point position.
-     */
-    private Point myCurrentPosition;
-    /*
-     * Instantiate random rotation.
-     */
-    private Rotation myRotation;
-    private boolean myGameOver;
-
-
+    private final List<Block[]> myFrozenBlocks;
     /**
      * The current state of the game board.
      * 0 = empty, 1 = occupied.
      */
-    private int[][] myBoardState = new int[ROWS][COLUMNS];
 
     public TetrisGameBoard() {
 
-        createPiece();
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
-
-
+        myFrozenBlocks = new ArrayList<Block[]>();
     }
-
-    /**
-     * Updates the state of the game board with the given board state.
-     *
-     * @param boardState The new board state to display.
-     */
-    public void setBoardState(int[][] boardState) {
-        myBoardState = boardState;
-        repaint();
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (PROPERTY_CURRENT_PIECE.equals(evt.getPropertyName())) {
+            myCurrentPiece = (MovableTetrisPiece) evt.getNewValue();
+            repaint();
+        }
+        if(PROPERTY_FROZEN_BLOCKS.equals(evt.getPropertyName())) {
+//            Block[] newBlock = (Block[]) evt.getNewValue();
+//            myFrozenBlocks.add(newBlock);
+//            repaint();
+        }
     }
 
     @Override
@@ -81,16 +71,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         // Draw the blocks on the game board.
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
-                if (myBoardState[row][col] == 1) {
-                    g2d.setColor(Color.GRAY);
-                    g2d.fillRect(col * BLOCK_SIZE, row * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-                    g2d.setColor(Color.BLACK);
-                    g2d.drawRect(col * BLOCK_SIZE, row * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-                }
-            }
-        }
+        g2d.setColor(Color.WHITE);
 
         if (myCurrentPiece != null) {
             TetrisPiece piece = myCurrentPiece.getTetrisPiece();
@@ -98,7 +79,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
             g2d.setColor(getColor(myCurrentPiece.getTetrisPiece().getBlock()));
             for (int i = 0; i < points.length; i++) {
                 int x = points[i][0] + myCurrentPiece.getPosition().x();
-                int y = points[i][1] + myCurrentPiece.getPosition().y();
+                int y = ROWS - 1 - points[i][1] - myCurrentPiece.getPosition().y();
                 g2d.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
             }
         }
@@ -112,13 +93,6 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
             g2d.drawLine(col * BLOCK_SIZE, 0, col * BLOCK_SIZE, ROWS * BLOCK_SIZE);
         }
 
-    }
-
-    public void createPiece() {
-        myNextPiece = TetrisPiece.getRandomPiece();
-        myRotation = Rotation.random();
-        myCurrentPosition = new Point(3, -3);
-        myCurrentPiece = new MovableTetrisPiece(myNextPiece, myCurrentPosition, myRotation);
     }
 
     private Color getColor(Block block) {
@@ -147,44 +121,6 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
                 break;
         }
         return blockColor;
-    }
-
-    private void addCurrentPieceToBoard() {
-        int[][] points = myCurrentPiece.getTetrisPiece().getPointsByRotation(myCurrentPiece.getRotation());
-        for (int i = 0; i < points.length; i++) {
-            int x = points[i][0] + myCurrentPosition.x();
-            int y = points[i][1] + myCurrentPosition.y();
-            myBoardState[y][x] = 1;
-        }
-    }
-
-    private boolean isValidMove(MovableTetrisPiece piece) {
-        int[][] points = piece.getTetrisPiece().getPointsByRotation(piece.getRotation());
-        for (int i = 0; i < points.length; i++) {
-            int x = points[i][0] + piece.getPosition().x();
-            int y = points[i][1] + piece.getPosition().y();
-            if (x < 0 || x >= COLUMNS || y >= ROWS || (y >= 0 && myBoardState[y][x] == 1)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (PROPERTY_CURRENT_PIECE.equals(evt.getPropertyName())) {
-            MovableTetrisPiece newPiece = (MovableTetrisPiece) evt.getNewValue();
-            myCurrentPiece = newPiece;
-
-            repaint();
-        } else if (CreateBoard.PROPERTY_GAME_OVER.equals(evt.getPropertyName())) {
-
-
-        } else if (CreateBoard.PROPERTY_NEXT_PIECE.equals(evt.getPropertyName())) {
-        }
     }
 }
 

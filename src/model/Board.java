@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.wallkicks.WallKick;
+import view.NextPiece;
 import view.ScorePanel;
 import view.TetrisGameBoard;
 
@@ -69,6 +70,7 @@ public class Board implements CreateBoard {
      */
     private final List<Block[]> myFrozenBlocks;
     private final ScorePanel myScorePanel;
+    private final NextPiece myNextPiecePanel;
 
 
     /**
@@ -135,10 +137,12 @@ public class Board implements CreateBoard {
         mySequenceIndex = 0;
         myGameBoard = new TetrisGameBoard();
         myScorePanel = new ScorePanel();
+        myNextPiecePanel = new NextPiece();
         myPCS = new PropertyChangeSupport(this);
 
         myPCS.addPropertyChangeListener(myGameBoard);
         myPCS.addPropertyChangeListener(myScorePanel);
+        myPCS.addPropertyChangeListener(myNextPiecePanel);
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
@@ -217,7 +221,7 @@ public class Board implements CreateBoard {
 
     @Override
     public void down() {
-        final MovableTetrisPiece oldCurrentPiece = myCurrentPiece;
+
         if (!move(myCurrentPiece.down())) {
             // the piece froze, so clear lines and update current piece
             addPieceToBoardData(myFrozenBlocks, myCurrentPiece);
@@ -225,7 +229,7 @@ public class Board implements CreateBoard {
             if (!myGameOver) {
                 myCurrentPiece = nextMovablePiece(false);
             }
-            myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, oldCurrentPiece, myCurrentPiece);
+            myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, myCurrentPiece);
         }
     }
 
@@ -425,7 +429,7 @@ public class Board implements CreateBoard {
             }
         }
         myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
-//        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, new Integer[completeRows.size()]);
+
     }
 
     /**
@@ -543,7 +547,7 @@ public class Board implements CreateBoard {
             myNextPiece = myNonRandomPieces.get(mySequenceIndex++);
         }
         if (share && !myGameOver) {
-            myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, oldNextPiece, myNextPiece);
+            myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, null, myNextPiece);
             myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX,
                     oldSequenceIndex, mySequenceIndex);
 

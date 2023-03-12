@@ -1,118 +1,101 @@
 package view;
 
-import model.Block;
+import model.*;
 import model.Point;
-import model.TetrisPiece;
 
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+
+import static model.CreateBoard.PROPERTY_NEXT_PIECE;
+
+
 public class NextPiece extends JPanel implements PropertyChangeListener {
-    private TetrisPiece nextPiece =null;
-    private Point[] myPoint =null;
-    private Block block=null;
-    private final JPanel[][] panels = new JPanel[4][4];
+    private static final int ROWS = 4;
+
+    /**
+     * Number of columns in the game board.
+     */
+    private static final int COLUMNS = 4;
+
+    /**
+     * The width of each block in pixels.
+     */
+    private static final int BLOCK_SIZE = 30;
+
+    private TetrisPiece myNextPiece;
+
 
     public NextPiece() {
-        setPreferredSize(new Dimension(100, 100));
-        setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        setLayout(new GridLayout(4, 4, 1, 1));
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                JPanel panel = new JPanel();
-                panel.setBackground(Color.BLACK);
-                panels[i][j] = panel;
-            }
-        }
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                add(panels[i][j]);
-            }
-        }
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
     }
-    // Override the paintComponent method to paint the Tetris piece
-    @Override
-    protected void paintComponent(Graphics g) {
-
-        System.out.println("paint1");
-        if (this.myPoint!=null){
-            super.paintComponent(g);
-
-            for (int i = 0; i <4; i++) {
-                for (int j = 0; j <4; j++) {
-                    panels[i][j].setBackground(Color.BLACK);
-                }
-            }
-
-            for (Point p : this.myPoint) {
-                System.out.println(p);
-                // Set the background color of each block in the Tetris piece
-                panels[p.x()][p.y()].setBackground(getBlockColor(nextPiece));
-            }
-            // Add the updated panels to the panel
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
-                    add(panels[i][j]);
-                }
-            }
-            // Repaint the panel
-            System.out.println(true);
-        }
-    }
-    // A helper method to return the color for each block type
-    private Color getBlockColor(TetrisPiece piece) {
-        switch (piece.getBlock()) {
-            case I:
-                return Color.CYAN;
-            case J:
-                return Color.BLUE;
-            case L:
-                return Color.ORANGE;
-            case O:
-                return Color.YELLOW;
-            case S:
-                return Color.GREEN;
-            case T:
-                return Color.PINK;
-            case Z:
-                return Color.RED;
-            default:
-                return Color.WHITE;
-        }
-    }
-
-    public Point[] getMyPoint() {
-        return myPoint;
-    }
-
-    public void setMyPoint(Point[] myPoint) {
-        this.myPoint = myPoint;
-    }
-
-    public Block getBlock() {
-        return block;
-    }
-
-    public void setBlock(Block block) {
-        this.block = block;
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("myNextPiece")) {
-            this.nextPiece = (TetrisPiece) evt.getNewValue();
-            System.out.println(nextPiece);
-            Block block1 = this.nextPiece.getBlock();
-            Point[] points = this.nextPiece.getPoints();
-            setBlock(block1);
-            setMyPoint(points);
-            if (this.block != null && this.myPoint != null) {
-                // Remove all components from the panel
-                // Set the background color of each block in the Tetris piece
-                repaint();
-            }
+        if (PROPERTY_NEXT_PIECE.equals(evt.getPropertyName())) {
+            myNextPiece = (TetrisPiece) evt.getNewValue();
+            repaint();
         }
     }
+
+
+    @Override
+    protected void paintComponent(Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+        // for better graphics display
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        if (myNextPiece != null) {
+            Point[] points = myNextPiece.getPoints();
+            g2d.setColor(getColor(myNextPiece.getBlock()));
+            for (Point point : points) {
+                int x = point.x();
+                int y = point.y();
+                g2d.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+            }
+        }
+
+        // Draw the grid lines.
+        g2d.setColor(Color.RED);
+        for (int row = 0; row <= ROWS; row++) {
+            g2d.drawLine(0, row * BLOCK_SIZE, COLUMNS * BLOCK_SIZE, row * BLOCK_SIZE);
+        }
+        for (int col = 0; col <= COLUMNS; col++) {
+            g2d.drawLine(col * BLOCK_SIZE, 0, col * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+        }
+    }
+
+    private Color getColor(Block block) {
+        Color blockColor = Color.BLACK;
+        switch (block) {
+            case I:
+                blockColor = Color.CYAN;
+                break;
+            case J:
+                blockColor = Color.BLUE;
+                break;
+            case L:
+                blockColor = Color.ORANGE;
+                break;
+            case O:
+                blockColor = Color.YELLOW;
+                break;
+            case S:
+                blockColor = Color.GREEN;
+                break;
+            case T:
+                blockColor = Color.decode("#A020F0"); // purple
+                break;
+            case Z:
+                blockColor = Color.RED;
+                break;
+        }
+        return blockColor;
+    }
+
+
 }
