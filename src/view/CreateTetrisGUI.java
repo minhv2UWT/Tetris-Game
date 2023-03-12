@@ -192,7 +192,8 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private Clip clip;
     private boolean myGameOver;
     private ControlAdapter myKeys;
-
+    private PauseKey myPauseKey;
+    private boolean myPause;
 
     /**
      * This method is a constructor that calls the createMenuGUI() method.
@@ -205,7 +206,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         createMenuGUI();
         myBoard = theBoard;
         myKeys = new ControlAdapter();
-
+        myPauseKey = new PauseKey();
         myTimer = new Timer(TIMER_DELAY, new ActionListener() {
             int n = 0;
 
@@ -223,9 +224,35 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent theEvent) {
         if (PROPERTY_GAME_OVER.equals(theEvent.getPropertyName())) {
             myGameOver = (boolean) theEvent.getNewValue();
-            if(myGameOver) {
+            if (myGameOver) {
                 myTimer.stop();
                 clip.stop();
+                removeKeyListener(myKeys);
+                removeKeyListener(myPauseKey);
+                JOptionPane.showMessageDialog(null, "GAME OVER YOU SUCK!!!", "GAME OVER LOL", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+
+    class PauseKey extends KeyAdapter {
+        @Override
+        public void keyPressed(final KeyEvent theEvent) {
+            final int keyCode = theEvent.getKeyCode();
+            final char keyChar = theEvent.getKeyChar();
+            if (keyCode == KeyEvent.VK_P || keyChar == 'p' || keyChar == 'P') {
+                System.out.println("Pause");
+                myPause = !myPause;
+                if (myPause) {
+                    if (clip != null) {
+                        clip.stop();
+                    }
+                    myTimer.stop();
+                    removeKeyListener(myKeys);
+                } else {
+                    clip.start();
+                    myTimer.start();
+                    addKeyListener(myKeys);
+                }
             }
         }
     }
@@ -326,36 +353,17 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                 myBoard.newGame();
                 myTimer.restart();
                 myGameOver = false;
-                addKeyListener(myKeys);
-            }
-        });
-        mySaveItem.addActionListener(e -> out.println("Game Saved"));
-        myLoadItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clip.start();
-                myBoard.step();
-                myTimer.start();
-                addKeyListener(myKeys);
 
-            }
-        });
-        myPauseItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (clip != null) {
-                    clip.stop();
-                }
-                myTimer.stop();
+                removeKeyListener(myPauseKey);
+                addKeyListener(myPauseKey);
                 removeKeyListener(myKeys);
+                addKeyListener(myKeys);
             }
         });
         // Adding Items to file menu
         fileMenu.add(myNewGameItem);
         fileMenu.addSeparator();
-        fileMenu.add(mySaveItem);
-        fileMenu.add(myLoadItem);
-        fileMenu.add(myPauseItem);
+
 
         // Adding Items to about us menu
         aboutMenu.add(myAboutUsItem);

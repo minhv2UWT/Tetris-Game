@@ -53,10 +53,6 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         }
         if (PROPERTY_GAME_OVER.equals(evt.getPropertyName())) {
             myGameOver = (Boolean) evt.getNewValue();
-            if(checkGameOver(myGameOver)) {
-                JOptionPane.showMessageDialog(null, "GAME OVER YOU SUCK!!!", "GAME OVER LOL", JOptionPane.INFORMATION_MESSAGE);
-            }
-
         }
     }
 
@@ -70,18 +66,6 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         drawUpdatedBoard(g2d);
         drawGrid(g2d);
 
-    }
-
-    private boolean checkGameOver(boolean theGameOver) {
-        System.out.println("I'm called!!!" + this.getClass());
-        Block[] firstRow = myBlocksOnBoard.get(0);
-        for (int i = 2; i < firstRow.length - 3; i++) {
-            if (firstRow[i] != null) {
-                myGameOver = theGameOver;
-                break;
-            }
-        }
-        return myGameOver;
     }
 
     private void drawGrid(Graphics2D g2d) {
