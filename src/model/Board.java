@@ -197,7 +197,7 @@ public class Board implements CreateBoard {
         myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX, null, mySequenceIndex);
         myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myFrozenBlocks);
         myPCS.firePropertyChange(PROPERTY_GAME_OVER, null, myGameOver);
-        myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, myCurrentPiece);
+        myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, new BoardData().getBoardData());
         myPCS.firePropertyChange(PROPERTY_DROP, null, myDrop);
     }
 
@@ -229,7 +229,7 @@ public class Board implements CreateBoard {
             if (!myGameOver) {
                 myCurrentPiece = nextMovablePiece(false);
             }
-            myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, myCurrentPiece);
+            myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, new BoardData().getBoardData());
         }
     }
 
@@ -358,7 +358,7 @@ public class Board implements CreateBoard {
             result = true;
             if (!myDrop) {
                 myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE,
-                        oldCurrentPiece, myCurrentPiece);
+                        oldCurrentPiece, new BoardData().getBoardData());
             }
         }
         return result;
@@ -428,7 +428,7 @@ public class Board implements CreateBoard {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
-        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, myBoardData.getBoardData());
+        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, new BoardData().getBoardData());
 
     }
 

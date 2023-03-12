@@ -6,6 +6,7 @@ import model.Block;
 
 import java.awt.*;
 
+import java.awt.geom.RectangularShape;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Array;
@@ -38,24 +39,26 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      * my Movable Piece
      */
     private MovableTetrisPiece myCurrentPiece;
-    private final List<Block[]> myFrozenBlocks;
+    private RectangularShape myPiece;
+    private List<Block[]> myFrozenBlocks;
 
 
     public TetrisGameBoard() {
 
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
-        myFrozenBlocks = new ArrayList<Block[]>();
+        myFrozenBlocks = new LinkedList<Block[]>();
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (PROPERTY_CURRENT_PIECE.equals(evt.getPropertyName())) {
-            myCurrentPiece = (MovableTetrisPiece) evt.getNewValue();
+            myFrozenBlocks = (List<Block[]>) evt.getNewValue();
             repaint();
         }
         if (PROPERTY_FROZEN_BLOCKS.equals(evt.getPropertyName())) {
-
+            myFrozenBlocks = (List<Block[]>) evt.getNewValue();
+            repaint();
         }
     }
 
@@ -69,6 +72,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         if (myCurrentPiece != null) {
             drawCurrentPiece(g2d);
         }
+        drawFrozenBlock(g2d);
         drawGrid(g2d);
 
     }
@@ -83,13 +87,30 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         }
     }
 
+    private void drawFrozenBlock(Graphics2D g2d) {
+        g2d.setColor(Color.GRAY);
+        for (int rowNumber = 0; rowNumber < myFrozenBlocks.size(); rowNumber++) {
+            Block[] row = myFrozenBlocks.get(rowNumber);
+            for (int column = 0; column < row.length; column++) {
+                if (row[column] != null) {
+                    int x = column * BLOCK_SIZE;
+                    int y = (ROWS - 1 - rowNumber) * BLOCK_SIZE;
+                    g2d.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+                }
+            }
+        }
+    }
+
+
     private void drawCurrentPiece(Graphics2D g2d) {
-        int[][] points = myCurrentPiece.getTetrisPiece().getPointsByRotation(myCurrentPiece.getRotation());
-        g2d.setColor(getColor(myCurrentPiece.getTetrisPiece().getBlock()));
-        for (int i = 0; i < points.length; i++) {
-            int x = points[i][0] + myCurrentPiece.getPosition().x();
-            int y = ROWS - (points[i][1] + myCurrentPiece.getPosition().y() + 1);
-            g2d.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+
+        for (int i = 0; i < myFrozenBlocks.size(); i++) {
+            for (int j = 0; j < myFrozenBlocks.get(i).length; j++) {
+                if (myFrozenBlocks.get(i)[j] != null) {
+                    g2d.setColor(getColor(myFrozenBlocks.get(i)[j]));
+                    myPiece.setFrame(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                }
+            }
         }
     }
 
