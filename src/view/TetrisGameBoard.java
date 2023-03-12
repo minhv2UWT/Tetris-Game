@@ -62,28 +62,24 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
 
         drawUpdatedBoard(g2d);
         drawGrid(g2d);
-
     }
 
     private void drawGrid(Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
         for (int i = 0; i <= ROWS; i++) {
-            for (int j = 0; j <= COLUMNS; j++) {
+            for (int column = 0; column <= COLUMNS; column++) {
                 g2d.drawLine(0, i * BLOCK_SIZE, COLUMNS * BLOCK_SIZE, i * BLOCK_SIZE);
-                g2d.drawLine(j * BLOCK_SIZE, 0, j * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+                g2d.drawLine(column * BLOCK_SIZE, 0, column * BLOCK_SIZE, ROWS * BLOCK_SIZE);
             }
         }
     }
 
     private void drawUpdatedBoard(Graphics2D g2d) {
-        g2d.setColor(Color.GRAY);
-        for (int i = 0; i < myBlocksOnBoard.size(); i++) {
-            Block[] row = myBlocksOnBoard.get(i);
-            for (int column = 0; column < row.length; column++) {
-                Block blocks = row[column];
-                if (blocks != null) {
-                    g2d.setColor(getColor(blocks));
-                    g2d.fillRect(column * BLOCK_SIZE, (ROWS - 1 - i) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+        for (int row = 0; row < myBlocksOnBoard.size(); row++) {
+            for (int column = 0; column < myBlocksOnBoard.get(row).length; column++) {
+                if (myBlocksOnBoard.get(row)[column] != null) {
+                    g2d.setColor(getColor(myBlocksOnBoard.get(row)[column]));
+                    g2d.fillRect(column * BLOCK_SIZE, (ROWS - 1 - row) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
         }

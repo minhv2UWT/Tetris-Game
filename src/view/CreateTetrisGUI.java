@@ -235,6 +235,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                     myTimer.stop();
                     removeKeyListener(myKeys);
                 } else {
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
                     clip.start();
                     myTimer.start();
                     addKeyListener(myKeys);
@@ -332,7 +333,9 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myNewGameItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 clip.setMicrosecondPosition(0);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
                 clip.start();
                 myBoard.newGame();
                 myTimer.restart();
@@ -387,6 +390,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             File audioFile = new File("Tetris.wav");
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(audioFile));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
