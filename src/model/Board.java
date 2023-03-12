@@ -199,6 +199,7 @@ public class Board implements CreateBoard {
         myPCS.firePropertyChange(PROPERTY_GAME_OVER, null, myGameOver);
         myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, new BoardData().getBoardData());
         myPCS.firePropertyChange(PROPERTY_DROP, null, myDrop);
+        myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, null, myNextPiece);
     }
 
     @Override
@@ -537,7 +538,7 @@ public class Board implements CreateBoard {
      * Prepares the Next movable piece for preview.
      */
     private void prepareNextMovablePiece() {
-
+        TetrisPiece oldPiece = myNextPiece;
         final boolean share = myNextPiece != null;
         if (myNonRandomPieces == null || myNonRandomPieces.isEmpty()) {
             myNextPiece = TetrisPiece.getRandomPiece();
@@ -546,7 +547,7 @@ public class Board implements CreateBoard {
             myNextPiece = myNonRandomPieces.get(mySequenceIndex++);
         }
         if (share && !myGameOver) {
-            myPCS.firePropertyChange(CreateBoard.PROPERTY_NEXT_PIECE, null, myNextPiece);
+            myPCS.firePropertyChange(CreateBoard.PROPERTY_NEXT_PIECE, oldPiece, myNextPiece);
         }
     }
 

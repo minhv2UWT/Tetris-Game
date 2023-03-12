@@ -16,19 +16,19 @@ import static model.CreateBoard.*;
 public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
 
     /**
-     * Number of rows in the game board.
+     * Number of rows.
      */
     private static final int ROWS = 20;
 
     /**
-     * Number of columns in the game board.
+     * Number of columns.
      */
     private static final int COLUMNS = 10;
 
     /**
-     * The width of each block in pixels.
+     * Size of a Unit
      */
-    private static final int BLOCK_SIZE = 28;
+    private static final int UNIT = 28;
     /**
      * my Movable Piece
      */
@@ -37,7 +37,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
 
     public TetrisGameBoard() {
         setBackground(Color.BLACK);
-        setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
+        setPreferredSize(new Dimension(COLUMNS * UNIT, ROWS * UNIT));
         myBlocksOnBoard = new LinkedList<Block[]>();
     }
 
@@ -68,8 +68,8 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         g2d.setColor(Color.WHITE);
         for (int i = 0; i <= ROWS; i++) {
             for (int column = 0; column <= COLUMNS; column++) {
-                g2d.drawLine(0, i * BLOCK_SIZE, COLUMNS * BLOCK_SIZE, i * BLOCK_SIZE);
-                g2d.drawLine(column * BLOCK_SIZE, 0, column * BLOCK_SIZE, ROWS * BLOCK_SIZE);
+                g2d.drawLine(0, i * UNIT, COLUMNS * UNIT, i * UNIT);
+                g2d.drawLine(column * UNIT, 0, column * UNIT, ROWS * UNIT);
             }
         }
     }
@@ -79,7 +79,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
             for (int column = 0; column < myBlocksOnBoard.get(row).length; column++) {
                 if (myBlocksOnBoard.get(row)[column] != null) {
                     g2d.setColor(getColor(myBlocksOnBoard.get(row)[column]));
-                    g2d.fillRect(column * BLOCK_SIZE, (ROWS - 1 - row) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    g2d.fillRect(column * UNIT, (ROWS - (1 + row)) * UNIT, UNIT, UNIT);
                 }
             }
         }

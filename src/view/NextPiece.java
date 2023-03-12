@@ -7,30 +7,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.LinkedList;
+import java.util.List;
 
 
 import static model.CreateBoard.PROPERTY_NEXT_PIECE;
 
 
 public class NextPiece extends JPanel implements PropertyChangeListener {
-    private static final int ROWS = 4;
+    private static final int ROWS = 5;
 
     /**
      * Number of columns in the game board.
      */
-    private static final int COLUMNS = 4;
+    private static final int COLUMNS = 5;
 
     /**
      * The width of each block in pixels.
      */
-    private static final int BLOCK_SIZE = 50;
-
+    private static final int BLOCK_SIZE = 40;
     private TetrisPiece myNextPiece;
 
+    private List<Block[]> myBlock;
 
     public NextPiece() {
         setBackground(Color.BLACK);
-        setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE , ROWS * BLOCK_SIZE));
+        setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
+        myBlock = new LinkedList<Block[]>();
+        myNextPiece = TetrisPiece.J;
     }
 
     @Override
@@ -50,11 +54,16 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        drawNextPiece(g2d);
         drawGrid(g2d);
     }
-private void drawNextPiece() {
 
-}
+    private void drawNextPiece(Graphics2D g2d) {
+if(myNextPiece!= null) {
+
+        }
+    }
+
     private void drawGrid(Graphics2D g2d) {
         g2d.setColor(Color.RED);
         for (int i = 0; i <= ROWS; i++) {
