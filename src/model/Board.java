@@ -137,6 +137,7 @@ public class Board implements CreateBoard {
         myGameBoard = new TetrisGameBoard();
         myScorePanel = new ScorePanel();
         myNextPiecePanel = new NextPiece();
+
         myPCS = new PropertyChangeSupport(this);
 
         myPCS.addPropertyChangeListener(myGameBoard);
@@ -198,6 +199,7 @@ public class Board implements CreateBoard {
         myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, new BoardData().getBoardData());
         myPCS.firePropertyChange(PROPERTY_GAME_OVER, null, myGameOver);
         myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, new BoardData().getBoardData());
+        myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, myNextPiece, myNextPiece);
 
     }
 
@@ -472,7 +474,7 @@ public class Board implements CreateBoard {
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
-            myPCS.firePropertyChange(PROPERTY_GAME_OVER, false, true);
+            myPCS.firePropertyChange(PROPERTY_GAME_OVER, false, myGameOver);
         }
     }
 

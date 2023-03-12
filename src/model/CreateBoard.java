@@ -17,7 +17,7 @@ public interface CreateBoard {
     /**
      * A property name for changes that affect the NextPiece Panel.
      */
-    String PROPERTY_NEXT_PIECE = "NextPiece Mutation";
+    public static final String PROPERTY_NEXT_PIECE = "NextPiece Mutation";
 
     /**
      * Add a PropertyChangeListener to the listener list. The listener is registered for

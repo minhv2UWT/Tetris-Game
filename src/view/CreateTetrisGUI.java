@@ -172,7 +172,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     /**
      * Instance of new panels/
      */
-    private JPanel myInforPanel;
+    private ScorePanel myInforPanel;
     private TetrisGameBoard myGameBoard;
     private NextPiece myNextPiecePanel;
     private Clip clip;
@@ -559,8 +559,9 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         final Board board = new Board();
 
         final CreateTetrisGUI panel = new CreateTetrisGUI(board);
-        board.addPropertyChangeListener(panel);
         board.addPropertyChangeListener(panel.myGameBoard);
+        board.addPropertyChangeListener(panel.myNextPiecePanel);
+        board.addPropertyChangeListener(panel.myInforPanel);
     }
 
 }

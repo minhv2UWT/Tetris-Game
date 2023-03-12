@@ -5,11 +5,9 @@ import model.Point;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.LinkedList;
-import java.util.List;
-
 
 import static model.CreateBoard.PROPERTY_NEXT_PIECE;
 
@@ -28,12 +26,11 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     private static final int BLOCK_SIZE = 40;
     private TetrisPiece myNextPiece;
 
-    private List<Block[]> myBlock;
 
     public NextPiece() {
+
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(COLUMNS * BLOCK_SIZE, ROWS * BLOCK_SIZE));
-        myBlock = new LinkedList<Block[]>();
 
 
     }
@@ -41,10 +38,10 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (PROPERTY_NEXT_PIECE.equals(evt.getPropertyName())) {
-            System.out.println("I'm called");
             myNextPiece = (TetrisPiece) evt.getNewValue();
             repaint();
         }
+
     }
 
 
@@ -58,17 +55,13 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
         if (myNextPiece != null) {
             drawNextPiece(g2d);
         }
-        System.out.println("aaa");
         drawGrid(g2d);
     }
 
     private void drawNextPiece(Graphics2D g2d) {
-        System.out.println("drawn");
-
         for (Point p : myNextPiece.getPoints()) {
             g2d.setColor(getColor(myNextPiece.getBlock()));
-            g2d.fillRect(p.x() * BLOCK_SIZE, p.y() * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-
+            g2d.fillRect((p.x() + 1) * BLOCK_SIZE, (p.y()+1) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         }
     }
 

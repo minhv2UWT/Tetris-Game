@@ -33,7 +33,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      * my Movable Piece
      */
     private List<Block[]> myBlocksOnBoard;
-    private boolean myGameOver;
+
 
     public TetrisGameBoard() {
         setBackground(Color.BLACK);

@@ -14,16 +14,14 @@ import static model.CreateBoard.PROPERTY_FROZEN_BLOCKS;
 public class ScorePanel extends JPanel implements PropertyChangeListener {
 
     int score;
-    int level = 1;
+    int level;
     int myLines;
     private final List<Block[]> myFrozenBlocks;
 
 
-//int nextLevel;
-
     public ScorePanel() {
-
-
+        level = 1;
+        myLines = 0;
         this.setBackground(Color.darkGray);
         setUpComponent();
         myFrozenBlocks = new LinkedList<Block[]>();
@@ -59,6 +57,24 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         linesCleared.setForeground(Color.WHITE);
         linesCleared.setFont(new Font("Arial", Font.PLAIN, 12));
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getLines() {
+        return myLines;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(PROPERTY_FROZEN_BLOCKS)) {
+            final List<Block[]> newFrozenBlock = (List<Block[]>) evt.getNewValue();
+            for (int i = 0; i < newFrozenBlock.size(); i++) {
+
+            }
+
+        }
 //    public void propertyChange(PropertyChangeEvent evt, final Integer[] theArray) {
 //        if (evt.getPropertyName().equals(PROPERTY_FROZEN_BLOCKS)) {
 //            if(theArray.length == 1) {
@@ -85,23 +101,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
 //        }
 //    }
 
-    public int getLevel() {
-        return level;
-    }
 
-    public int getLines() {
-        return myLines;
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals(PROPERTY_FROZEN_BLOCKS)) {
-            final List<Block[]> newFrozenBlock = (List<Block[]>) evt.getNewValue();
-            for (Block[] blocks : myFrozenBlocks) {
-
-            }
-
-        }
 //            if (theArray.length == 1) {
 //                score += 40 * level;
 //                myLines++;
