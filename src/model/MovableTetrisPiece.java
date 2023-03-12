@@ -7,8 +7,7 @@
 package model;
 
 /**
- * Represents a TetrisPiece with a position and a rotation.
- * 
+ * Represents a TetrisPiece with a position and a rotation.*
  * A MovableTetrisPiece is immutable.
  * 
  * @author Charles Bryan
@@ -39,7 +38,7 @@ public final class MovableTetrisPiece {
     
     // This constructor allows creation of pieces in the zero rotational state
     /**
-     * Constructs a MovablTetrisPiece using the specified type and position;
+     * Constructs a MovableTetrisPiece using the specified type and position;
      * the initial rotation is set to the default zero (NONE) Rotation.
      * 
      * @param theTetrisPiece the type of TetrisPiece.
@@ -53,7 +52,7 @@ public final class MovableTetrisPiece {
 
     // This constructor allows creation of pieces in any rotation
     /**
-     * Constructs a MovablTetrisPiece using the specified type, position, and initial rotation.
+     * Constructs a MovableTetrisPiece using the specified type, position, and initial rotation.
      * 
      * @param theTetrisPiece the type of TetrisPiece.
      * @param thePosition the position on the Board.
@@ -131,7 +130,7 @@ public final class MovableTetrisPiece {
      * 
      * @return the board points for the TetrisPiece blocks.
      */
-    protected Point[] getBoardPoints() {
+    Point[] getBoardPoints() {
         return getPoints(myPosition);
     }
     
@@ -141,18 +140,18 @@ public final class MovableTetrisPiece {
      * 
      * @return A new rotated movable TetrisPiece
      */
-    protected MovableTetrisPiece rotateCW() {
+    MovableTetrisPiece rotateCW() {
         return new MovableTetrisPiece(myTetrisPiece,
                                       myPosition,
                                       myRotation.clockwise());
     }
 
     /**
-     * Rotates the TetrisPiece counter clockwise.
+     * Rotates the TetrisPiece counterclockwise.
      * 
      * @return A new rotated movable TetrisPiece
      */
-    protected MovableTetrisPiece rotateCCW() {
+    MovableTetrisPiece rotateCCW() {
         return new MovableTetrisPiece(myTetrisPiece,
                                       myPosition,
                                       myRotation.counterClockwise());
@@ -163,7 +162,7 @@ public final class MovableTetrisPiece {
      * 
      * @return A new left moved movable TetrisPiece
      */
-    protected MovableTetrisPiece left() {
+    MovableTetrisPiece left() {
         return new MovableTetrisPiece(myTetrisPiece,
                                       myPosition.transform(-1, 0),
                                       myRotation);
@@ -174,7 +173,7 @@ public final class MovableTetrisPiece {
      * 
      * @return A new right moved movable TetrisPiece
      */
-    protected MovableTetrisPiece right() {
+    MovableTetrisPiece right() {
         return new MovableTetrisPiece(myTetrisPiece,
                                       myPosition.transform(1, 0),
                                       myRotation);
@@ -185,7 +184,7 @@ public final class MovableTetrisPiece {
      * 
      * @return A new movable TetrisPiece moved down.
      */
-    protected MovableTetrisPiece down() {
+    MovableTetrisPiece down() {
         return new MovableTetrisPiece(myTetrisPiece,
                                       myPosition.transform(0, -1),
                                       myRotation);
@@ -200,7 +199,7 @@ public final class MovableTetrisPiece {
      * @param thePosition the location for the returned MovableTetrisPiece
      * @return A new movable TetrisPiece at the specified location
      */
-    protected MovableTetrisPiece setPosition(final Point thePosition) {
+    MovableTetrisPiece setPosition(final Point thePosition) {
         return new MovableTetrisPiece(myTetrisPiece, thePosition, myRotation);
     }
 
@@ -222,23 +221,14 @@ public final class MovableTetrisPiece {
             final Point block = blocks[i];
             if (myTetrisPiece != TetrisPiece.O) {
                 switch (myRotation) {
-                    case QUARTER:
-                        blocks[i] = new Point(block.y(),
-                                              myTetrisPiece.getWidth() - block.x() - 1);
-                        
-                        break;
-                    case HALF:
-                        blocks[i] = new Point(myTetrisPiece.getWidth() - block.x() - 1,
-                                              myTetrisPiece.getWidth() - block.y() - 1);
-                        
-                        break;
-                    case THREEQUARTER:                 
-                        blocks[i] = new Point(myTetrisPiece.getWidth() - block.y() - 1,
-                                              block.x());
-                        
-                        
-                        break;
-                    default:
+                    case QUARTER -> blocks[i] = new Point(block.y(),
+                            myTetrisPiece.getWidth() - block.x() - 1);
+                    case HALF -> blocks[i] = new Point(myTetrisPiece.getWidth() - block.x() - 1,
+                            myTetrisPiece.getWidth() - block.y() - 1);
+                    case THREEQUARTER -> blocks[i] = new Point(myTetrisPiece.getWidth() - block.y() - 1,
+                            block.x());
+                    default -> {
+                    }
                 }
             }
             if (thePoint != null) {

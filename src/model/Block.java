@@ -1,16 +1,15 @@
 package model;
 
 /**
- * The different types of blocks that can be stored in a Board's grid.
- *
+ * The different types of blocks that can be stored in a Board's grid.*
  * TCSS 305 - Project Tetris
  *
  * @author Alan Fowler
  * @version 1.2
  */
 public enum Block {
-    /** AN empty space in the grid. */
-    EMPTY,
+    //AN empty space in the grid. */
+    //EMPTY,
     /** A Block from an IPiece. */
     I,
     /** A Block from a JPiece. */
@@ -24,6 +23,5 @@ public enum Block {
     /** A Block from a TPiece. */
     T,
     /** A Block from a ZPiece. */
-    Z;
-
+    Z
 }
