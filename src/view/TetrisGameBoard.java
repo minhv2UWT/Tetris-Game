@@ -5,8 +5,8 @@
 
 package view;
 
-import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
-import static model.CreateBoard.PROPERTY_FROZEN_BLOCKS;
+import static model.CreateBoard.CURRENT_PIECE;
+import static model.CreateBoard.FROZEN_BLOCKS;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -78,11 +78,11 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvt) {
-        if (PROPERTY_CURRENT_PIECE.equals(theEvt.getPropertyName())) {
+        if (CURRENT_PIECE.equals(theEvt.getPropertyName())) {
             myBlocksOnBoard = (List<Block[]>) theEvt.getNewValue();
             repaint();
         }
-        if (PROPERTY_FROZEN_BLOCKS.equals(theEvt.getPropertyName())) {
+        if (FROZEN_BLOCKS.equals(theEvt.getPropertyName())) {
             myBlocksOnBoard = (List<Block[]>) theEvt.getNewValue();
             repaint();
         }
@@ -119,9 +119,9 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
     private void drawGrid(final Graphics2D theG2d) {
         theG2d.setColor(Color.WHITE);
         for (int i = 0; i <= ROWS; i++) {
-            for (int column = 0; column <= COLUMNS; column++) {
+            for (int j = 0; j <= COLUMNS; j++) {
                 theG2d.drawLine(0, i * UNIT, COLUMNS * UNIT, i * UNIT);
-                theG2d.drawLine(column * UNIT, 0, column * UNIT, ROWS * UNIT);
+                theG2d.drawLine(j * UNIT, 0, j * UNIT, ROWS * UNIT);
             }
         }
     }
@@ -131,13 +131,13 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      * @param theG2d this is the graphic that is being drawn.
      */
     private void drawUpdatedBoard(final Graphics2D theG2d) {
-        for (int row = 0; row < myBlocksOnBoard.size(); row++) {
-            final Block[] rowBlocks = myBlocksOnBoard.get(row);
-            for (int column = 0; column < rowBlocks.length; column++) {
-                if (myBlocksOnBoard.get(row)[column] != null) {
-                    theG2d.setColor(getColor(myBlocksOnBoard.get(row)[column]));
-                    final int upsideDown = ROWS - (1 + row);
-                    theG2d.fillRect(column * UNIT, upsideDown * UNIT, UNIT, UNIT);
+        for (int i = 0; i < myBlocksOnBoard.size(); i++) {
+            final Block[] rowBlocks = myBlocksOnBoard.get(i);
+            for (int j = 0; j < rowBlocks.length; j++) {
+                if (myBlocksOnBoard.get(i)[j] != null) {
+                    theG2d.setColor(getColor(myBlocksOnBoard.get(i)[j]));
+                    final int upsideDown = ROWS - (1 + i);
+                    theG2d.fillRect(j * UNIT, upsideDown * UNIT, UNIT, UNIT);
                 }
             }
         }

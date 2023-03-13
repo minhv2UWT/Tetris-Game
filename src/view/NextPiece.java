@@ -5,7 +5,7 @@
 
 package view;
 
-import static model.CreateBoard.PROPERTY_NEXT_PIECE;
+import static model.CreateBoard.NEXT_PIECE;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -74,7 +74,7 @@ public class NextPiece extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvt) {
-        if (PROPERTY_NEXT_PIECE.equals(theEvt.getPropertyName())) {
+        if (NEXT_PIECE.equals(theEvt.getPropertyName())) {
             myNextPiece = (TetrisPiece) theEvt.getNewValue();
             repaint();
         }

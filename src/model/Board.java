@@ -6,13 +6,11 @@
 
 package model;
 
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import model.wallkicks.WallKick;
 import view.NextPiece;
 import view.ScorePanel;
@@ -21,7 +19,7 @@ import view.TetrisGameBoard;
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern.
- * <p>Clients can expect Board objects to call norifyObservers with four different
+ * <p>Clients can expect Board objects to call notify Observers with four different
  * data types:</p>
  * <dl>
  * <dt>{@code List<Block[]>}</dt>
@@ -38,11 +36,15 @@ import view.TetrisGameBoard;
  *
  * @author Charles Bryan
  * @author Alan Fowler
+ * @author Koji Yoshiyama
+ * @author Simran Narwal
+ * @author Minh Vu
+ * @author Jack Chen
  * @version 1.3
  */
 public class Board implements CreateBoard {
 
-    // Class constants
+// Class constants
 
     /**
      * Default width of a Tetris game board.
@@ -54,7 +56,7 @@ public class Board implements CreateBoard {
      */
     private static final int DEFAULT_HEIGHT = 20;
 
-    // Instance fields
+// Instance fields
     /**
      * Width of the game board.
      */
@@ -69,9 +71,6 @@ public class Board implements CreateBoard {
      * The frozen blocks on the board.
      */
     private final List<Block[]> myFrozenBlocks;
-    private final ScorePanel myScorePanel;
-    private final NextPiece myNextPiecePanel;
-
 
     /**
      * The game over state.
@@ -109,8 +108,23 @@ public class Board implements CreateBoard {
      * This field stores all the property change listeners.
      */
     private final PropertyChangeSupport myPCS;
-    private final TetrisGameBoard myGameBoard;
-    // Constructors
+
+    /**.
+     * Instantiates TetrisBoardGame so it can be notified by the observer
+     */
+    private final TetrisGameBoard myGameBoard = new TetrisGameBoard();
+
+    /**.
+     * Instantiates ScorePanel so it can be notified by the observer
+     */
+    private final ScorePanel myScorePanel = new ScorePanel();
+
+    /**.
+     * Instantiates myNextPiece so it can be notified by the observer
+     */
+    private final NextPiece myNextPiecePanel = new NextPiece();
+
+// Constructors
 
     /**
      * Default Tetris board constructor.
@@ -122,67 +136,58 @@ public class Board implements CreateBoard {
 
     /**
      * Tetris board constructor for non-default sized boards.
-     *
-     * @param theWidth  Width of the Tetris game board.
+     * Instantiates TetrisGameBoard, ScorePanel, and NextPiece panel
+     * ,so they can be notified of changes made (PCL)
+     * @param theWidth Width of the Tetris game board.
      * @param theHeight Height of the Tetris game board.
      */
     public Board(final int theWidth, final int theHeight) {
         super();
         myWidth = theWidth;
         myHeight = theHeight;
-        myFrozenBlocks = new LinkedList<Block[]>();
+        myFrozenBlocks = new LinkedList<>();
 
-        myNonRandomPieces = new ArrayList<TetrisPiece>();
+        myNonRandomPieces = new ArrayList<>();
         mySequenceIndex = 0;
-        myGameBoard = new TetrisGameBoard();
-        myScorePanel = new ScorePanel();
-        myNextPiecePanel = new NextPiece();
 
         myPCS = new PropertyChangeSupport(this);
 
         myPCS.addPropertyChangeListener(myGameBoard);
         myPCS.addPropertyChangeListener(myScorePanel);
         myPCS.addPropertyChangeListener(myNextPiecePanel);
-        /*  myNextPiece and myCurrentPiece
-         *  are initialized by the newGame() method.
-         */
     }
 
+    /**.
+     * adds a property change listener
+     * @param theListener The PropertyChangeListener to be added
+     */
     @Override
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
         myPCS.addPropertyChangeListener(theListener);
     }
 
-    @Override
-    public void addPropertyChangeListener(final String thePropertyName,
-                                          final PropertyChangeListener theListener) {
-        myPCS.addPropertyChangeListener(thePropertyName, theListener);
-    }
+// public queries
 
-    @Override
-    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
-        myPCS.removePropertyChangeListener(theListener);
-    }
-
-    @Override
-    public void removePropertyChangeListener(final String thePropertyName,
-                                             final PropertyChangeListener theListener) {
-        myPCS.removePropertyChangeListener(thePropertyName, theListener);
-    }
-
-    // public queries
-
+    /**.
+     * method to return width
+     * @return the width of the board
+     */
     @Override
     public int getWidth() {
         return myWidth;
     }
 
-    @Override
+    /**.
+     * method to return height
+     * @return the height of the board
+     */
     public int getHeight() {
         return myHeight;
     }
 
-
+    /**.
+     * method to start a new game and if game is over, to restart
+     */
     @Override
     public void newGame() {
         mySequenceIndex = 0;
@@ -195,21 +200,28 @@ public class Board implements CreateBoard {
         myCurrentPiece = nextMovablePiece(true);
         myDrop = false;
 
-        myPCS.firePropertyChange(PROPERTY_SEQUENCE_INDEX, null, mySequenceIndex);
-        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, new BoardData().getBoardData());
-        myPCS.firePropertyChange(PROPERTY_GAME_OVER, null, myGameOver);
-        myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, new BoardData().getBoardData());
-        myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, myNextPiece, myNextPiece);
+        myPCS.firePropertyChange(SEQUENCE_INDEX, null, mySequenceIndex);
+        myPCS.firePropertyChange(FROZEN_BLOCKS, null, new BoardData().getBoardData());
+        myPCS.firePropertyChange(GAME_OVER, null, myGameOver);
+        myPCS.firePropertyChange(CURRENT_PIECE, null, new BoardData().getBoardData());
+        myPCS.firePropertyChange(NEXT_PIECE, myNextPiece, myNextPiece);
 
     }
 
+    /**.
+     * sequence for how the pieces will be displayed
+     * @param thePieces the List of non-random TetrisPieces.
+     */
     @Override
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
-        myNonRandomPieces = new ArrayList<TetrisPiece>(thePieces);
+        myNonRandomPieces = new ArrayList<>(thePieces);
         mySequenceIndex = 0;
         myCurrentPiece = nextMovablePiece(true);
     }
 
+    /**.
+     * step is used to bring down the piece
+     */
     @Override
     public void step() {
         /*
@@ -221,34 +233,44 @@ public class Board implements CreateBoard {
         down();
     }
 
+    /**.
+     * moves a piece down
+     */
     @Override
     public void down() {
 
         if (!move(myCurrentPiece.down())) {
-            // the piece froze, so clear lines and update current piece
+// the piece froze, so clear lines and update current piece
             addPieceToBoardData(myFrozenBlocks, myCurrentPiece);
             checkRows();
             if (!myGameOver) {
                 myCurrentPiece = nextMovablePiece(false);
             }
-            myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE, null, new BoardData().getBoardData());
+            myPCS.firePropertyChange(CURRENT_PIECE,
+                    null, new BoardData().getBoardData());
         }
     }
-
+    /**.
+     * moves a piece to the left
+     */
     @Override
     public void left() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.left());
         }
     }
-
+    /**.
+     * moves a piece to the right
+     */
     @Override
     public void right() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.right());
         }
     }
-
+    /**.
+     * rotates a piece clockwise
+     */
     @Override
     public void rotateCW() {
         if (myCurrentPiece != null) {
@@ -269,7 +291,9 @@ public class Board implements CreateBoard {
             }
         }
     }
-
+    /**.
+     * rotates a piece counterclockwise
+     */
     @Override
     public void rotateCCW() {
         if (myCurrentPiece != null) {
@@ -290,20 +314,24 @@ public class Board implements CreateBoard {
             }
         }
     }
-
+    /**.
+     * drops a piece down
+     */
     @Override
     public void drop() {
         if (!myGameOver) {
             myDrop = true;
             while (isPieceLegal(myCurrentPiece.down())) {
-                down();  // move down as far as possible
+                down(); // move down as far as possible
             }
             myDrop = false;
-            down();  // move down one more time to freeze in place
+            down(); // move down one more time to freeze in place
         }
     }
 
-
+    /**.
+     * adds a piece to the board
+     */
     @Override
     public String toString() {
         final List<Block[]> board = getBoard();
@@ -314,36 +342,35 @@ public class Board implements CreateBoard {
         if (myCurrentPiece != null) {
             addPieceToBoardData(board, myCurrentPiece);
         }
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sBuilder = new StringBuilder();
         for (int i = board.size() - 1; i >= 0; i--) {
             final Block[] row = board.get(i);
-            sb.append('|');
+            sBuilder.append('|');
             for (final Block c : row) {
                 if (c == null) {
-                    sb.append(' ');
+                    sBuilder.append(' ');
                 } else {
-                    sb.append('*');
+                    sBuilder.append('*');
                 }
             }
-            sb.append("|\n");
+            sBuilder.append("|\n");
             if (i == this.myHeight) {
-                sb.append(' ');
+                sBuilder.append(' ');
                 for (int j = 0; j < this.myWidth; j++) {
-                    sb.append('-');
+                    sBuilder.append('-');
                 }
-                sb.append('\n');
+                sBuilder.append('\n');
             }
         }
-        sb.append('|');
-        for (int w = 0; w < myWidth; w++) {
-            sb.append('-');
+        sBuilder.append('|');
+        for (int j = 0; j < this.myWidth; j++) {
+            sBuilder.append('|');
         }
-        sb.append('|');
-        return sb.toString();
+        return sBuilder.toString();
     }
 
 
-    // private helper methods
+// private helper methods
 
     /**
      * Helper function to check if the current piece can be shifted to the
@@ -359,7 +386,7 @@ public class Board implements CreateBoard {
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
-                myPCS.firePropertyChange(PROPERTY_CURRENT_PIECE,
+                myPCS.firePropertyChange(CURRENT_PIECE,
                         oldCurrentPiece, new BoardData().getBoardData());
             }
         }
@@ -396,7 +423,7 @@ public class Board implements CreateBoard {
      * and the frozen blocks.
      *
      * @param theFrozenBlocks Board to set the piece on.
-     * @param thePiece        Piece to set on the board.
+     * @param thePiece Piece to set on the board.
      */
     private void addPieceToBoardData(final List<Block[]> theFrozenBlocks,
                                      final MovableTetrisPiece thePiece) {
@@ -422,7 +449,7 @@ public class Board implements CreateBoard {
                 completeRows.add(myFrozenBlocks.indexOf(row));
             }
         }
-        // loop through list backwards removing items by index
+// loop through list backwards removing items by index
         if (!completeRows.isEmpty()) {
             for (int i = completeRows.size() - 1; i >= 0; i--) {
                 final Block[] row = myFrozenBlocks.get(completeRows.get(i));
@@ -430,7 +457,7 @@ public class Board implements CreateBoard {
                 myFrozenBlocks.add(new Block[myWidth]);
             }
         }
-        myPCS.firePropertyChange(PROPERTY_FROZEN_BLOCKS, null, new BoardData().getBoardData());
+        myPCS.firePropertyChange(FROZEN_BLOCKS, null, new BoardData().getBoardData());
 
     }
 
@@ -440,7 +467,7 @@ public class Board implements CreateBoard {
      * @return A new copy of the board.
      */
     private List<Block[]> getBoard() {
-        final List<Block[]> board = new ArrayList<Block[]>();
+        final List<Block[]> board = new ArrayList<>();
         for (final Block[] row : myFrozenBlocks) {
             board.add(row.clone());
         }
@@ -474,7 +501,7 @@ public class Board implements CreateBoard {
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
-            myPCS.firePropertyChange(PROPERTY_GAME_OVER, false, myGameOver);
+            myPCS.firePropertyChange(GAME_OVER, false, true);
         }
     }
 
@@ -485,11 +512,11 @@ public class Board implements CreateBoard {
      * @return the Block type at point or null if no block exists.
      */
     private Block getPoint(final Point thePoint) {
-        Block b = null;
+        Block block = null;
         if (isPointOnBoard(myFrozenBlocks, thePoint)) {
-            b = myFrozenBlocks.get(thePoint.y())[thePoint.x()];
+            block = myFrozenBlocks.get(thePoint.y())[thePoint.x()];
         }
-        return b;
+        return block;
     }
 
     /**
@@ -513,7 +540,7 @@ public class Board implements CreateBoard {
     /**
      * Gets the next MovableTetrisPiece.
      *
-     * @param theRestart Restart the non random cycle.
+     * @param theRestart Restart the non-random cycle.
      * @return A new MovableTetrisPiece.
      */
     private MovableTetrisPiece nextMovablePiece(final boolean theRestart) {
@@ -539,7 +566,7 @@ public class Board implements CreateBoard {
      * Prepares the Next movable piece for preview.
      */
     private void prepareNextMovablePiece() {
-        TetrisPiece oldPiece = myNextPiece;
+        final TetrisPiece oldPiece = myNextPiece;
         final boolean share = myNextPiece != null;
         if (myNonRandomPieces == null || myNonRandomPieces.isEmpty()) {
             myNextPiece = TetrisPiece.getRandomPiece();
@@ -548,12 +575,11 @@ public class Board implements CreateBoard {
             myNextPiece = myNonRandomPieces.get(mySequenceIndex++);
         }
         if (share && !myGameOver) {
-            myPCS.firePropertyChange(PROPERTY_NEXT_PIECE, oldPiece, myNextPiece);
+            myPCS.firePropertyChange(NEXT_PIECE, oldPiece, myNextPiece);
         }
     }
 
-
-    // Inner classes
+// Inner classes
 
     /**
      * A class to describe the board data to registered Observers.
@@ -569,7 +595,7 @@ public class Board implements CreateBoard {
         /**
          * Constructor of the Board Data object.
          */
-        protected BoardData() {
+        private BoardData() {
             myBoardData = getBoard();
             myBoardData.add(new Block[myWidth]);
             myBoardData.add(new Block[myWidth]);
@@ -585,8 +611,8 @@ public class Board implements CreateBoard {
          *
          * @return Copy of the Board Data.
          */
-        protected List<Block[]> getBoardData() {
-            final List<Block[]> board = new ArrayList<Block[]>();
+        private List<Block[]> getBoardData() {
+            final List<Block[]> board = new ArrayList<>();
             for (final Block[] row : myBoardData) {
                 board.add(row.clone());
             }
@@ -594,6 +620,4 @@ public class Board implements CreateBoard {
         }
 
     } // end inner class BoardData
-
-
 }

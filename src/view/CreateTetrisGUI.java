@@ -4,10 +4,8 @@
  */
 package view;
 
-import static model.CreateBoard.PROPERTY_GAME_OVER;
+import static model.CreateBoard.GAME_OVER;
 
-import model.Board;
-import model.CreateBoard;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import model.Board;
+import model.CreateBoard;
 
 
 
@@ -286,6 +286,9 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         this.setVisible(true);
     }
 
+    /**
+     * This method creates the audio playing in the background.
+     */
     private void createAudio() {
         try {
             final File audioFile = new File("Tetris.wav");
@@ -297,6 +300,9 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         }
     }
 
+    /**
+     * This method creates the layout for the panel display.
+     */
     private void createLayout() {
 // create panels
         final JPanel containerPanel = createPanel(Color.gray,
@@ -328,6 +334,9 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         this.add(myGameBoard, BorderLayout.CENTER);
     }
 
+    /**
+     * This method creates the JPanel for tetris.
+     */
     private JPanel createPanel(final Color theColor, final Dimension theSize) {
         final JPanel panel = new JPanel();
         panel.setBackground(theColor);
@@ -392,12 +401,12 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private void createHowToPlay() {
         final JFrame frame = new JFrame("Instructions to Play!");
         final JTextArea text = new JTextArea("""
-Instructions to Play!
-1. The pieces will automatically come down
-2. To bring piece down faster, click the down key on your keyboard
-3. Fit the pieces so they all fill the bottom row
-4. Once the bottom row is filled, your score will increase!
-""");
+            Instructions to Play!
+            1. The pieces will automatically come down
+            2. To bring piece down faster, click the down key on your keyboard
+            3. Fit the pieces so they all fill the bottom row
+            4. Once the bottom row is filled, your score will increase!
+            """);
         text.setBounds(0, 0, MAGIC_NUMBER, MAGIC_NUMBER);
         frame.add(text);
         frame.setSize(MAGIC_NUMBER, DIMENSION_150);
@@ -425,6 +434,8 @@ Instructions to Play!
             Answer: Unfortunately, we are unable to support that request at this time!
             5. Question: Can I play with other players?
             Answer: Unfortunately, this game of Tetris is to be played individually!
+            6. Question: Where did we get the background music from?
+            Answer: https://archive.org/details/TetrisThemeMusic#reviews
             Is your question not here?
             `Try searching the web. Good Luck :)
             """);
@@ -439,6 +450,9 @@ Instructions to Play!
         frame.setVisible(true);
     }
 
+    /**
+     * This method creates the option to exit out of the game.
+     */
     private void createExitOption() {
         final int selection = JOptionPane.showConfirmDialog(null,
                 "Are you sure you want to "
@@ -471,9 +485,14 @@ Instructions to Play!
         myTimer = new Timer(TIMER_DELAY, theEvent -> myBoard.step());
     }
 
+    /**
+     * This method determines the state of the game if game is over.
+     * @param theEvent A PropertyChangeEvent object describing the event source
+     * and the property that has changed.
+     */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (PROPERTY_GAME_OVER.equals(theEvent.getPropertyName())) {
+        if (GAME_OVER.equals(theEvent.getPropertyName())) {
             myGameOver = (boolean) theEvent.getNewValue();
             if (myGameOver) {
                 myTimer.stop();
@@ -505,7 +524,6 @@ Instructions to Play!
         board.addPropertyChangeListener(panel.myInfoPanel);
     }
 
-
     /**
      * .
      * Method that determines the state of the game when paused
@@ -532,7 +550,6 @@ Instructions to Play!
             }
         }
     }
-
 
     /**
      * .
@@ -575,6 +592,10 @@ Instructions to Play!
             }
         }
 
+        /**
+         * Implementing what happens when key is released.
+         * @param theEvent the event to be processed
+         */
         @Override
         public void keyReleased(final KeyEvent theEvent) {
             if (theEvent.getKeyCode() == KeyEvent.VK_H) {
