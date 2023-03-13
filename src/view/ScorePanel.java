@@ -13,29 +13,29 @@ import static model.CreateBoard.PROPERTY_FROZEN_BLOCKS;
 
 public class ScorePanel extends JPanel implements PropertyChangeListener {
 
-    int score;
-    int level;
-    int myLines;
+    private int myScore;
+    private int myLevel;
+    private int myLines;
     private final List<Block[]> myFrozenBlocks;
-
-
+    private JLabel scoreText;
+    private JLabel currentLevel;
+    private JLabel upLevel;
+    private JLabel linesCleared;
     public ScorePanel() {
-        level = 1;
-        myLines = 0;
         this.setBackground(Color.darkGray);
         setUpComponent();
         myFrozenBlocks = new LinkedList<Block[]>();
     }
 
     private void setUpComponent() {
-        JLabel scoreText = new JLabel();
+        scoreText = new JLabel();
         this.add(scoreText);
-        scoreText.setText("Current Score: " + score);
+        scoreText.setText("Current Score: " + myScore);
         scoreText.setForeground(Color.WHITE);
         scoreText.setFont(new Font("Arial", Font.BOLD, 12));
 
 
-        JLabel currentLevel = new JLabel();
+        currentLevel = new JLabel();
         currentLevel.setPreferredSize(new Dimension(100, 100));
         this.add(currentLevel);
         currentLevel.setText("Current Level: " + getLevel());
@@ -43,14 +43,12 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         currentLevel.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
-        JLabel upLevel = new JLabel();
+        upLevel = new JLabel();
         this.add(upLevel);
         upLevel.setText("Lines Till Next Level: ");
         upLevel.setForeground(Color.WHITE);
         upLevel.setFont(new Font("Arial", Font.PLAIN, 12));
-
-
-        JLabel linesCleared = new JLabel();
+        linesCleared = new JLabel();
         linesCleared.setPreferredSize(new Dimension(100, 100));
         this.add(linesCleared);
         linesCleared.setText("Lines Cleared: " + getLines());
@@ -59,7 +57,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
     }
 
     public int getLevel() {
-        return level;
+        return myLevel;
     }
 
     public int getLines() {
@@ -69,61 +67,25 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(PROPERTY_FROZEN_BLOCKS)) {
-            final List<Block[]> newFrozenBlock = (List<Block[]>) evt.getNewValue();
-            for (int i = 0; i < newFrozenBlock.size(); i++) {
+            final List<Block[]> myFrozenBlocks = (List<Block[]>) evt.getNewValue();
 
-            }
+            for (int row = 0; row < myFrozenBlocks.size(); row++) {
+                boolean checkRow = true;
+                int blockClear = 0;
+                int rowClear = 0;
+                for (int column = 0; column < myFrozenBlocks.get(row).length; column++) {
+                    if (myFrozenBlocks.get(row)[column] != null) {
+                        checkRow = false;
+                        break;
+                    }
+                    blockClear++;
+                    if(blockClear == 10) {
+                        rowClear++;
+                    }
+                }
+            }myScore++;
 
         }
-//    public void propertyChange(PropertyChangeEvent evt, final Integer[] theArray) {
-//        if (evt.getPropertyName().equals(PROPERTY_FROZEN_BLOCKS)) {
-//            if(theArray.length == 1) {
-//                score += 40 * level;
-//                myLines++;
-//            } else if (theArray.length == 2) {
-//                score += 100 * level;
-//                myLines++;
-//            } else if (theArray.length == 3) {
-//                score += 300 * level;
-//                myLines++;
-//            } else if (theArray.length == 4) {
-//                score += 1200 * level;
-//                myLines++;
-//            }
-//        }
-//
-//        if (myLines <= 4) {
-//            level++;
-//        } else if(myLines <= 9) {
-//            level ++;
-//        } else if(myLines <= 14) {
-//            level++;
-//        }
-//    }
 
-
-//            if (theArray.length == 1) {
-//                score += 40 * level;
-//                myLines++;
-//            } else if (theArray.length == 2) {
-//                score += 100 * level;
-//                myLines++;
-//            } else if (theArray.length == 3) {
-//                score += 300 * level;
-//                myLines++;
-//            } else if (theArray.length == 4) {
-//                score += 1200 * level;
-//                myLines++;
-//            }
-//        }
-//
-//        if (myLines <= 4) {
-//            level++;
-//        } else if (myLines <= 9) {
-//            level++;
-//        } else if (myLines <= 14) {
-//            level++;
-//        }
     }
 }
-

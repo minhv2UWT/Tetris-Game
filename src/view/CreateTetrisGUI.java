@@ -6,10 +6,6 @@ package view;
 
 import model.Board;
 import model.CreateBoard;
-import model.MovableTetrisPiece;
-
-import static java.lang.System.out;
-import static model.CreateBoard.PROPERTY_CURRENT_PIECE;
 import static model.CreateBoard.PROPERTY_GAME_OVER;
 
 import java.awt.BorderLayout;
@@ -52,14 +48,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      * This constant is made to avoid magic numbers.
      */
     private static final int SIZE_HEIGHT = 450;
-    /**
-     * About us Window Width.
-     */
-    private static final int ABOUT_US_WINDOW_WIDTH = 510;
-    /**
-     * About us Window Height.
-     */
-    private static final int ABOUT_US_WINDOW_HEIGHT = 500;
+
     /**
      * This constant sets the size of the gameBoardGUI.
      */
@@ -95,11 +84,11 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private static final String EXIT = "Exit";
 
     /**
-     * Creating string holding breaklines commands.
+     * Creating string holding break lines commands.
      */
     private static final String BR_BR = "<br><br>";
     /**
-     * Creating string holding breaklines commands.
+     * Creating string holding break lines commands.
      */
     private static final String HTML = "<html>";
 
@@ -134,21 +123,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      */
     private final JMenuItem myNewGameItem = new JMenuItem("New Game");
 
-
-    /**
-     * Creates a menu option that displays, "Layout 1".
-     */
-    private final JMenuItem myLayout1 = new JMenuItem("Layout 1");
-
-    /**
-     * Creates a menu option that displays, "Layout 2".
-     */
-    private final JMenuItem myLayout2 = new JMenuItem("Layout 2");
-
-    /**
-     * This is the game board GUI that will be merged with the menu bar.
-     */
-//    private JFrame this;
     /**
      * Create board inside the JFrame.
      */
@@ -162,29 +136,42 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      */
     private final Timer myTimer;
     /**
-     * Instance of new panels/
+     * Instance of new Score Panel
      */
-    private JPanel myContainerPanel;
+    private ScorePanel myInfoPanel;
     /**
-     * Instance of new panels/
+     * Instance of new GameBoard Panel
      */
-    private JPanel myTetrisTitlePanel;
-    /**
-     * Instance of new panels/
-     */
-    private ScorePanel myInforPanel;
     private TetrisGameBoard myGameBoard;
+    /**
+     * Instance of new NextPiece Panel
+     */
     private NextPiece myNextPiecePanel;
+    /**
+     * Instance of sound clip
+     */
     private Clip clip;
+    /**
+     * Boolean for myGameOver
+     */
     private boolean myGameOver;
-    private ControlAdapter myKeys;
-    private PauseKey myPauseKey;
+    /**
+     * Instantiates ControlAdapter
+     */
+    private final ControlAdapter myKeys;
+    /**
+     * Instantiates new PauseKey
+     */
+    private final PauseKey myPauseKey;
+    /**
+     * Boolean for if myPause if on or off
+     */
     private boolean myPause;
 
     /**
      * This method is a constructor that calls the createMenuGUI() method.
      */
-    public CreateTetrisGUI(CreateBoard theBoard) {
+    public CreateTetrisGUI(final CreateBoard theBoard) {
         super();
         createAudio();
         gameBoardGUISetUp();
@@ -193,21 +180,12 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myBoard = theBoard;
         myKeys = new ControlAdapter();
         myPauseKey = new PauseKey();
-        myTimer = new Timer(TIMER_DELAY, new ActionListener() {
-            int n = 0;
-
-            @Override
-            public void actionPerformed(final ActionEvent theEvent) {
-
-                myBoard.step();
-                System.out.println(n++);
-            }
-        });
+        myTimer = new Timer(TIMER_DELAY, theEvent -> myBoard.step());
     }
 
 
     @Override
-    public void propertyChange(PropertyChangeEvent theEvent) {
+    public void propertyChange(final PropertyChangeEvent theEvent) {
         if (PROPERTY_GAME_OVER.equals(theEvent.getPropertyName())) {
             myGameOver = (boolean) theEvent.getNewValue();
             if (myGameOver) {
@@ -215,18 +193,21 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
                 clip.stop();
                 removeKeyListener(myKeys);
                 removeKeyListener(myPauseKey);
-                JOptionPane.showMessageDialog(null, "GAME OVER YOU SUCK!!!", "GAME OVER LOL", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "GAME OVER YOU SUCK!!!", "GAME OVER "
+                        + "LOL", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
 
-    class PauseKey extends KeyAdapter {
+    /**
+     * Method that determines the state of the game when paused
+     */
+    public class PauseKey extends KeyAdapter {
         @Override
         public void keyPressed(final KeyEvent theEvent) {
             final int keyCode = theEvent.getKeyCode();
             final char keyChar = theEvent.getKeyChar();
             if (keyCode == KeyEvent.VK_P || keyChar == 'p' || keyChar == 'P') {
-                System.out.println("Pause");
                 myPause = !myPause;
                 if (myPause) {
                     if (clip != null) {
@@ -244,45 +225,48 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         }
     }
 
-    class ControlAdapter extends KeyAdapter {
-        /**
-         * When pressing the key, trigger an event:
+
+    /**
+     * Method that determines what happens when keys are pressed
+     */
+    private class ControlAdapter extends KeyAdapter {
+        /** When pressing the key, trigger an event:
          * Move Left: left arrow and 'a' and 'A'.
          * Move Right: right arrow and 'd' and 'D'.
-         * Rotate: up arrow and 'w' and 'W'.
-         * Move Down: down arrow and 's' and 'S'.
-         * C TO ROTATE THE BLOCK CLOCKWISE.
-         * Drop: space.
-         *
-         * @param theEvent the event to be processed
-         */
+         * Rotate: up arrow and 'w' and 'W'.Move Down: down arrow and 's' and
+         * 'S'.C TO ROTATE THE BLOCK CLOCKWISE.Drop: space.
+         * @param theEvent the event to be processed */
         @Override
         public void keyPressed(final KeyEvent theEvent) {
             final int keyCode = theEvent.getKeyCode();
             final char keyChar = theEvent.getKeyChar();
             if (keyCode == KeyEvent.VK_LEFT || keyChar == 'a' || keyChar == 'A') {
-                System.out.println("left");
                 myBoard.left();
             }
             if (keyCode == KeyEvent.VK_RIGHT || keyChar == 'd' || keyChar == 'D') {
-                System.out.println("right");
                 myBoard.right();
             }
             if (keyCode == KeyEvent.VK_SPACE) {
-                System.out.println("drop");
                 myBoard.drop();
             }
             if (keyCode == KeyEvent.VK_DOWN || keyChar == 's' || keyChar == 'S') {
-                System.out.println("down");
                 myBoard.down();
             }
             if (keyCode == KeyEvent.VK_UP || keyChar == 'e' || keyChar == 'E') {
-                System.out.println("rotateCW");
                 myBoard.rotateCW();
             }
             if (keyCode == KeyEvent.VK_Q || keyChar == 'q' || keyChar == 'Q') {
-                System.out.println("rotateCCW");
                 myBoard.rotateCCW();
+            }
+            if (theEvent.getKeyCode() == KeyEvent.VK_H) {
+                myTimer.stop();
+            }
+        }
+
+        @Override
+        public void keyReleased(final KeyEvent theEvent) {
+            if (theEvent.getKeyCode() == KeyEvent.VK_H) {
+                myTimer.start();
             }
         }
     }
@@ -301,26 +285,17 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         final JMenu aboutMenu = new JMenu("About ");
         final JMenu helpMenu = new JMenu("Help");
         final JMenu exitMenu = new JMenu(EXIT);
-        final JMenu optionsMenu = new JMenu("Options");
 
         // Set ShortKey to Menu Options
         fileMenu.setMnemonic(KeyEvent.VK_F);
         aboutMenu.setMnemonic(KeyEvent.VK_U);
         helpMenu.setMnemonic(KeyEvent.VK_H);
         exitMenu.setMnemonic(KeyEvent.VK_X);
-        optionsMenu.setMnemonic(KeyEvent.VK_O);
 
-        // adding Items to options
-        optionsMenu.add(myLayout1);
-        optionsMenu.add(myLayout2);
 
         // Set ShortKey to File Menu Items
         myNewGameItem.setMnemonic(KeyEvent.VK_N);
 
-
-        // Creating performance for these layouts
-        myLayout1.addActionListener(e -> out.println("layout 1 generated"));
-        myLayout2.addActionListener(e -> out.println("layout 2 generated"));
 
         // Adding Items to Help Menu
         helpMenu.add(myHowToPlayItem);
@@ -330,22 +305,19 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         exitMenu.add(myExitItem);
 
         // Creating performances of file menu items
-        myNewGameItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        myNewGameItem.addActionListener(e -> {
 
-                clip.setMicrosecondPosition(0);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.start();
-                myBoard.newGame();
-                myTimer.restart();
-                myGameOver = false;
+            clip.setMicrosecondPosition(0);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+            myBoard.newGame();
+            myTimer.restart();
+            myGameOver = false;
 
-                removeKeyListener(myPauseKey);
-                addKeyListener(myPauseKey);
-                removeKeyListener(myKeys);
-                addKeyListener(myKeys);
-            }
+            removeKeyListener(myPauseKey);
+            addKeyListener(myPauseKey);
+            removeKeyListener(myKeys);
+            addKeyListener(myKeys);
         });
         // Adding Items to file menu
         fileMenu.add(myNewGameItem);
@@ -376,7 +348,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         // Adding options to menu bar
         menuBar.add(fileMenu);
         menuBar.add(aboutMenu);
-        menuBar.add(optionsMenu);
         menuBar.add(helpMenu);
         menuBar.add(exitMenu);
 
@@ -387,7 +358,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
     private void createAudio() {
         try {
-            File audioFile = new File("Tetris.wav");
+            final File audioFile = new File("Tetris.wav");
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(audioFile));
 
@@ -398,31 +369,31 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
     private void createLayout() {
         // create panels
-        myContainerPanel = createPanel(Color.gray,
+        final JPanel myContainerPanel = createPanel(Color.gray,
                 new Dimension(200, 600));
 
-        myTetrisTitlePanel = createPanel(Color.black,
+        final JPanel myTetrisTitle = createPanel(Color.black,
                 new Dimension(500, 120));
 
         myGameBoard = new TetrisGameBoard();
         myNextPiecePanel = new NextPiece();
 
 
-        myInforPanel = new ScorePanel();
+        myInfoPanel = new ScorePanel();
 
 
         final ImageIcon image = new ImageIcon("TetrisBackGround.PNG");
         final JLabel label = new JLabel();
         label.setIcon(image);
-        myTetrisTitlePanel.add(label);
+        myTetrisTitle.add(label);
 
         myContainerPanel.setLayout(new GridLayout(2, 1));
         myContainerPanel.add(myNextPiecePanel);
-        myContainerPanel.add(myInforPanel);
+        myContainerPanel.add(myInfoPanel);
 
         // add panels to frame
         this.add(myContainerPanel, BorderLayout.EAST);
-        this.add(myTetrisTitlePanel, BorderLayout.NORTH);
+        this.add(myTetrisTitle, BorderLayout.NORTH);
 
         this.add(myGameBoard, BorderLayout.CENTER);
     }
@@ -471,7 +442,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.TOP);
         label.setHorizontalAlignment(JLabel.CENTER);
-        frame.setSize(ABOUT_US_WINDOW_WIDTH, ABOUT_US_WINDOW_HEIGHT);
+        frame.setSize(510, 500);
         frame.setVisible(true);
         frame.add(label);
         frame.setIconImage(image.getImage());
@@ -480,7 +451,6 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         frame.setTitle(ABOUT_US);
 
     }
-
 
     /**
      * This method creates a window of text, displaying the instructions on
@@ -551,18 +521,22 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Main method that runs the CreateTetrisGui
+     */
     public static void main(final String... theArgs) {
         SwingUtilities.invokeLater(CreateTetrisGUI::createAndShowGui);
     }
 
+    /**
+     * Method that displays the GUI
+     */
     public static void createAndShowGui() {
         final Board board = new Board();
-
         final CreateTetrisGUI panel = new CreateTetrisGUI(board);
         board.addPropertyChangeListener(panel);
         board.addPropertyChangeListener(panel.myGameBoard);
         board.addPropertyChangeListener(panel.myNextPiecePanel);
-        board.addPropertyChangeListener(panel.myInforPanel);
+        board.addPropertyChangeListener(panel.myInfoPanel);
     }
-
 }
