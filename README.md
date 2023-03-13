@@ -12,6 +12,9 @@
 ### Sprint 3 Contribution 
 
 #### Simran Narwal
+- Worked on implementing ScorePanel (with the help of Minh)
+- Worked on completing all checkstyle warnings for CreateTetrisGUI, Board
+- Added JavaDoc comments where necessary
 
 
 #### Koji Yoshiyama
@@ -21,6 +24,10 @@
 
 #### Minh Vu
 
+- Implemented TetrisGameBoard, NextPiece, and CreateTetrisGUI
+- Tried to implement ScorePanel 
+- Adding special features (background music, holding a piece).
+- Made the all the arts that are shown in the GUI
 
 #### Jack Chen
 
@@ -28,6 +35,7 @@
 ### Sprint 3 Meeting Minutes
 - https://docs.google.com/document/d/1N2jN-uTNWGAEur-PbvrxyoRYTwcvAIuPmpRAlFfUdbE/edit 
 - Minh and Koji had a meeting on 03/10 from 6-8pm discussing ways to implement the gameBoard. At 8-9:15pm we had a meeting with the whole group where we discussed where we were all at with our work.
+- Simran and Minh met from on 3/11/23 @ 12pm to 1:40pm discussing and trying to implement the ScorePanel method
 - Minh and Simran met on 03/12 from 2:50-4:50pm and Koji joined in half way. During this meeting, Minh was working on the scorePanel and Koji and Simran
 were working on PMD/checkstyle fixes.
 - Aside from formal meetings, our main form of communcation for sprint 3 was through our group project discord server.
@@ -36,6 +44,7 @@ were working on PMD/checkstyle fixes.
 - We had a lot of issues trying to implement the ScorePanel as well as the nextPiece classes.
 - At the end of the project when we were trying to create the final branch and merge our work, we had issues with being able to see the latest versions of each others contributions.
 - We felt that it was extrememly complex and difficult trying to get the property changes to update the content on tetrisGameBoard, scorePanel, and NextPiece.
+- Had issues with fetching remote commits, while trying to commit and push changes
 
 ### Executive Summary Notes
 
