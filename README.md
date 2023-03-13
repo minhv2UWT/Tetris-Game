@@ -30,7 +30,8 @@
 - Made the all the arts that are shown in the GUI
 
 #### Jack Chen
-
+- Implemented TetrisGameBoard
+- Implemented NextPiece
 
 ### Sprint 3 Meeting Minutes
 - https://docs.google.com/document/d/1N2jN-uTNWGAEur-PbvrxyoRYTwcvAIuPmpRAlFfUdbE/edit 
