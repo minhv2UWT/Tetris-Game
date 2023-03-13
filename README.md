@@ -62,7 +62,7 @@ were working on PMD/checkstyle fixes.
 11. Created an inner class at the end of the board class that houses the myBoardData field, BoardData constructor and the getBoardData method. This was used to implement NextPiece and TetrisGameBoard. 
 
 #### Difficulty Level
-- We were not able to implement a difficult level.
+- We were not able to implement a difficulty level.
 
 #### Scoring Algorithm
 - This was implemented in the ScorePanel class within the propertyChange method.
