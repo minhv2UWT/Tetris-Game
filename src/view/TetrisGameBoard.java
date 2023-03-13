@@ -74,7 +74,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      * game board can update accordingly.
      *
      * @param theEvt A PropertyChangeEvent object describing the event source
-     *          and the property that has changed.
+     * and the property that has changed.
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvt) {
@@ -109,7 +109,7 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
      */
     private void setRenderingHints(final Graphics2D theGraphics) {
         theGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                                     RenderingHints.VALUE_ANTIALIAS_ON);
+                RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     /**
@@ -160,5 +160,4 @@ public class TetrisGameBoard extends JPanel implements PropertyChangeListener {
         };
     }
 }
-
 

@@ -45,7 +45,8 @@ public interface CreateBoard {
     String NEXT_PIECE = "NextPiece Mutation";
 
     /**
-     * Add a PropertyChangeListener to the listener list. The listener is registered for
+     * Add a PropertyChangeListener to the listener list.
+     * The listener is registered for
      * all properties.
      *
      * @param theListener The PropertyChangeListener to be added
