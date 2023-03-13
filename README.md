@@ -24,6 +24,7 @@
 - Implemented TetrisGameBoard, NextPiece, and CreateTetrisGUI
 - Tried to implement ScorePanel 
 - Adding special features (background music, holding a piece).
+- Made the all the arts that are shown in the GUI
 
 #### Jack Chen
 
