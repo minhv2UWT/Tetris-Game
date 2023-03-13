@@ -35,7 +35,7 @@
 ### Sprint 3 Meeting Minutes
 - https://docs.google.com/document/d/1N2jN-uTNWGAEur-PbvrxyoRYTwcvAIuPmpRAlFfUdbE/edit 
 - Minh and Koji had a meeting on 03/10 from 6-8pm discussing ways to implement the gameBoard. At 8-9:15pm we had a meeting with the whole group where we discussed where we were all at with our work.
-- Simran and Minh met from 12 - 1:40 discussing and trying to implement the ScorePanel method
+- Simran and Minh met from on 3/11/23 @ 12pm to 1:40pm discussing and trying to implement the ScorePanel method
 - Minh and Simran met on 03/12 from 2:50-4:50pm and Koji joined in half way. During this meeting, Minh was working on the scorePanel and Koji and Simran
 were working on PMD/checkstyle fixes.
 - Aside from formal meetings, our main form of communcation for sprint 3 was through our group project discord server.
