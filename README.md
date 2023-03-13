@@ -9,32 +9,59 @@
  Minh Vu,
  Jack Chen,
 
-### Sprint 2 Contribution 
+### Sprint 3 Contribution 
 
 #### Simran Narwal
-- Implemented a Property Change Listener 
-- Added the instaniated object to the MenuGUI, in order for it to receive any updates in the Board
-- Created a paintComponent method in which I filled in the rectangle to be color.cyan, which was later updated to Minh's version of the board
+
 
 #### Koji Yoshiyama
-- Instantiated and added a reference to a PropertyChangeSupport object in the board class
-- Created and added the add/remove PropertyChangeListener methods in the board class.
-- Determined where and when state changes occur within the board class and fired a property change accordingly.
+- Worked with Minh to complete the gameBoard class.
+- Multiple attempts to try and implement nextPiece, Minh ended up being able to get it working.
+- Did a mass fix of PMD and checkstyle warnings across the view package and completed documentation.
+
 #### Minh Vu
-- Instantiated and added a reference to Timer object in the MenuGUI class.
-- Added inner class for keyadapter.
-- Created and implemented NextPiece and TetrisGameBoard classes to be the representation of Tetris NextPiece and game board panel.
+
 
 #### Jack Chen
-- Created and implemented the TetrisNextPiece class
-- Implemented a PropertyChangeListener
 
-### Sprint 2 Meeting Minutes
+
+### Sprint 3 Meeting Minutes
 - https://docs.google.com/document/d/1N2jN-uTNWGAEur-PbvrxyoRYTwcvAIuPmpRAlFfUdbE/edit 
-- We had one more meeting on 3/4/23 from 8:00-8:45pm via Discord voice channels. During this meeting we put together all of our completed work and discussed our individual parts so we could all understand how our code works.
-- Aside from formal meetings, our main form of communcation for sprint 2 was through our group project discord server.
+- Minh and Koji had a meeting on 03/10 from 6-8pm discussing ways to implement the gameBoard. At 8-9:15pm we had a meeting with the whole group where we discussed where we were all at with our work.
+- Minh and Simran met on 03/12 from 2:50-4:50pm and Koji joined in half way. During this meeting, Minh was working on the scorePanel and Koji and Simran
+were working on PMD/checkstyle fixes.
+- Aside from formal meetings, our main form of communcation for sprint 3 was through our group project discord server.
 
-### Sprint 2 Comments 
-- Simran had trouble committing as her program recieved a ClassNotFound error, which restricted her program from running succesfully. This issue was later resolved 
+### Sprint 3 Comments 
+- We had a lot of issues trying to implement the ScorePanel as well as the nextPiece classes.
+- At the end of the project when we were trying to create the final branch and merge our work, we had issues with being able to see the latest versions of each others contributions.
+- We felt that it was extrememly complex and difficult trying to get the property changes to update the content on tetrisGameBoard, scorePanel, and NextPiece.
+
+### Executive Summary Notes
+
+#### Changes to the Model Package
+1. Created an interface for the board class called createBoard that stores all the different properties to be used when firing property changes.
+2. Created five fields in the Board class - myFrozenBocks, myScorePanel, myGameBoard and myNextPiecePanel were created to make our implementation of the score panel, next piece panel, and gameboard panel possible. myPCS was created to implement the ODP.
+3. Instantiated myPCS in the constructor of the board class and added myGameBoard, myScorePanel, and myNextPiecePanel as propertyChangeListeners.
+4. Added an addPropertyChangeListener method. 
+5. Fired five property changes in the newGame method.
+6. Fired one property change in the down method.
+7. Fired one property change in the move method.
+8. Fired one property change in the checkRows method.
+9. Fired one property change in the setPoint method.
+10. Fired one property change in the prepareNextMovablePiece method.
+
+#### Difficulty Level
+- We were not able to implement a difficult level.
+
+#### Scoring Algorithm
+- This was implemented in the ScorePanel class within the propertyChange method.
+
+#### Special Features
+1. We added background music
+2. We implemented a way to 'hold' a piece
+
+
+
 
 
