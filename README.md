@@ -21,6 +21,9 @@
 
 #### Minh Vu
 
+- Implemented TetrisGameBoard, NextPiece, and CreateTetrisGUI
+- Tried to implement ScorePanel 
+- Adding special features (background music, holding a piece).
 
 #### Jack Chen
 
