@@ -50,6 +50,7 @@ were working on PMD/checkstyle fixes.
 8. Fired one property change in the checkRows method.
 9. Fired one property change in the setPoint method.
 10. Fired one property change in the prepareNextMovablePiece method.
+11. Created an inner class at the end of the board class that houses the myBoardData field, BoardData constructor and the getBoardData method. This was used to implement NextPiece and TetrisGameBoard. 
 
 #### Difficulty Level
 - We were not able to implement a difficult level.
