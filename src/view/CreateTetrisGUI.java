@@ -277,34 +277,34 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      */
     private void createMenuGUI() {
 
-        // Creating Menu Bar
+// Creating Menu Bar
         final JMenuBar menuBar = new JMenuBar();
 
-        // Creating Menu Options
+// Creating Menu Options
         final JMenu fileMenu = new JMenu("File");
         final JMenu aboutMenu = new JMenu("About ");
         final JMenu helpMenu = new JMenu("Help");
         final JMenu exitMenu = new JMenu(EXIT);
 
-        // Set ShortKey to Menu Options
+// Set ShortKey to Menu Options
         fileMenu.setMnemonic(KeyEvent.VK_F);
         aboutMenu.setMnemonic(KeyEvent.VK_U);
         helpMenu.setMnemonic(KeyEvent.VK_H);
         exitMenu.setMnemonic(KeyEvent.VK_X);
 
 
-        // Set ShortKey to File Menu Items
+// Set ShortKey to File Menu Items
         myNewGameItem.setMnemonic(KeyEvent.VK_N);
 
 
-        // Adding Items to Help Menu
+// Adding Items to Help Menu
         helpMenu.add(myHowToPlayItem);
         helpMenu.add(myFAQItem);
 
-        //Adding Items to Exit Menu
+//Adding Items to Exit Menu
         exitMenu.add(myExitItem);
 
-        // Creating performances of file menu items
+// Creating performances of file menu items
         myNewGameItem.addActionListener(e -> {
 
             clip.setMicrosecondPosition(0);
@@ -319,16 +319,16 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
             removeKeyListener(myKeys);
             addKeyListener(myKeys);
         });
-        // Adding Items to file menu
+// Adding Items to file menu
         fileMenu.add(myNewGameItem);
         fileMenu.addSeparator();
 
 
-        // Adding Items to about us menu
+// Adding Items to about us menu
         aboutMenu.add(myAboutUsItem);
         aboutMenu.add(myAboutItem);
 
-        // Creating Performance for about Items
+// Creating Performance for about Items
         myAboutUsItem.addActionListener(e -> createAboutUs());
         myAboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null,
                 HTML
@@ -345,13 +345,13 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myFAQItem.addActionListener(e -> createFrequentlyAskedQuestions());
         myExitItem.addActionListener(e -> createExitOption());
 
-        // Adding options to menu bar
+// Adding options to menu bar
         menuBar.add(fileMenu);
         menuBar.add(aboutMenu);
         menuBar.add(helpMenu);
         menuBar.add(exitMenu);
 
-        // Set Frame menu bar
+// Set Frame menu bar
         this.setJMenuBar(menuBar);
         this.setVisible(true);
     }
@@ -368,7 +368,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     }
 
     private void createLayout() {
-        // create panels
+// create panels
         final JPanel myContainerPanel = createPanel(Color.gray,
                 new Dimension(200, 600));
 
@@ -391,7 +391,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
         myContainerPanel.add(myNextPiecePanel);
         myContainerPanel.add(myInfoPanel);
 
-        // add panels to frame
+// add panels to frame
         this.add(myContainerPanel, BorderLayout.EAST);
         this.add(myTetrisTitle, BorderLayout.NORTH);
 
@@ -409,10 +409,10 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      * This is a helper method for createMenuGUI that sets up te gameBoardGUI.
      */
     private void gameBoardGUISetUp() {
-        //GUI window using BorderLayoutPractice
+//GUI window using BorderLayoutPractice
 
 
-        // Creating GUI window
+// Creating GUI window
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setLayout(new BorderLayout());
@@ -420,7 +420,7 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
 
         this.setLocationRelativeTo(null);
 
-        // Adding icon and title
+// Adding icon and title
         final ImageIcon icon = new ImageIcon("TetrisIcon.PNG");
         this.setIconImage(icon.getImage());
         this.setTitle("Tetris");
@@ -459,12 +459,12 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
     private void createHowToPlay() {
         final JFrame frame = new JFrame("Instructions to Play!");
         final JTextArea text = new JTextArea("""
-                Instructions to Play!
-                1. The pieces will automatically come down
-                2. To bring piece down faster, click the down key on your keyboard
-                3. Fit the pieces so they all fill the bottom row
-                4. Once the bottom row is filled, your score will increase!
-                """);
+Instructions to Play!
+1. The pieces will automatically come down
+2. To bring piece down faster, click the down key on your keyboard
+3. Fit the pieces so they all fill the bottom row
+4. Once the bottom row is filled, your score will increase!
+""");
         text.setBounds(0, 0, MAGIC_NUMBER, MAGIC_NUMBER);
         frame.add(text);
         frame.setSize(MAGIC_NUMBER, DIMENSION_150);
@@ -479,21 +479,21 @@ public class CreateTetrisGUI extends JFrame implements PropertyChangeListener {
      */
     private void createFrequentlyAskedQuestions() {
         final JTextArea text = new JTextArea("""
-                  Frequently Asked Questions
-                  1. Question: Why play?
-                  Answer: IT'S THE BEST GAME EVER!
-                  2. Question: When was the first game of Tetris created?
-                  Answer: 1984!
-                  3. Question: My pieces won't fall?
-                  Answer: There may be a chance there is a lag in the system
-                  Try restarting!
-                  4. Question: Can I change the background color of my screen?
-                  Answer: Unfortunately, we are unable to support that request at this time!
-                  5. Question: Can I play with other players?
-                  Answer: Unfortunately, this game of Tetris is to be played individually!
-                  Is your question not here?
-                 `Try searching the web. Good Luck :)
-                """);
+Frequently Asked Questions
+1. Question: Why play?
+Answer: IT'S THE BEST GAME EVER!
+2. Question: When was the first game of Tetris created?
+Answer: 1984!
+3. Question: My pieces won't fall?
+Answer: There may be a chance there is a lag in the system
+Try restarting!
+4. Question: Can I change the background color of my screen?
+Answer: Unfortunately, we are unable to support that request at this time!
+5. Question: Can I play with other players?
+Answer: Unfortunately, this game of Tetris is to be played individually!
+Is your question not here?
+`Try searching the web. Good Luck :)
+""");
         text.setBounds(0, 0, BOUNDS_SIZE, BOUNDS_SIZE);
 
         final JFrame frame = new JFrame();
